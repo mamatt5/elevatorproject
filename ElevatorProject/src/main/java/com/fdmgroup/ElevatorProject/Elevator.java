@@ -34,6 +34,10 @@ public class Elevator {
 	public void setCurrentFloor(int currentFloor) {
 		this.currentFloor = currentFloor;
 	}
+	
+	public ArrayList<Person> getPeopleInside() {
+		return peopleInside;
+	}
 
 	
 	
