@@ -26,13 +26,13 @@
 		<Root level="trace">
 			<AppenderRef ref="StdOut" level="trace"/>
 		</Root>
-		<Logger name="com.fdmgroup.Logging" level="trace">
+		<Logger name="com.fdmgroup.ElevatorProject" level="trace">
 			<AppenderRef ref="StdOut" level="trace" />
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
 		</Logger>
-		<Logger name="com.fdmgroup.Logging.LoggExtra" level="trace">
+		<Logger name="com.fdmgroup.ElevatorProject" level="trace">
 			<AppenderRef ref="StdOut" level="error" />
 			<AppenderRef ref="WarnExtraFileAppender" level="warn" />
 		</Logger> 
