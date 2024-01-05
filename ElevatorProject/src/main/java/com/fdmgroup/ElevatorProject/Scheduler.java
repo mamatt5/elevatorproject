@@ -12,12 +12,12 @@ public class Scheduler {
 		Person person = controller.getPerson();
 		
 		for ( Elevator elevator : elevators ) {
-			int distance = Math.abs(elevator.getCurrentFloor() - controller.getPerson().getSrcFloor());
+			int distance = Math.abs(elevator.getCurrentFloor() - person.getSrcFloor());
 			
 			if ( distance < minDistance ) {
 				minDistance = distance;
 				
-				if ( elevator.isIdle() || person.isGoingUp() == elevator.isGoingUp() ) {
+				if ( elevator.isIdle() || ( person.isGoingUp() == elevator.isGoingUp() ) ) {
 					bestElevator = elevator;
 				}
 			}
