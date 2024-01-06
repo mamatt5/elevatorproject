@@ -18,8 +18,6 @@ public class Scheduler {
 		this.elevators.add(elevator);
 	}
 
-
-
 	public Elevator CallElevator(Person person) {
 		Elevator bestElevator = null;
 		int minDistance = Integer.MAX_VALUE;
@@ -37,6 +35,12 @@ public class Scheduler {
 		}
 		
 		return bestElevator;
+	}
+	
+	public void RunElevators() {
+		for ( Elevator elevator : elevators ) {
+			new Thread(elevator).start();
+		}
 	}
 
 }

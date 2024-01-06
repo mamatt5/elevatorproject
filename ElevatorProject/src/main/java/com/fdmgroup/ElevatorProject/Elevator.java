@@ -74,7 +74,6 @@ public class Elevator implements Runnable {
 					this.GoToFloor(person.getDestFloor());
 					peopleInside.remove(person);
 				}
-				
 			} else {
 				isIdle = true;
 			}

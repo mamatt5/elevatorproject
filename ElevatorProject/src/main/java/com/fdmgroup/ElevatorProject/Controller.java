@@ -10,7 +10,6 @@ public class Controller {
 		this.scheduler = scheduler;
 	}
 	
-	
 	public ArrayList<Person> getPeopleQueue() {
 		return peopleQueue;
 	}
@@ -35,6 +34,7 @@ public class Controller {
 	public void assignElevator() {
 		for (Person person : peopleQueue ) {
 			scheduler.CallElevator(person).LoadPerson(person);
+			peopleQueue.remove(person);
 		}
 	}
 	
