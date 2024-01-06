@@ -65,7 +65,20 @@ public class Elevator implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		while ( !Thread.interrupted() ) {
+			
+			if (!peopleInside.isEmpty()) {
+				isIdle = false;
+				
+				for ( Person person : peopleInside ) {
+					this.GoToFloor(person.getDestFloor());
+					peopleInside.remove(person);
+				}
+				
+			} else {
+				isIdle = true;
+			}
+		}
 		
 	}
 	
