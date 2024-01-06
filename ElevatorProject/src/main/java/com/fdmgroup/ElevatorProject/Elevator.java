@@ -7,8 +7,8 @@ public class Elevator implements Runnable {
 	private boolean isIdle = true;
 	private int currentFloor = 0;
 	private ArrayList<Person> peopleInside = new ArrayList<>();
-	private int minFloor;
-	private int maxFloor;
+	private int minFloor = 0;
+	private int maxFloor = 0;
 	
 	
 	// Getters and Setters
