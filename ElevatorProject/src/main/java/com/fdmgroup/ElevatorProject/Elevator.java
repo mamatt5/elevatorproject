@@ -45,12 +45,16 @@ public class Elevator {
 	// Elevator methods
 	
 	public void goToFloor(int floor) {
+		int srcFloor = this.currentFloor;
 		this.isIdle = false;
 		
 		if ( currentFloor < floor ) {
 			this.goingUp = true;
 		}
-		this.currentFloor = floor;
+		
+		for ( int i = srcFloor ; i < floor ; i++ ) {
+			this.currentFloor++;
+		}
 	}
 	
 	public void loadPerson(Person person) {
