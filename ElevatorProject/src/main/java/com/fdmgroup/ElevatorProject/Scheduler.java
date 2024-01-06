@@ -14,13 +14,13 @@ public class Scheduler {
 		return elevators;
 	}
 
-	public void addElevator(Elevator elevator) {
+	public void AddElevator(Elevator elevator) {
 		this.elevators.add(elevator);
 	}
 
 
 
-	public Elevator callElevator(Person person) {
+	public Elevator CallElevator(Person person) {
 		Elevator bestElevator = null;
 		int minDistance = Integer.MAX_VALUE;
 		

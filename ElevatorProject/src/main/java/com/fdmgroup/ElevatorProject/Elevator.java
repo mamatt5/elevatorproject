@@ -46,7 +46,7 @@ public class Elevator implements Runnable {
 	
 	// Elevator methods
 	
-	public void goToFloor(int floor) {
+	public void GoToFloor(int floor) {
 		int srcFloor = this.currentFloor;
 		this.isIdle = false;
 		
@@ -59,7 +59,7 @@ public class Elevator implements Runnable {
 		}
 	}
 	
-	public void loadPerson(Person person) {
+	public void LoadPerson(Person person) {
 		this.peopleInside.add(person);
 	}
 

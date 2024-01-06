@@ -10,6 +10,35 @@ public class Controller {
 		this.scheduler = scheduler;
 	}
 	
+	
+	public ArrayList<Person> getPeopleQueue() {
+		return peopleQueue;
+	}
+	
+	public ArrayList<Elevator> getElevators() {
+		return scheduler.getElevators();
+	}
+
+
+	public Person StringToPerson(String input) {
+		String[] personString = input.split(":");
+		int srcFloor = Integer.parseInt(personString[0]);
+		int destFloor = Integer.parseInt(personString[1]);
+		return new Person(srcFloor, destFloor);
+	}
+	
+	public void addPersonToQueue(Person person) {
+		this.peopleQueue.add(person);
+	}
+	
+	
+	public void assignElevator() {
+		for (Person person : peopleQueue ) {
+			scheduler.CallElevator(person).LoadPerson(person);
+		}
+	}
+	
+	// This is to convert string input into People object, hold testing for now!
 	public void handlePeopleWaiting(String input) {
 		
 		// sample input: "1:4,12:3,5:13", where "src:dest" notation
@@ -21,20 +50,10 @@ public class Controller {
 		for ( int i = 0 ; i <= peopleList.length-1 ; i++ ) {
 			
 			// each element in personString is {src, dest}, then converted into Person object
-			String[] personString = peopleList[i].split(":");
-			int srcFloor = Integer.parseInt(personString[0]);
-			int destFloor = Integer.parseInt(personString[1]);
-			
-			Person person = new Person(srcFloor, destFloor);
+			Person person = StringToPerson(peopleList[i]);
 			peopleQueue.add(person);
 		}
 		
-	}
-	
-	public void assignElevator() {
-		for (Person person : peopleQueue ) {
-			scheduler.callElevator(person).loadPerson(person);
-		}
 	}
 	
 }

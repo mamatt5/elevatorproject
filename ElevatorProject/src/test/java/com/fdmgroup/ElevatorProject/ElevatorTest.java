@@ -28,21 +28,21 @@ public class ElevatorTest {
 	@Test
 	void elevator_load_one_person() {
 		Person person = new Person(0,1);
-		elevator.loadPerson(person);
+		elevator.LoadPerson(person);
 		
 		assertEquals(person, elevator.getPeopleInside().get(0));
 	}
 	
 	@Test
 	void elevator_go_up_to_floor_10() {
-		elevator.goToFloor(10);
+		elevator.GoToFloor(10);
 		
 		assertEquals(10, elevator.getCurrentFloor());
 	}
 	
 	@Test
 	void elevator_go_to_same_floor() {
-		elevator.goToFloor(0);
+		elevator.GoToFloor(0);
 		
 		assertEquals(0, elevator.getCurrentFloor());
 	}
@@ -50,9 +50,9 @@ public class ElevatorTest {
 	@Test
 	void elevator_loads_a_person_then_goes_to_floor() {
 		Person person = new Person(0,10);
-		elevator.loadPerson(person);
+		elevator.LoadPerson(person);
 		
-		elevator.goToFloor(elevator.getPeopleInside().get(0).getDestFloor());
+		elevator.GoToFloor(elevator.getPeopleInside().get(0).getDestFloor());
 		
 		assertEquals(10,elevator.getCurrentFloor());
 	}

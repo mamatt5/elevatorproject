@@ -28,7 +28,7 @@ public class SchedulerTest {
 	@Test
 	void scheduler_can_add_elevator() {
 		Elevator elevator4 = new Elevator();
-		scheduler.addElevator(elevator4);
+		scheduler.AddElevator(elevator4);
 		
 		assertEquals(4, scheduler.getElevators().size());
 	}
@@ -36,7 +36,7 @@ public class SchedulerTest {
 	@Test
 	void scheduler_can_assign_elevator_to_a_person() {
 		Person person = new Person(0,10);
-		Elevator assignedElevator = scheduler.callElevator(person);
+		Elevator assignedElevator = scheduler.CallElevator(person);
 		
 		assertNotNull(assignedElevator);
 	}
