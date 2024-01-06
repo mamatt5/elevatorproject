@@ -2,11 +2,13 @@ package com.fdmgroup.ElevatorProject;
 
 import java.util.ArrayList;
 
-public class Elevator {
+public class Elevator implements Runnable {
 	private boolean goingUp = false;
 	private boolean isIdle = true;
 	private int currentFloor = 0;
 	private ArrayList<Person> peopleInside = new ArrayList<>();
+	private int minFloor;
+	private int maxFloor;
 	
 	
 	// Getters and Setters
@@ -59,6 +61,12 @@ public class Elevator {
 	
 	public void loadPerson(Person person) {
 		this.peopleInside.add(person);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
