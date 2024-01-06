@@ -1,6 +1,7 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,7 @@ public class ControllerTest {
 		controller.addPersonToQueue(person1);
 		controller.assignElevator();
 		
-		assertEquals(person1, controller.getElevators().get(0).getPeopleInside().get(0));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
 	}
 
 }

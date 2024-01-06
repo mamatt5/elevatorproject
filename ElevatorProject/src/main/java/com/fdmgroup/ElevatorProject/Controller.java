@@ -38,6 +38,16 @@ public class Controller {
 		}
 	}
 	
+	public Elevator FindElevatorWithPerson(Person person) {
+		for ( Elevator elevator : scheduler.getElevators() ) {
+			if ( elevator.getPeopleInside().contains(person) ) {
+				return elevator;
+			}
+		}
+		
+		return null; // if no person exists inside any of the elevators
+	}
+	
 	// This is to convert string input into People object, hold testing for now!
 	public void handlePeopleWaiting(String input) {
 		
