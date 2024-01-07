@@ -28,21 +28,36 @@ public class ElevatorTest {
 	@Test
 	void elevator_load_one_person() {
 		Person person = new Person(0,1);
-		elevator.LoadPerson(person);
+		try {
+			elevator.LoadPerson(person);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(person, elevator.getPeopleInside().get(0));
 	}
 	
 	@Test
 	void elevator_go_up_to_floor_10() {
-		elevator.GoToFloor(10);
+		try {
+			elevator.GoToFloor(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(10, elevator.getCurrentFloor());
 	}
 	
 	@Test
 	void elevator_go_to_same_floor() {
-		elevator.GoToFloor(0);
+		try {
+			elevator.GoToFloor(0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(0, elevator.getCurrentFloor());
 	}
@@ -50,9 +65,19 @@ public class ElevatorTest {
 	@Test
 	void elevator_loads_a_person_then_goes_to_floor() {
 		Person person = new Person(0,10);
-		elevator.LoadPerson(person);
+		try {
+			elevator.LoadPerson(person);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		elevator.GoToFloor(elevator.getPeopleInside().get(0).getDestFloor());
+		try {
+			elevator.GoToFloor(elevator.getPeopleInside().get(0).getDestFloor());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertEquals(10,elevator.getCurrentFloor());
 	}

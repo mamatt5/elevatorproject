@@ -65,7 +65,12 @@ public class ControllerTest {
 		Person person1 = new Person(0,1);
 		
 		controller.addPersonToQueue(person1);
-		controller.assignElevator();
+		try {
+			controller.assignElevator();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
 	}

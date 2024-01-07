@@ -30,7 +30,12 @@ public class Runner {
         controller.addPersonToQueue(new Person(6, 2));
 
         // Assign elevators to the people in the queue
-        controller.assignElevator();
+        try {
+			controller.assignElevator();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
     }

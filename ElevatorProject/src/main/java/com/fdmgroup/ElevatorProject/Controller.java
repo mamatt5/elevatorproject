@@ -32,7 +32,7 @@ public class Controller {
 	}
 	
 	
-	public void assignElevator() {
+	public void assignElevator() throws InterruptedException {
 		for (Person person : peopleQueue ) {
 			scheduler.CallElevator(person).LoadPerson(person);
 			peopleQueue.remove(person);

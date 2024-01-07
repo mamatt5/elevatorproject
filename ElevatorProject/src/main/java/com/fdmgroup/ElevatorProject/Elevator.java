@@ -46,21 +46,32 @@ public class Elevator implements Runnable {
 	
 	// Elevator methods
 	
-	public void GoToFloor(int floor) {
+	public void GoToFloor(int floor) throws InterruptedException {
 		int srcFloor = this.currentFloor;
 		this.isIdle = false;
 		
 		if ( currentFloor < floor ) {
 			this.goingUp = true;
+			
+			for ( int i = srcFloor ; i < floor ; i++ ) {
+				this.currentFloor++;
+				Thread.sleep(1000);
+			}
+			
+		} else if ( currentFloor > floor ) {
+			this.goingUp = false;
+			
+			for ( int i = srcFloor ; i > floor ; i-- ) {
+				this.currentFloor--;
+				Thread.sleep(1000);
+			}
 		}
 		
-		for ( int i = srcFloor ; i < floor ; i++ ) {
-			this.currentFloor++;
-		}
 	}
 	
-	public void LoadPerson(Person person) {
+	public void LoadPerson(Person person) throws InterruptedException {
 		this.peopleInside.add(person);
+		Thread.sleep(1000);
 	}
 
 	@Override
@@ -71,7 +82,12 @@ public class Elevator implements Runnable {
 				isIdle = false;
 				
 				for ( Person person : peopleInside ) {
-					this.GoToFloor(person.getDestFloor());
+					try {
+						this.GoToFloor(person.getDestFloor());
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					peopleInside.remove(person);
 				}
 			} else {
