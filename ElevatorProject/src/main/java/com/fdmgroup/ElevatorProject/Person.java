@@ -32,10 +32,4 @@ public class Person {
 		return goingUp;
 	}
 
-	public void setGoingUp(boolean goingUp) {
-		this.goingUp = goingUp;
-	}
-	
-	
-
 }
