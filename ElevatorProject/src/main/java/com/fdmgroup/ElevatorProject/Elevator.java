@@ -81,14 +81,20 @@ public class Elevator implements Runnable {
 			if (!peopleInside.isEmpty()) {
 				isIdle = false;
 				
-				for ( Person person : peopleInside ) {
+				// Since this is modifying the peopleInside list, use for-loop with indices but do not increment i unless person object is not removed.
+				for ( int i = 0; i < peopleInside.size() ; ) {
+					Person person = peopleInside.get(i);
 					try {
+						System.out.println("Elevator moving to floor " + person.getDestFloor());
 						this.GoToFloor(person.getDestFloor());
+						System.out.println("Elevator arrived at floor " + this.getCurrentFloor());
+						peopleInside.remove(i);
+						System.out.println("Person unloaded at floor " + this.getCurrentFloor());
+						
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						i++;
 					}
-					peopleInside.remove(person);
 				}
 			} else {
 				isIdle = true;

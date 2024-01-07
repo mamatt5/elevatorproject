@@ -63,6 +63,25 @@ public class ElevatorTest {
 	}
 	
 	@Test
+	void elevator_go_down_to_ground_floor() {
+		try {
+			elevator.GoToFloor(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			elevator.GoToFloor(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(1, elevator.getCurrentFloor());
+	}
+	
+	@Test
 	void elevator_loads_a_person_then_goes_to_floor() {
 		Person person = new Person(0,10);
 		try {

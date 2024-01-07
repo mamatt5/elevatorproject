@@ -20,6 +20,7 @@ public class Scheduler {
 
 	public Elevator CallElevator(Person person) {
 		Elevator bestElevator = null;
+		Elevator closestElevator = null;
 		int minDistance = Integer.MAX_VALUE;
 		
 		for ( Elevator elevator : elevators ) {
@@ -27,6 +28,7 @@ public class Scheduler {
 			
 			if ( distance < minDistance ) {
 				minDistance = distance;
+				closestElevator = elevator;
 				
 				if ( elevator.isIdle() || ( person.isGoingUp() == elevator.isGoingUp() ) ) {
 					bestElevator = elevator;
@@ -34,7 +36,7 @@ public class Scheduler {
 			}
 		}
 		
-		return bestElevator;
+		return bestElevator != null ? bestElevator : closestElevator;
 	}
 	
 	public void RunElevators() {
