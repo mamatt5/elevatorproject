@@ -1,6 +1,8 @@
 package com.fdmgroup.ElevatorProject;
 
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Elevator implements Runnable {
 	private boolean goingUp = false;
@@ -10,7 +12,7 @@ public class Elevator implements Runnable {
 	private int minFloor = 0;
 	private int maxFloor = 0;
 	
-	
+	private static final Logger LOGGER = LogManager.getLogger(Elevator.class);
 	// Getters and Setters
 	
 	public boolean isGoingUp() {
@@ -70,6 +72,7 @@ public class Elevator implements Runnable {
 	}
 	
 	public void LoadPerson(Person person) throws InterruptedException {
+		LOGGER.info("Person entered elevator on floor " + this.getCurrentFloor());
 		this.peopleInside.add(person);
 		Thread.sleep(1000);
 	}
@@ -85,12 +88,13 @@ public class Elevator implements Runnable {
 				for ( int i = 0; i < peopleInside.size() ; ) {
 					Person person = peopleInside.get(i);
 					try {
-						System.out.println("Elevator moving to floor " + person.getDestFloor());
+						LOGGER.info("Elevator moving to floor " + person.getDestFloor());
 						this.GoToFloor(person.getDestFloor());
-						System.out.println("Elevator arrived at floor " + this.getCurrentFloor());
-						peopleInside.remove(i);
-						System.out.println("Person unloaded at floor " + this.getCurrentFloor());
 						
+						LOGGER.info("Elevator arrived at floor " + this.getCurrentFloor());
+						peopleInside.remove(i);
+
+						LOGGER.info("Person unloaded at floor " + this.getCurrentFloor());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 						i++;
