@@ -14,7 +14,8 @@ public class InputValidation {
     private int minFloor = 0;
     private int maxFloor = 10;
 
- // getters & setters
+    // getters & setters
+
     public int getMinFloor() {
         return minFloor;
     }
