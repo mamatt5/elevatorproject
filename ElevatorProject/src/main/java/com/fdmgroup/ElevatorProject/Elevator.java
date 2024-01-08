@@ -103,6 +103,7 @@ public class Elevator implements Runnable, Serializable {
 	}
 
 	// Improve this logic for sorting people. It's weird. It does not factor in the direction of the Person objects inside the list.
+	// Maybe sort based on destFloor first then group the objects based on direction
 	public void sortPeopleInside() {
 		PriorityQueue<Person> sortedPeople = new PriorityQueue<>(peopleInside);
 		this.peopleInside.clear();
@@ -134,7 +135,9 @@ public class Elevator implements Runnable, Serializable {
 
 	@Override
 	public void run() {
-		unloadPeople();
+		while(!Thread.interrupted()) {
+			unloadPeople();
+		}
 	}
 
 }
