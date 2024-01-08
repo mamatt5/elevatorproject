@@ -1,6 +1,7 @@
 package com.fdmgroup.ElevatorProject;
 
 public class InvalidInputException extends Exception {
+
     private final InputValidation validation = new InputValidation();
 
     public InvalidInputException() {
