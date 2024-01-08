@@ -53,7 +53,7 @@ public class ElevatorConsole
 	    		break;
 	    	}
 	    	
-	    	if (inputValidation.isValidInput(input)) {
+	    	if (inputValidation.isValidRequest(input)) {
 	    		String[] people = input.split(",");
 	    		
 	    		for (String person: people) {
