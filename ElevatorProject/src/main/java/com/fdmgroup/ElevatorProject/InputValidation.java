@@ -38,6 +38,11 @@ public class InputValidation {
             int src = Integer.parseInt(floors[0]);
             int dest = Integer.parseInt(floors[1]);
 
+            // fixme: [check] do I need to declare the exception [InvalidInputException validityCheck]?
+            InvalidInputException validityCheck = new InvalidInputException();
+            validityCheck.validateFloor(src);
+            validityCheck.validateFloor(dest);
+
             if (src == dest) {                          // there's no need for an elevator
                 return false;                           // if there's no need for movement
             }
@@ -46,6 +51,10 @@ public class InputValidation {
             return isValidFloor(src)                    // both floors have to be valid
                     && isValidFloor(dest);              // for the elevator to travel
         }
+        catch (InvalidInputException e) {
+            // todo @Jasper is this also error log
+            return false;
+        }
         catch (NumberFormatException e) {
             // todo @Jasper to log error
             return false;
@@ -53,16 +62,15 @@ public class InputValidation {
     }
 
     // expected input format is "src:dest,src:dest,src:dest..."
-    public boolean isValidInput(@NotNull String input) {
+    // splits on comma (,) delimiter for separate src:dest requests
+    public void passInputToController (@NotNull String input) {
         String[] requests = input.split(",");
 
         for (String request : requests) {
 
-            if (!isValidRequest(request)) {
-                return false;
+            if (isValidRequest(request)) {
+                // todo: add job into queue
             }
         }
-
-        return true;
     }
 }
