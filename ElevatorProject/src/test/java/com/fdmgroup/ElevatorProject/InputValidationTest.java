@@ -1,7 +1,5 @@
 package com.fdmgroup.ElevatorProject;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +24,7 @@ public class InputValidationTest {
         };
 
         for (String input : normalInputs) {
-            assertTrue(inputValidation.isValidInput(input),
+            assertTrue(inputValidation.isValidRequest(input),
                     "failed: " + input);
         }
 
@@ -38,7 +36,7 @@ public class InputValidationTest {
         };
 
         for (String input : whitespaceInputs) {
-            assertTrue(inputValidation.isValidInput(input),
+            assertTrue(inputValidation.isValidRequest(input),
                     "failed: " + input);
         }
     }
@@ -53,7 +51,7 @@ public class InputValidationTest {
         };
 
         for (String input : inputs) {
-            assertFalse(inputValidation.isValidInput(input),
+            assertFalse(inputValidation.isValidRequest(input),
                     "failed: " + input);
         }
     }
@@ -71,7 +69,7 @@ public class InputValidationTest {
         };
 
         for (String input : inputs) {
-            assertFalse(inputValidation.isValidInput(input),
+            assertFalse(inputValidation.isValidRequest(input),
                     "failed: " + input);
         }
     }
@@ -87,7 +85,7 @@ public class InputValidationTest {
         };
 
         for (String input : inputs) {
-            assertFalse(inputValidation.isValidInput(input),
+            assertFalse(inputValidation.isValidRequest(input),
                     "failed: " + input);
         }
     }
