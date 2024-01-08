@@ -16,10 +16,6 @@
 			<PatternLayout
 				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</File>
-		<File name="WarnExtraFileAppender" filename="WarnExtraLog.log">
-			<PatternLayout
-				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-		</File>
 	</Appenders>
 	<Loggers> # Set level <Root level="trace">
 			<AppenderRef ref="StdOut" level="trace" />
@@ -42,12 +38,23 @@
 			<AppenderRef ref="ErrorFileAppender" level="error" />
 	</Logger>
 
+
 	<Logger
 			name="com.fdmgroup.ElevatorProject.ReadConfiguration" level="trace">
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
+			
 	</Logger>
+
+	<Logger
+			name="com.fdmgroup.ElevatorProject.InputValidator" level="trace">
+
+			<AppenderRef ref="TraceFileAppender" level="trace" />
+			<AppenderRef ref="WarningFileAppender" level="warn" />
+			<AppenderRef ref="ErrorFileAppender" level="error" />
+	</Logger>
+
 		
 
 	</Loggers>

@@ -25,3 +25,8 @@
 14:11:18.382 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 2
 14:11:19.393 [main] INFO  com.fdmgroup.ElevatorProject.Controller - Assigning person from floor 3 to floor 7 to an elevator.
 14:11:19.393 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 3
+14:37:56.436 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Invalid-Configuration-File
+14:37:56.464 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Configuration-File-Not-Found
+14:39:21.996 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Invalid-Configuration-File
+14:39:22.025 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Configuration-File-Not-Found
+14:54:01.528 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Invalid-Configuration-File

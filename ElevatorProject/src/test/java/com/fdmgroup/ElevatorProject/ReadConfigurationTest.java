@@ -2,25 +2,27 @@ package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 
 public class ReadConfigurationTest {
 	
 	ReadConfiguration configReader;
 
+	/**
+	 * Function that is used to verify certain log messages were produced in order
+	 * to test if getConfiguration is working properly. It reads the last line of the
+	 * LogTesting.log file to see if the lastest logger message produced is correct. 
+	 * @return
+	 */
 	private String readLogFile() {
 		
 		String logErrorToken = "";
@@ -81,7 +83,50 @@ public class ReadConfigurationTest {
 		assertEquals(1, config.getMinFloor());
 		assertEquals(3, config.getNumOfElevators());
 
+	}
+	
+	@Test 
+	void invalid_maxFloor_field() {
 		
+		String fileName = "src/test/resources/InvalidMaxFloorTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
+	void invalid_minFloor_field() {
+		
+		String fileName = "src/test/resources/InvalidMinFloorTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
+	void invalid_numOfElevators_field() {
+		
+		String fileName = "src/test/resources/InvalidNumOfElevatorsTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
+	void invalid_min_and_max_floor_field() {
+		
+		String fileName = "src/test/resources/InvalidMinAndMaxFloorTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
 	}
 	
 

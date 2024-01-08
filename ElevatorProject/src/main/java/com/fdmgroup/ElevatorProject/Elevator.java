@@ -1,10 +1,12 @@
 package com.fdmgroup.ElevatorProject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Elevator implements Runnable {
+
+public class Elevator implements Runnable, Serializable {
 	private boolean goingUp = false;
 	private boolean isIdle = true;
 	private int currentFloor = 0;
@@ -42,8 +44,6 @@ public class Elevator implements Runnable {
 		return peopleInside;
 	}
 
-	
-	
 	
 	// Elevator methods
 	

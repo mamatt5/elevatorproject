@@ -1,0 +1,7 @@
+{
+
+	"maxFloor":25,
+	"minFloor":-45,
+	"numOfElevators":5
+	
+}
