@@ -41,7 +41,7 @@ public class Controller {
 		for ( int i = 0 ; i < peopleQueue.size() ; ) {
 			Person person = peopleQueue.get(i);
 			scheduler.CallElevator(person).LoadPerson(person);
-			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
+//			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
 			peopleQueue.remove(i);
 		}
 	}

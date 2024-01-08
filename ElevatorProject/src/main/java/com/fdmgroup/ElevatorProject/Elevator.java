@@ -88,9 +88,9 @@ public class Elevator implements Runnable, Serializable {
 	            isIdle = false;
 	            Person person = peopleInside.get(0);
 	            try {
-	                LOGGER.info(this.ELEVATORID + " moving to floor " + person.getDestFloor());
+//	                LOGGER.info(this.ELEVATORID + " moving to floor " + person.getDestFloor());
 	                this.GoToFloor(person.getDestFloor());
-	                LOGGER.info(this.ELEVATORID + " arrived at floor " + this.getCurrentFloor());
+//	                LOGGER.info(this.ELEVATORID + " arrived at floor " + this.getCurrentFloor());
 	                peopleInside.remove(0);
 	                LOGGER.info("Person unloaded from " + this.ELEVATORID + " at floor " + this.getCurrentFloor());
 	            } catch (InterruptedException e) {
