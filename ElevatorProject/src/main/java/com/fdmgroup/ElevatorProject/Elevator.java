@@ -2,6 +2,7 @@ package com.fdmgroup.ElevatorProject;
 
 import java.util.ArrayList;
 
+
 public class Elevator implements Runnable {
 	private boolean goingUp = false;
 	private boolean isIdle = true;
@@ -41,8 +42,6 @@ public class Elevator implements Runnable {
 		return peopleInside;
 	}
 
-	
-	
 	
 	// Elevator methods
 	

@@ -2,6 +2,7 @@ package com.fdmgroup.ElevatorProject;
 
 import java.util.ArrayList;
 
+
 public class Runner {
     public static void main(String[] args) {
         // Create elevators
@@ -47,7 +48,19 @@ public class Runner {
 		}
         
         // TODO we want to know if all the elevators were utilized for all three people because theoretically, it should use all elevators.
-
+        
+        
+        scheduler.serializeSystemState("elevatorSystemState.ser");
+        
+        
+        //Deserialise to restart/reboot
+        Scheduler rebootScheduler = scheduler.deserializeSchedulerState("elevatorSystemState.ser");
+        
+        
+        
+        
 
     }
+
+	
 }

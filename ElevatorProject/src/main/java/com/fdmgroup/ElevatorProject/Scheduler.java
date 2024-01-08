@@ -1,9 +1,15 @@
 package com.fdmgroup.ElevatorProject;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Scheduler {
+public class Scheduler implements Serializable {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 	
 	public Scheduler(ArrayList<Elevator> elevators) {
@@ -44,5 +50,24 @@ public class Scheduler {
 			new Thread(elevator).start();
 		}
 	}
+
+	public void serializeSystemState(String fileName)
+	{
+		try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))){
+			output.writeObject(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Scheduler deserializeSchedulerState(String filename) {
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
+            return (Scheduler) input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
