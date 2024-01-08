@@ -1,5 +1,7 @@
 package com.fdmgroup.ElevatorProject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InputValidation {
@@ -8,7 +10,7 @@ public class InputValidation {
     // todo @Jefferson minFloor and maxFloor should be from config (?)
     int minFloor = 0;
     int maxFloor = 10;
-
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     public boolean isValidFloor(int floor) {
         return floor >= minFloor && floor <= maxFloor;
@@ -32,7 +34,7 @@ public class InputValidation {
                     && isValidFloor(dest);
         }
         catch (NumberFormatException e) {
-            // todo @Jasper to log error
+        	LOGGER.error("Invalid input");
             return false;
         }
     }
