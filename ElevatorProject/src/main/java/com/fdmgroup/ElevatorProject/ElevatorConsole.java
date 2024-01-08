@@ -6,7 +6,23 @@ import java.util.Scanner;
 public class ElevatorConsole
 {
 
-	public static void main(String[] args) {
+	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
+		
+	public static void main(String[] args)
+	{
+		
+		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
+		
+		if (configs == null) {
+			System.out.println("Error occured when reading configuration file. Please double check the "
+					+ "configuration file and relauch the program");
+			return;
+		}
+		
+		int numElevators = configs.getNumOfElevators();
+		int maxFloor = configs.getMaxFloor();
+		int minFloor = configs.getMinFloor();
+		
 		// TODO: use config to create number of elevators
 		System.out.println("Creating elevators...");
         Elevator elevator1 = new Elevator();

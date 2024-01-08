@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Scheduler implements Serializable
 {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
@@ -43,7 +44,7 @@ public class Scheduler implements Serializable
 	        }
 
 	        // If no idle Elevator, gets minimum distance between Elevator and person, then checks if same direction
-	        if (distance < minDistance && (person.isGoingUp() == elevator.isGoingUp())) {
+	        if (distance < minDistance && (elevator.isIdle() || (person.isGoingUp() == elevator.isGoingUp()) ) ) {
 	            bestElevator = elevator;
 	            minDistance = distance;
 	        }
