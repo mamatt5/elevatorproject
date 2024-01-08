@@ -67,8 +67,5 @@ public class Runner {
 			e.printStackTrace();
 		}
         
-        // TODO we want to know if all the elevators were utilized for all three people because theoretically, it should use all elevators.
-
-
     }
 }
