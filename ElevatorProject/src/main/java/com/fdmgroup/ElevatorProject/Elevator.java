@@ -10,7 +10,7 @@ public class Elevator implements Runnable {
 	private int minFloor = 0;
 	private int maxFloor = 0;
 	
-	
+
 	// Getters and Setters
 	
 	public boolean isGoingUp() {

@@ -41,6 +41,13 @@
 		</Logger>
 		
 		-->
+		<Logger
+			name="com.fdmgroup.ElevatorProject.ReadConfiguration" level="trace">
+			<AppenderRef ref="TraceFileAppender" level="trace" />
+			<AppenderRef ref="WarningFileAppender" level="warn" />
+			<AppenderRef ref="ErrorFileAppender" level="error" />
+	</Logger>
+		
 	</Loggers>
 	
 </Configuration>
