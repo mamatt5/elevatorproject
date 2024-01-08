@@ -24,7 +24,11 @@ public class Elevator implements Runnable, Serializable {
 	}
 
 	// Getters and Setters
-
+	
+	public String getElevatorID() {
+		return ELEVATORID;
+	}
+	
 	public boolean isGoingUp() {
 		return goingUp;
 	}

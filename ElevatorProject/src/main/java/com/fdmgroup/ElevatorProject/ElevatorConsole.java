@@ -53,7 +53,7 @@ public class ElevatorConsole
 	    		break;
 	    	}
 	    	
-	    	if (inputValidation.isValidInput(input)) {
+	    	if (inputValidation.isValidRequest(input)) {
 	    		String[] people = input.split(",");
 	    		
 	    		for (String person: people) {
@@ -65,6 +65,16 @@ public class ElevatorConsole
 	    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 	    		}
 	    	}
+	    	
+	    	// Assign elevators to the people in the queue
+	        try
+	        {
+	            System.out.println("Assigning elevators to queued requests...");
+	            controller.assignElevator();
+	        } catch (InterruptedException e)
+	        {
+	            e.printStackTrace();
+	        }
 	    }
 		
 	    myObj.close();
