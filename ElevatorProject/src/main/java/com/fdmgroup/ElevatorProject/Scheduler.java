@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Scheduler implements Serializable
 {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
