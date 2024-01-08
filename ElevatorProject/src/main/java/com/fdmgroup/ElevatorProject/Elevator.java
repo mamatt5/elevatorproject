@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,11 +25,11 @@ public class Elevator implements Runnable, Serializable {
 	}
 
 	// Getters and Setters
-	
+
 	public String getElevatorID() {
 		return ELEVATORID;
 	}
-	
+
 	public boolean isGoingUp() {
 		return goingUp;
 	}
@@ -100,15 +101,14 @@ public class Elevator implements Runnable, Serializable {
 		this.peopleInside.add(person);
 		doorsOpenClose();
 	}
-	
-	// Improve this logic for sorting people. It's weird.
+
+	// Improve this logic for sorting people. It's weird. It does not factor in the direction of the Person objects inside the list.
 	public void sortPeopleInside() {
-		if (this.goingUp) {
-			Collections.sort(peopleInside);
-			
-		} else if (!this.goingUp) {
-			Collections.sort(peopleInside, Collections.reverseOrder());
-			
+		PriorityQueue<Person> sortedPeople = new PriorityQueue<>(peopleInside);
+		this.peopleInside.clear();
+
+		while (!sortedPeople.isEmpty()) {
+			this.peopleInside.add(sortedPeople.poll());
 		}
 	}
 
