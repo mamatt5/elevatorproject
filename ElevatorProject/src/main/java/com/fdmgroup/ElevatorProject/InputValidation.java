@@ -5,35 +5,15 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InputValidation {
-
-    // fixme temporary min and max values
-    // todo @Jefferson minFloor and maxFloor should be from config (?)
-
+    private final Configurations CONFIGS = new Configurations();
+    private final int MIN_FLOOR = CONFIGS.getMinFloor();
+    private final int MAX_FLOOR = CONFIGS.getMaxFloor();
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
-    private int minFloor = 0;
-    private int maxFloor = 10;
-
-    // getters & setters
-    public int getMinFloor() {
-        return minFloor;
-    }
-
-    public int getMaxFloor() {
-        return maxFloor;
-    }
-
-    public void setMinFloor(int minFloor) {
-        this.minFloor = minFloor;
-    }
-
-    public void setMaxFloor(int maxFloor) {
-        this.maxFloor = maxFloor;
-    }
 
 
     // methods
     public boolean isValidFloor(int floor) {
-        return floor >= minFloor && floor <= maxFloor;
+        return floor >= MIN_FLOOR && floor <= MAX_FLOOR;
     }
 
     // expected floor-to-floor request format is "src:dest"
