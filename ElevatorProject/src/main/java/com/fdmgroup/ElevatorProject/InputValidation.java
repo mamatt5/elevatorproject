@@ -6,9 +6,20 @@ public class InputValidation {
 
     // fixme temporary min and max values
     // todo @Jefferson minFloor and maxFloor should be from config (?)
-    int minFloor = 0;
-    int maxFloor = 10;
+    private int minFloor = 0;
+    private int maxFloor = 10;
 
+    // getters
+    public int getMinFloor() {
+        return minFloor;
+    }
+
+    public int getMaxFloor() {
+        return maxFloor;
+    }
+
+
+    // methods
 
     public boolean isValidFloor(int floor) {
         return floor >= minFloor && floor <= maxFloor;
@@ -27,9 +38,13 @@ public class InputValidation {
             int src = Integer.parseInt(floors[0]);
             int dest = Integer.parseInt(floors[1]);
 
+            if (src == dest) {                          // there's no need for an elevator
+                return false;                           // if there's no need for movement
+            }
+
             // floor validity check
-            return isValidFloor(src)
-                    && isValidFloor(dest);
+            return isValidFloor(src)                    // both floors have to be valid
+                    && isValidFloor(dest);              // for the elevator to travel
         }
         catch (NumberFormatException e) {
             // todo @Jasper to log error
