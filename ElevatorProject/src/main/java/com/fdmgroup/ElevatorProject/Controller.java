@@ -1,11 +1,12 @@
 package com.fdmgroup.ElevatorProject;
 
 import java.util.ArrayList;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class Controller {
 	private ArrayList<Person> peopleQueue = new ArrayList<Person>();
 	private Scheduler scheduler;
-
+	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 	public Controller( Scheduler scheduler ) {
 		this.scheduler = scheduler;
 	}
@@ -38,7 +39,7 @@ public class Controller {
 		for ( int i = 0 ; i < peopleQueue.size() ; ) {
 			Person person = peopleQueue.get(i);
 			scheduler.CallElevator(person).LoadPerson(person);
-			System.out.println("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
+			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
 			peopleQueue.remove(i);
 		}
 	}
