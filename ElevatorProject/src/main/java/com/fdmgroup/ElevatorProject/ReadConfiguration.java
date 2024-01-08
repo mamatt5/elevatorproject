@@ -18,6 +18,13 @@ public class ReadConfiguration {
 	private static File file;
 	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
 	
+	/**
+	 * Reads the content from the fileName and deserializes it into an instance of 
+	 * the Configurations object type.
+	 * @param fileName - the path of the configuration file
+	 * @return null if an error occured during reading the configuration file,
+	 * 		   otherwise returns an instance of the Confirugations object.
+	 */
 	public static Configurations getConfiguration(String fileName) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -40,7 +47,7 @@ public class ReadConfiguration {
 		} catch (IOException e) {
 		
 			LOGGER.info("Invalid-Configuration-File");
-			e.printStackTrace();
+			return null;
 		} 
 		
 		

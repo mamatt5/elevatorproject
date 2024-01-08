@@ -1,6 +1,7 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
@@ -51,7 +52,7 @@ public class ReadConfigurationTest {
 		
 		String fileName = "Invalid";
 	
-		ReadConfiguration.getConfiguration(fileName);
+		assertNull(ReadConfiguration.getConfiguration(fileName));
 		
 		assertEquals("Configuration-File-Not-Found", readLogFile());
 		
@@ -63,7 +64,7 @@ public class ReadConfigurationTest {
 		
 		String fileName = "src/test/resources/InvalidJsonFormatConfigurationTest.txt";
 
-		ReadConfiguration.getConfiguration(fileName);			
+		assertNull(ReadConfiguration.getConfiguration(fileName));			
 		
 		assertEquals("Invalid-Configuration-File", readLogFile());
 		
