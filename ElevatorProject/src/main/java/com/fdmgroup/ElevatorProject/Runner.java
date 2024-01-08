@@ -37,6 +37,27 @@ public class Runner {
         
         controller.addPersonToQueue(new Person(6, 2));
         System.out.println("Person 6 to 2 created");
+        
+        controller.addPersonToQueue(new Person(0, 5));
+        System.out.println("Person 0 to 5 created");
+        
+        controller.addPersonToQueue(new Person(2, 10));
+        System.out.println("Person 2 to 10 created");
+        
+        controller.addPersonToQueue(new Person(10, 4));
+        System.out.println("Person 10 to 4 created");
+        
+        controller.addPersonToQueue(new Person(1, 4));
+        System.out.println("Person 1 to 4 created");
+        
+        controller.addPersonToQueue(new Person(3, 7));
+        System.out.println("Person 3 to 7 created");
+        
+        controller.addPersonToQueue(new Person(6, 2));
+        System.out.println("Person 6 to 2 created");
+        
+        controller.addPersonToQueue(new Person(4, 4));
+        System.out.println("Person 4 to 4 created");
 
         // Assign elevators to the people in the queue
         try {
