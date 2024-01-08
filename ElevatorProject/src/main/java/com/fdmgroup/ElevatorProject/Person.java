@@ -3,7 +3,7 @@ package com.fdmgroup.ElevatorProject;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Person implements Serializable{
+public class Person implements Serializable , Comparable<Person>{
 	private int srcFloor;
 	private int destFloor;
 	private boolean goingUp;
@@ -33,6 +33,11 @@ public class Person implements Serializable{
 
 	public boolean isGoingUp() {
 		return goingUp;
+	}
+
+	@Override
+	public int compareTo(Person other) {
+		return Integer.compare(this.destFloor, other.destFloor);
 	}
 
 }
