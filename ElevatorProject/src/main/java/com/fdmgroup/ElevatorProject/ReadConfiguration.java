@@ -18,40 +18,38 @@ public class ReadConfiguration {
 	private static File file;
 	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
 	
-	public static void readFile(String fileName) throws FileNotFoundException {
-		
-		File newFile = new File(fileName);
-		
-		if (!newFile.exists()) {
-			throw new FileNotFoundException("Configuration File not found");
-		} else {
-			file = newFile;
-		}
-		
-	}
-	
-	public static Configurations getConfiguration() {
+	public static Configurations getConfiguration(String fileName) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Configurations config = new Configurations();
 		
-
+		
+		File newFile = new File(fileName);
+		
+		
+		if (!newFile.exists()) {
+			
+			LOGGER.info("Configuration-File-Not-Found");
+			return null;
+			
+		} else {
+			file = newFile;
+		}
+		
+		
 		try {
 			config = objectMapper.readValue(file, Configurations.class);
-		} catch (JsonParseException e) {
-			
-			LOGGER.info("Invalid JSON format");
-			
-		} catch (InvalidFormatException e) {
-			
-			e.printStackTrace();
 		} catch (IOException e) {
-			
+		
+			LOGGER.info("Invalid-Configuration-File");
 			e.printStackTrace();
-		}
+		
+		} 
 		
 		
 		return config;
 	}
+	
+	
 	
 }

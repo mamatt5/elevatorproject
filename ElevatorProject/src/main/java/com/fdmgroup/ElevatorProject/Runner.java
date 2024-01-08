@@ -1,9 +1,28 @@
 package com.fdmgroup.ElevatorProject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+
 public class Runner {
+	private final static String configFilePath = "../ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/Configurations.txt";
+	
     public static void main(String[] args) {
+    	;
+    	int numElevators, maxFloor, minFloor = 0;
+    	
+    
+  
+		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
+			
+		numElevators = configs.getNumOfElevators();
+		maxFloor = configs.getMaxFloor();
+		minFloor = configs.getMinFloor();
+		
+		System.out.println(numElevators);
+			
+		
+    	
         // Create elevators
     	System.out.println("Creating elevators...");
         Elevator elevator1 = new Elevator();

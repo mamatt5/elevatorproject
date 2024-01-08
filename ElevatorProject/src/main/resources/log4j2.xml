@@ -31,30 +31,25 @@
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
-<<<<<<< HEAD
-		</Logger>
-<Logger
-			name="com.fdmgroup.ElevatorProject.CLASSNAME" level="trace">
-			<AppenderRef ref="StdOut" level="error" />
-			<AppenderRef ref="WarnExtraFileAppender" level="warn" />
-		</Logger>
-		
-		-->
-		<Logger
-			name="com.fdmgroup.ElevatorProject.ReadConfiguration" level="trace">
-=======
+
 	</Logger>
+	
+
 	<Logger
 			name="com.fdmgroup.ElevatorProject.Controller" level="trace">
->>>>>>> origin
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
 	</Logger>
-<<<<<<< HEAD
+
+	<Logger
+			name="com.fdmgroup.ElevatorProject.ReadConfiguration" level="trace">
+			<AppenderRef ref="TraceFileAppender" level="trace" />
+			<AppenderRef ref="WarningFileAppender" level="warn" />
+			<AppenderRef ref="ErrorFileAppender" level="error" />
+	</Logger>
 		
-=======
->>>>>>> origin
+
 	</Loggers>
 	
 </Configuration>
