@@ -6,8 +6,7 @@ import java.util.Scanner;
 public class ElevatorConsole
 {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		// TODO: use config to create number of elevators
 		System.out.println("Creating elevators...");
         Elevator elevator1 = new Elevator();
@@ -50,6 +49,16 @@ public class ElevatorConsole
 	    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 	    		}
 	    	}
+	    	
+	    	// Assign elevators to the people in the queue
+	        try
+	        {
+	            System.out.println("Assigning elevators to queued requests...");
+	            controller.assignElevator();
+	        } catch (InterruptedException e)
+	        {
+	            e.printStackTrace();
+	        }
 	    }
 		
 	    myObj.close();
