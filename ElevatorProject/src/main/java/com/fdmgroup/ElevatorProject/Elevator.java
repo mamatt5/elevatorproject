@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+@SuppressWarnings("serial")
 public class Elevator implements Runnable, Serializable {
 	private boolean goingUp = false;
 	private boolean isIdle = true;

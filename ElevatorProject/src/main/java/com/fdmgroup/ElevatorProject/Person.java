@@ -2,6 +2,7 @@ package com.fdmgroup.ElevatorProject;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Person implements Serializable{
 	private int srcFloor;
 	private int destFloor;
