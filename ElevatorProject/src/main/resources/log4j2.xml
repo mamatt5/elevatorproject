@@ -24,15 +24,14 @@
 	<Loggers> # Set level <Root level="trace">
 			<AppenderRef ref="StdOut" level="trace" />
 		</Root>
-		<!--   //    
 
-		 ADD/CHANGE CLASS NAME
 		
-<Logger
-			name="com.fdmgroup.ElevatorProject.CLASSNAME" level="trace">
+	<Logger
+			name="com.fdmgroup.ElevatorProject.Elevator" level="trace">
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
+<<<<<<< HEAD
 		</Logger>
 <Logger
 			name="com.fdmgroup.ElevatorProject.CLASSNAME" level="trace">
@@ -43,11 +42,19 @@
 		-->
 		<Logger
 			name="com.fdmgroup.ElevatorProject.ReadConfiguration" level="trace">
+=======
+	</Logger>
+	<Logger
+			name="com.fdmgroup.ElevatorProject.Controller" level="trace">
+>>>>>>> origin
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
 			<AppenderRef ref="ErrorFileAppender" level="error" />
 	</Logger>
+<<<<<<< HEAD
 		
+=======
+>>>>>>> origin
 	</Loggers>
 	
 </Configuration>
