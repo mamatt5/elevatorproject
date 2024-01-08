@@ -8,29 +8,32 @@ public class InputValidation {
 
     // fixme temporary min and max values
     // todo @Jefferson minFloor and maxFloor should be from config (?)
-<<<<<<< ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/InputValidation.java
-    private final int MIN_FLOOR = 0;
-    private final int MAX_FLOOR = 10;
-=======
 
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
     private int minFloor = 0;
     private int maxFloor = 10;
->>>>>>> ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/InputValidation.java
 
-    // getters
+    // getters & setters
     public int getMinFloor() {
-        return MIN_FLOOR;
+        return minFloor;
     }
 
     public int getMaxFloor() {
-        return MAX_FLOOR;
+        return maxFloor;
+    }
+
+    public void setMinFloor(int minFloor) {
+        this.minFloor = minFloor;
+    }
+
+    public void setMaxFloor(int maxFloor) {
+        this.maxFloor = maxFloor;
     }
 
 
     // methods
     public boolean isValidFloor(int floor) {
-        return floor >= MIN_FLOOR && floor <= MAX_FLOOR;
+        return floor >= minFloor && floor <= maxFloor;
     }
 
     // expected floor-to-floor request format is "src:dest"
