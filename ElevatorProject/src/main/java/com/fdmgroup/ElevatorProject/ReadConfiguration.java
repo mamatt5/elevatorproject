@@ -22,10 +22,7 @@ public class ReadConfiguration {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Configurations config = new Configurations();
-		
-		
 		File newFile = new File(fileName);
-		
 		
 		if (!newFile.exists()) {
 			
@@ -38,12 +35,12 @@ public class ReadConfiguration {
 		
 		
 		try {
+			
 			config = objectMapper.readValue(file, Configurations.class);
 		} catch (IOException e) {
 		
 			LOGGER.info("Invalid-Configuration-File");
 			e.printStackTrace();
-		
 		} 
 		
 		

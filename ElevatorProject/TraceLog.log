@@ -19,3 +19,9 @@
 14:04:47.982 [main] INFO  com.fdmgroup.ElevatorProject.Controller - Assigning person from floor 3 to floor 7 to an elevator.
 14:04:47.982 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 3
 14:04:48.993 [main] INFO  com.fdmgroup.ElevatorProject.Controller - Assigning person from floor 6 to floor 2 to an elevator.
+14:11:17.375 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 0
+14:11:17.377 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Elevator moving to floor 4
+14:11:18.382 [main] INFO  com.fdmgroup.ElevatorProject.Controller - Assigning person from floor 1 to floor 4 to an elevator.
+14:11:18.382 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 2
+14:11:19.393 [main] INFO  com.fdmgroup.ElevatorProject.Controller - Assigning person from floor 3 to floor 7 to an elevator.
+14:11:19.393 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered elevator on floor 3

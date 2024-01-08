@@ -5,14 +5,12 @@ import java.util.ArrayList;
 
 
 public class Runner {
-	private final static String configFilePath = "../ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/Configurations.txt";
+	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
 	
     public static void main(String[] args) {
-    	;
-    	int numElevators, maxFloor, minFloor = 0;
     	
-    
-  
+    	int numElevators, maxFloor, minFloor = 0;
+
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 			
 		numElevators = configs.getNumOfElevators();
