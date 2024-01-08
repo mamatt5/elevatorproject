@@ -88,16 +88,33 @@ public class SchedulerTest {
 		
 		Elevator assignedElevator2 = scheduler.CallElevator(person2);
 		
-		assertEquals("Elevator1", assignedElevator2.getElevatorID());
+		assertEquals("Elevator0", assignedElevator2.getElevatorID());
+		try
+		{
+			assignedElevator2.GoToFloor(14);
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		
 		assertFalse(assignedElevator1.isIdle());
 		assertFalse(assignedElevator2.isIdle());
-		assertFalse(assignedElevator2.getPeopleInside().isEmpty());
+		assertTrue(assignedElevator2.getPeopleInside().isEmpty());
 		
 		
 		Elevator assignedElevator3 = scheduler.CallElevator(person3);
 		
+		assertEquals("Elevator1", assignedElevator3.getElevatorID());
+		try
+		{
+			assignedElevator3.GoToFloor(3);
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 		assertFalse(assignedElevator3.isIdle());
 		assertFalse(assignedElevator3.getPeopleInside().isEmpty());
+		
 		
 	}
 	
@@ -151,6 +168,8 @@ public class SchedulerTest {
 		
 		Elevator assignedElevator7 = scheduler.CallElevator(person7);
 		assertEquals("Elevator6", assignedElevator7.getElevatorID());
+		
+		
 	}
 
 }
