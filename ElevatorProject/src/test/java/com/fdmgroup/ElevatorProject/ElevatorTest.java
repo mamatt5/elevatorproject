@@ -100,5 +100,42 @@ public class ElevatorTest {
 		
 		assertEquals(10,elevator.getCurrentFloor());
 	}
+	
+	@Test
+	void elevator_loads_a_person_then_unloads() throws InterruptedException {
+		Person person = new Person(0,10);
+		elevator.LoadPerson(person);
+		elevator.unloadPeople();
+		
+	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertEquals(10, elevator.getCurrentFloor());
+	}
+	
+	@Test
+	void elevator_loads_a_person_then_unloads_then_check_if_idle() throws InterruptedException {
+		Person person = new Person(0,10);
+		elevator.LoadPerson(person);
+		elevator.unloadPeople();
+		
+	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertEquals(10, elevator.getCurrentFloor());
+	    assertTrue(elevator.isIdle());
+	}
+	
+	// Weird test for now, because it initially loads all Person objects into the elevator, basically the elevator is teleporting. Then unloads.
+	@Test
+	void elevator_loads_multiple_people_then_unloads_everyone() throws InterruptedException {
+		Person person1 = new Person(0,10);
+		Person person2 = new Person(2,5);
+		Person person3 = new Person(6,11);
+		Person person4 = new Person(14,0);
+		elevator.LoadPerson(person1);
+		elevator.LoadPerson(person2);
+		elevator.LoadPerson(person3);
+		elevator.LoadPerson(person4);
+		elevator.unloadPeople();
+		
+	    assertTrue(elevator.getPeopleInside().isEmpty());
+	}
 
 }
