@@ -1,5 +1,7 @@
 package com.fdmgroup.ElevatorProject;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Controller {
@@ -20,7 +22,7 @@ public class Controller {
 
 
 	// Might have to move this method to Person object
-	public Person StringToPerson(String input) {
+	public Person StringToPerson(@NotNull String input) {
 		String[] personString = input.split(":");
 		int srcFloor = Integer.parseInt(personString[0]);
 		int destFloor = Integer.parseInt(personString[1]);
@@ -53,8 +55,10 @@ public class Controller {
 		
 		return null; // if no person exists inside any of the elevators
 	}
-	
-//	// This is to convert string input into People object, hold testing for now!
+
+
+
+//	todo: This is to convert string input into People object, hold testing for now!
 //	public void handlePeopleWaiting(String input) {
 //		
 //		// sample input: "1:4,12:3,5:13", where "src:dest" notation
