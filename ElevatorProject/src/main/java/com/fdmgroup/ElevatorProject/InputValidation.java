@@ -1,13 +1,22 @@
 package com.fdmgroup.ElevatorProject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InputValidation {
 
     // fixme temporary min and max values
     // todo @Jefferson minFloor and maxFloor should be from config (?)
+<<<<<<< ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/InputValidation.java
     private final int MIN_FLOOR = 0;
     private final int MAX_FLOOR = 10;
+=======
+
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+    private int minFloor = 0;
+    private int maxFloor = 10;
+>>>>>>> ElevatorProject/src/main/java/com/fdmgroup/ElevatorProject/InputValidation.java
 
     // getters
     public int getMinFloor() {
@@ -20,7 +29,6 @@ public class InputValidation {
 
 
     // methods
-
     public boolean isValidFloor(int floor) {
         return floor >= MIN_FLOOR && floor <= MAX_FLOOR;
     }
@@ -52,11 +60,11 @@ public class InputValidation {
                     && isValidFloor(dest);              // for the elevator to travel
         }
         catch (InvalidInputException e) {
-            // todo @Jasper is this also error log
+            LOGGER.error("Invalid input: floor out of range");
             return false;
         }
         catch (NumberFormatException e) {
-            // todo @Jasper to log error
+        	LOGGER.error("Invalid input: floor format error");
             return false;
         }
     }

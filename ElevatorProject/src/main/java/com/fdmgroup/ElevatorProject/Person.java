@@ -1,6 +1,9 @@
 package com.fdmgroup.ElevatorProject;
 
-public class Person {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Person implements Serializable{
 	private int srcFloor;
 	private int destFloor;
 	private boolean goingUp;
