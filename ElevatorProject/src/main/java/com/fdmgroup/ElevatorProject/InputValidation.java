@@ -1,11 +1,15 @@
 package com.fdmgroup.ElevatorProject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InputValidation {
 
     // fixme temporary min and max values
     // todo @Jefferson minFloor and maxFloor should be from config (?)
+
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
     private int minFloor = 0;
     private int maxFloor = 10;
 
@@ -20,7 +24,6 @@ public class InputValidation {
 
 
     // methods
-
     public boolean isValidFloor(int floor) {
         return floor >= minFloor && floor <= maxFloor;
     }
@@ -47,7 +50,7 @@ public class InputValidation {
                     && isValidFloor(dest);              // for the elevator to travel
         }
         catch (NumberFormatException e) {
-            // todo @Jasper to log error
+        	LOGGER.error("Invalid input");
             return false;
         }
     }
