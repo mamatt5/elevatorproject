@@ -64,8 +64,7 @@ public class ElevatorConsole
     			
     			int srcFloor = requests[i][0];
     			int dstFloor = requests[i][1];
-    			System.out.println(srcFloor);
-    			System.out.println(dstFloor);
+    			
     			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
     		// Assign elevators to the people in the queue

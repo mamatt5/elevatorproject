@@ -11,7 +11,6 @@ public class InputValidation {
     private final int MAX_FLOOR = CONFIGS.getMaxFloor();
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
-
     // methods
     public boolean isValidFloor(int floor) {
         return floor >= MIN_FLOOR && floor <= MAX_FLOOR;
