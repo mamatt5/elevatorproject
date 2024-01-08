@@ -55,26 +55,25 @@ public class ElevatorConsole
 	    		break;
 	    	}
 	    	
-	    	if (inputValidation.isValidRequest(input)) {
-	    		String[] people = input.split(",");
-	    		
-	    		for (String person: people) {
-	    			
-	    			String[] floors = person.split(":");
-	    			int srcFloor = Integer.parseInt(floors[0]);
-	    			int dstFloor = Integer.parseInt(floors[1]);
-	    			
-	    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
-	    		}
-	    		// Assign elevators to the people in the queue
-		        try
-		        {
-		            controller.assignElevator();
-		        } catch (InterruptedException e)
-		        {
-		            e.printStackTrace();
-		        }
-	    	} 
+//	    	(inputValidation.isValidRequest(input)) 
+    		String[] people = input.split(",");
+    		
+    		for (String person: people) {
+    			String[] floors = person.split(":");
+    			int srcFloor = Integer.parseInt(floors[0]);
+    			int dstFloor = Integer.parseInt(floors[1]);
+    			
+    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+    		}
+    		// Assign elevators to the people in the queue
+	        try
+	        {
+	            controller.assignElevator();
+	        } catch (InterruptedException e)
+	        {
+	            e.printStackTrace();
+	        }
+	    	
 	    }
 		
 	    myObj.close();
