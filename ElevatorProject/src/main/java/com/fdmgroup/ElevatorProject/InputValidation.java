@@ -54,14 +54,27 @@ public class InputValidation {
 
     // expected input format is "src:dest,src:dest,src:dest..."
     // splits on comma (,) delimiter for separate src:dest requests
-    public void passInputToController (@NotNull String input) {
-        String[] requests = input.split(",");
+    public int[][] InputTo2DArray (@NotNull String userInput) {
+        String[] input = userInput.split(",");
+        int[][] requests = new int[input.length][2];
 
-        for (String request : requests) {
+        for (int i = 0; i < input.length; i++) {
+            if (isValidRequest(input[i])) {
+                String[] floors = input[i].split(":"); // src:dest
+                requests[i][0] = Integer.parseInt(floors[0]); // src floor
+                requests[i][1] = Integer.parseInt(floors[1]); // dest floor
+            }
 
-            if (isValidRequest(request)) {
-                // todo: add job into queue
+            else {
+                LOGGER.error("Invalid request: " + input[i]);
+                // currently have a full length array - needs to be adjusted?
+                requests[i][0] = -1; // temp invalid value
+                requests[i][1] = -1; // until array length is fixed
             }
         }
+
+        return requests;
     }
+
+
 }
