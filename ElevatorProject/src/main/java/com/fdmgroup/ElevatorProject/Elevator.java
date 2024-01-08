@@ -15,11 +15,11 @@ public class Elevator implements Runnable, Serializable {
 	private final String ELEVATORID;
 
 	private static final Logger LOGGER = LogManager.getLogger(Elevator.class);
-	
+
 	public Elevator() {
 		this.ELEVATORID = "Elevator" +nextID++;
 	}
-	
+
 	// Getters and Setters
 
 	public boolean isGoingUp() {
@@ -50,7 +50,19 @@ public class Elevator implements Runnable, Serializable {
 		return peopleInside;
 	}
 
+	public String getELEVATORID() {
+		return this.ELEVATORID;
+	}
+
 	// Elevator methods
+
+	public void doorsOpenClose() throws InterruptedException {
+		Thread.sleep(1);
+	}
+
+	public void movesFloor() throws InterruptedException {
+		Thread.sleep(1);
+	}
 
 	public void GoToFloor(int floor) throws InterruptedException {
 		int srcFloor = this.currentFloor;
@@ -61,7 +73,7 @@ public class Elevator implements Runnable, Serializable {
 
 			for ( int i = srcFloor ; i < floor ; i++ ) {
 				this.currentFloor++;
-				Thread.sleep(1000);
+				movesFloor();
 			}
 
 		} else if ( currentFloor > floor ) {
@@ -69,37 +81,40 @@ public class Elevator implements Runnable, Serializable {
 
 			for ( int i = srcFloor ; i > floor ; i-- ) {
 				this.currentFloor--;
-				Thread.sleep(1000);
+				movesFloor();
 			}
 		}
 
 	}
 
 	public void LoadPerson(Person person) throws InterruptedException {
-		LOGGER.info("Person entered " + this.ELEVATORID + " on floor " + this.getCurrentFloor());
+		LOGGER.info("Person entered " + this.ELEVATORID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
 		this.peopleInside.add(person);
-		Thread.sleep(1000);
+		doorsOpenClose();
+	}
+
+	// Might have to change peopleInside list to something sorted. otherwise it will go up and down, test for now
+	public void unloadPeople() {
+		while (!peopleInside.isEmpty()) {
+			isIdle = false;
+			Person person = peopleInside.get(0);
+			try {
+				LOGGER.info(this.ELEVATORID + " moving to floor " + person.getDestFloor());
+				this.GoToFloor(person.getDestFloor());
+				LOGGER.info(this.ELEVATORID + " arrived at floor " + this.getCurrentFloor());
+				doorsOpenClose();
+				peopleInside.remove(0);
+				LOGGER.info("Person unloaded from " + this.ELEVATORID + " at floor " + this.getCurrentFloor());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		this.isIdle = true;
 	}
 
 	@Override
 	public void run() {
-	    while (!Thread.interrupted()) {
-	        while (!peopleInside.isEmpty()) {
-	            isIdle = false;
-	            Person person = peopleInside.get(0);
-	            try {
-//	                LOGGER.info(this.ELEVATORID + " moving to floor " + person.getDestFloor());
-	                this.GoToFloor(person.getDestFloor());
-//	                LOGGER.info(this.ELEVATORID + " arrived at floor " + this.getCurrentFloor());
-	                peopleInside.remove(0);
-	                LOGGER.info("Person unloaded from " + this.ELEVATORID + " at floor " + this.getCurrentFloor());
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        isIdle = true;
-	        
-	    }
+		unloadPeople();
 	}
 
 }

@@ -30,3 +30,43 @@
 14:39:21.996 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Invalid-Configuration-File
 14:39:22.025 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Configuration-File-Not-Found
 14:54:01.528 [main] INFO  com.fdmgroup.ElevatorProject.ReadConfiguration - Invalid-Configuration-File
+16:07:25.873 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 0
+16:07:26.879 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 2
+16:07:27.892 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator1 on floor 0
+16:07:28.900 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator2 on floor 0
+16:07:29.910 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator1 on floor 2
+16:07:29.911 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 4
+16:07:29.912 [Thread-1] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator1 at floor 2
+16:07:30.921 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator3 on floor 0
+16:07:31.930 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator3 on floor 2
+16:07:32.940 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator2 on floor 4
+16:07:32.940 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 7
+16:07:33.950 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 7
+16:07:33.950 [Thread-2] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator2 at floor 5
+16:07:34.953 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 6
+16:07:34.953 [Thread-3] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator3 at floor 4
+16:07:34.954 [Thread-3] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator3 at floor 4
+16:07:35.961 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 5
+16:07:35.961 [Thread-2] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator2 at floor 7
+16:07:36.967 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator3 on floor 4
+16:07:37.975 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator4 on floor 0
+16:07:37.975 [Thread-1] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator1 at floor 10
+16:07:38.980 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 2
+16:07:38.980 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator1 on floor 10
+16:07:39.982 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator2 on floor 7
+16:07:39.989 [Thread-4] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator4 at floor 2
+16:07:40.985 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator2 on floor 9
+16:07:41.000 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 4
+16:07:41.994 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator4 on floor 2
+16:07:42.010 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 3
+16:07:43.002 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator1 on floor 6
+16:07:43.018 [Thread-3] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator3 at floor 10
+16:07:44.013 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator1 on floor 4
+16:07:45.023 [Thread-2] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator2 at floor 12
+16:07:45.023 [main] INFO  com.fdmgroup.ElevatorProject.Elevator - Person entered Elevator0 on floor 3
+16:07:48.049 [Thread-4] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator4 at floor 8
+16:07:48.051 [Thread-2] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator2 at floor 15
+16:07:49.053 [Thread-1] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator1 at floor 0
+16:07:50.055 [Thread-1] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator1 at floor 1
+16:07:51.064 [Thread-1] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator1 at floor 2
+16:07:51.064 [Thread-0] INFO  com.fdmgroup.ElevatorProject.Elevator - Person unloaded from Elevator0 at floor 9
