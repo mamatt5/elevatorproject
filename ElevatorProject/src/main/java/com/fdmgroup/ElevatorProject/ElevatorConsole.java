@@ -52,7 +52,7 @@ public class ElevatorConsole
 	    	}
 	    }
 		
-
+	    myObj.close();
 	}
 
 }
