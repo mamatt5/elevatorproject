@@ -50,19 +50,22 @@ public class ElevatorConsole
 	    while(true) {
 	    	
 	    	input = myObj.nextLine();
+	    	input = input.replaceAll(" ", "");
 	    	
 	    	if (input.equals("q")) {
 	    		break;
 	    	}
 	    	
-//	    	(inputValidation.isValidRequest(input)) 
+
     		String[] people = input.split(",");
+    		int[][] requests = inputValidation.InputTo2DArray(input);
     		
-    		for (String person: people) {
-    			String[] floors = person.split(":");
-    			int srcFloor = Integer.parseInt(floors[0]);
-    			int dstFloor = Integer.parseInt(floors[1]);
+    		for (int i = 0; i < people.length; i++) {
     			
+    			int srcFloor = requests[i][0];
+    			int dstFloor = requests[i][1];
+    			System.out.println(srcFloor);
+    			System.out.println(dstFloor);
     			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
     		// Assign elevators to the people in the queue
