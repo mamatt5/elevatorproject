@@ -1,7 +1,9 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class SchedulerTest {
 		Elevator assignedElevator = scheduler.CallElevator(person);
 
 		assertNotNull(assignedElevator);
+		assertTrue(scheduler.getElevators().contains(assignedElevator));
 	}
 	
 	@Test
@@ -48,7 +51,7 @@ public class SchedulerTest {
 		Person person2 = new Person(0,10);
 
 		Elevator assignedElevator1 = scheduler.CallElevator(person1);
-		assertEquals(assignedElevator1.getElevatorID(), "Elevator0"); 
+		assertEquals("Elevator0",assignedElevator1.getElevatorID()); 
 		
 		// Bring Elevator0 to floor 2
 		try
@@ -63,7 +66,39 @@ public class SchedulerTest {
 		// of them in order of ID.
 		Elevator assignedElevator2 = scheduler.CallElevator(person2);
 		
-		assertEquals(assignedElevator2.getElevatorID(), "Elevator1");
+		assertEquals("Elevator1",assignedElevator2.getElevatorID());
+	}
+	
+	@Test
+	void scheduler_assign_elevators_with_more_people_added() {  
+	    Person person1 = new Person(0,3);
+		Person person2 = new Person(10,14);
+		Person person3 = new Person(2,4);
+		
+		
+		Elevator assignedElevator1 = scheduler.CallElevator(person1);
+		assertEquals("Elevator0", assignedElevator1.getElevatorID());
+
+		
+		try {
+			assignedElevator1.GoToFloor(3);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		Elevator assignedElevator2 = scheduler.CallElevator(person2);
+		
+		assertEquals("Elevator1", assignedElevator2.getElevatorID());
+		assertFalse(assignedElevator1.isIdle());
+		assertFalse(assignedElevator2.isIdle());
+		assertFalse(assignedElevator2.getPeopleInside().isEmpty());
+		
+		
+		Elevator assignedElevator3 = scheduler.CallElevator(person3);
+		
+		assertFalse(assignedElevator3.isIdle());
+		assertFalse(assignedElevator3.getPeopleInside().isEmpty());
+		
 	}
 
 }
