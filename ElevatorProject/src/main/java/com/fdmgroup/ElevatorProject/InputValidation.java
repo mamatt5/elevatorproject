@@ -9,11 +9,13 @@ public class InputValidation {
     // fixme temporary min and max values
     // todo @Jefferson minFloor and maxFloor should be from config (?)
 
+
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
     private int minFloor = 0;
     private int maxFloor = 10;
 
     // getters & setters
+
     public int getMinFloor() {
         return minFloor;
     }
