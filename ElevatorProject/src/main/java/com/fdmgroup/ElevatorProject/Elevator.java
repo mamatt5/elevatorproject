@@ -2,6 +2,9 @@ package com.fdmgroup.ElevatorProject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,11 +60,11 @@ public class Elevator implements Runnable, Serializable {
 	// Elevator methods
 
 	public void doorsOpenClose() throws InterruptedException {
-		Thread.sleep(1);
+		Thread.sleep(100);
 	}
 
 	public void movesFloor() throws InterruptedException {
-		Thread.sleep(1);
+		Thread.sleep(100);
 	}
 
 	public void GoToFloor(int floor) throws InterruptedException {
@@ -88,14 +91,27 @@ public class Elevator implements Runnable, Serializable {
 	}
 
 	public void LoadPerson(Person person) throws InterruptedException {
+		GoToFloor(person.getSrcFloor());
 		LOGGER.info("Person entered " + this.ELEVATORID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
 		this.peopleInside.add(person);
 		doorsOpenClose();
+	}
+	
+	// Improve this logic for sorting people. It's weird.
+	public void sortPeopleInside() {
+		if (this.goingUp) {
+			Collections.sort(peopleInside);
+			
+		} else if (!this.goingUp) {
+			Collections.sort(peopleInside, Collections.reverseOrder());
+			
+		}
 	}
 
 	// Might have to change peopleInside list to something sorted. otherwise it will go up and down, test for now
 	public void unloadPeople() {
 		while (!peopleInside.isEmpty()) {
+			sortPeopleInside();
 			isIdle = false;
 			Person person = peopleInside.get(0);
 			try {

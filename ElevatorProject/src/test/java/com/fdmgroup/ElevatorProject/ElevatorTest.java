@@ -122,6 +122,7 @@ public class ElevatorTest {
 	    assertTrue(elevator.isIdle());
 	}
 	
+	// Weird test for now, because it initially loads all Person objects into the elevator, basically the elevator is teleporting. Then unloads.
 	@Test
 	void elevator_loads_multiple_people_then_unloads_everyone() throws InterruptedException {
 		Person person1 = new Person(0,10);
