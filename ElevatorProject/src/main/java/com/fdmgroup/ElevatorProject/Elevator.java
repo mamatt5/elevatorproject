@@ -3,7 +3,6 @@ package com.fdmgroup.ElevatorProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +16,7 @@ import org.apache.logging.log4j.Logger;
  * and requests made to the elevator system.
  */
 
+@SuppressWarnings("serial")
 public class Elevator implements Runnable, Serializable {
 	private ConcurrentSkipListSet<Integer> floorsToGo = new ConcurrentSkipListSet<>();
 	// ConcurrentSkipListSet permits concurrent modifications when loading/unloading people and moving floors,

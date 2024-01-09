@@ -1,5 +1,6 @@
 package com.fdmgroup.ElevatorProject;
 
+@SuppressWarnings("serial")
 public class InvalidInputException extends Exception {
     
     /**

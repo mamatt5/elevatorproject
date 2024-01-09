@@ -2,7 +2,6 @@ package com.fdmgroup.ElevatorProject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -25,7 +24,7 @@ public class InputValidation {
      * @param userInput The input string in the format "src:dest,src:dest,src:dest..."
      * @return A 2D array representing source and destination floors
      */
-    public int[][] InputTo2DArray (@NotNull String userInput) {
+    public int[][] InputTo2DArray (String userInput) {
         userInput = userInput.replaceAll(" ", "");
         String[] requests = userInput.split(",");     // splits on comma (,) delimiter for separate src:dest requests
         int[][] jobs = new int[requests.length][2];
@@ -59,7 +58,7 @@ public class InputValidation {
      * @param input The job request array "src:dest" to validate
      * @return True if the input array has a length of 2; otherwise, false
      */
-    public boolean isValidSrcDestFormat(String @NotNull [] input) {
+    public boolean isValidSrcDestFormat(String [] input) {
         return input.length == 2;                           // expected job format is "src:dest"
     }
     
@@ -68,7 +67,7 @@ public class InputValidation {
      * @param input An array in the expected src:dest format, where the source floor is the first element
      * @return The integer value of the source floor
      */
-    public int getSrcFloor(String @NotNull [] input) {
+    public int getSrcFloor(String [] input) {
         try {
             return Integer.parseInt(input[0]);              // converts source floor from String to int
         }
@@ -83,7 +82,7 @@ public class InputValidation {
      * @param input An array in the expected src:dest format, where the destination floor is the second element
      * @return The integer value of the destination floor
      */
-    public int getDestFloor(String @NotNull [] input) {
+    public int getDestFloor(String [] input) {
         try {
             return Integer.parseInt(input[1]);                     // converts destination floor from String to int
         }
