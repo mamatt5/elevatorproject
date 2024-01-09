@@ -2,33 +2,37 @@ package com.fdmgroup.ElevatorProject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("serial")
 public class Elevator implements Runnable, Serializable {
-	private boolean goingUp = false;
+	private boolean goingUp = true;
 	private boolean isIdle = true;
+	
 	private int currentFloor = 0;
+	private ConcurrentSkipListSet<Integer> floorsToGo = new ConcurrentSkipListSet<>();
+	
 	private ArrayList<Person> peopleInside = new ArrayList<>();
-	private static int nextID = 0;
-	private final String ELEVATORID;
+	private ArrayList<Person> peopleOutsideToLoad = new ArrayList<>();
 
 	private static final Logger LOGGER = LogManager.getLogger(Elevator.class);
+	private static int nextID = 0;
+	private final String ELEVATORID;
 
 	public Elevator() {
 		this.ELEVATORID = "Elevator" +nextID++;
 	}
 
 	// Getters and Setters
-	
+
 	public String getElevatorID() {
 		return ELEVATORID;
 	}
-	
+
 	public boolean isGoingUp() {
 		return goingUp;
 	}
@@ -56,6 +60,14 @@ public class Elevator implements Runnable, Serializable {
 	public ArrayList<Person> getPeopleInside() {
 		return peopleInside;
 	}
+	
+	public ArrayList<Person> getPeopleOutsideToLoad() {
+		return peopleOutsideToLoad;
+	}
+	
+	public ConcurrentSkipListSet<Integer> getFloorsToGo() {
+		return floorsToGo;
+	}
 
 	public String getELEVATORID() {
 		return this.ELEVATORID;
@@ -64,13 +76,13 @@ public class Elevator implements Runnable, Serializable {
 	// Elevator methods
 
 	public void doorsOpenClose() throws InterruptedException {
-		Thread.sleep(100);
+		Thread.sleep(10);
 	}
 
 	public void movesFloor() throws InterruptedException {
-		Thread.sleep(100);
+		Thread.sleep(10);
 	}
-
+	
 	public void GoToFloor(int floor) throws InterruptedException {
 		int srcFloor = this.currentFloor;
 		this.isIdle = false;
@@ -83,6 +95,7 @@ public class Elevator implements Runnable, Serializable {
 				movesFloor();
 			}
 
+
 		} else if ( currentFloor > floor ) {
 			this.goingUp = false;
 
@@ -91,50 +104,104 @@ public class Elevator implements Runnable, Serializable {
 				movesFloor();
 			}
 		}
-
-	}
-
-	public void LoadPerson(Person person) throws InterruptedException {
-		GoToFloor(person.getSrcFloor());
-		LOGGER.info("Person entered " + this.ELEVATORID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
-		this.peopleInside.add(person);
-		doorsOpenClose();
+		
 	}
 	
-	// Improve this logic for sorting people. It's weird.
-	public void sortPeopleInside() {
-		if (this.goingUp) {
-			Collections.sort(peopleInside);
-			
-		} else if (!this.goingUp) {
-			Collections.sort(peopleInside, Collections.reverseOrder());
-			
+	public void updateFloors() {
+		for (Person person : peopleOutsideToLoad ) {
+			floorsToGo.add(person.getSrcFloor());
 		}
+		
+		for (Person person : peopleInside ) {
+			floorsToGo.add(person.getDestFloor());
+		}
+	}
+	
+	// Person handling
+	
+	// Adds Person object to peopleToLoad list
+	public void addPersonToLoad(Person person) {
+		this.peopleOutsideToLoad.add(person);
+		updateFloors();
 	}
 
-	// Might have to change peopleInside list to something sorted. otherwise it will go up and down, test for now
-	public void unloadPeople() {
-		while (!peopleInside.isEmpty()) {
-			sortPeopleInside();
-			isIdle = false;
-			Person person = peopleInside.get(0);
-			try {
-				LOGGER.info(this.ELEVATORID + " moving to floor " + person.getDestFloor());
-				this.GoToFloor(person.getDestFloor());
-				LOGGER.info(this.ELEVATORID + " arrived at floor " + this.getCurrentFloor());
-				doorsOpenClose();
-				peopleInside.remove(0);
-				LOGGER.info("Person unloaded from " + this.ELEVATORID + " at floor " + this.getCurrentFloor());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	public void LoadPeople() throws InterruptedException {
+		ArrayList<Person> peopleToBeLoaded = new ArrayList<Person>();
+		for ( Person person : peopleOutsideToLoad ) {
+			if ( person.getSrcFloor() == this.currentFloor ) {
+				this.peopleInside.add(person);
+				peopleToBeLoaded.add(person);
+				LOGGER.info("Person entered " + this.ELEVATORID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
 			}
 		}
-		this.isIdle = true;
+		
+		peopleOutsideToLoad.removeAll(peopleToBeLoaded);
+		updateFloors();
+		doorsOpenClose();
 	}
+
+	public void unloadPeople() throws InterruptedException {
+		ArrayList<Person> peopleToBeUnloaded = new ArrayList<Person>() ;
+		for (Person person : peopleInside ) {
+			if ( person.getDestFloor() == this.currentFloor ) {
+				peopleToBeUnloaded.add(person);
+				LOGGER.info("Person unloaded from " + this.ELEVATORID + " at floor " + this.getCurrentFloor());
+			}
+		}
+		
+		peopleInside.removeAll(peopleToBeUnloaded);
+		updateFloors();
+		doorsOpenClose();
+		
+	}
+	
+	// This will move the Elevator over the floorsToGo list
+	public void operateElevator() throws InterruptedException {
+	    if (floorsToGo.isEmpty()) {
+	        this.isIdle = true;
+	        return;
+	    }
+
+	    this.isIdle = false;
+	    ArrayList<Integer> floorsVisited = new ArrayList<>();
+	    Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
+
+	    for (Integer floor : floorsIterable) {
+	        GoToFloor(floor);
+	        LoadPeople();
+	        unloadPeople();
+	        floorsVisited.add(floor);
+	        
+	        // Check if the current floor is the highest floor in floorsToGo
+	        if (this.currentFloor == floorsToGo.last()) {
+	            this.goingUp = false;
+	            break; // Exit the loop as the direction has changed
+	        }
+	    }
+
+	    updateFloors();
+	    floorsToGo.removeAll(floorsVisited);
+
+	    // Check if there are more floors to visit and the elevator is not idle
+	    if (!floorsToGo.isEmpty() && !this.isIdle) {
+	        operateElevator(); // Recursively call the method
+	    } else {
+	        this.isIdle = true;
+	    }
+	}
+
+	
 
 	@Override
 	public void run() {
-		unloadPeople();
+		while(!Thread.interrupted()) {
+			try {
+				operateElevator();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
