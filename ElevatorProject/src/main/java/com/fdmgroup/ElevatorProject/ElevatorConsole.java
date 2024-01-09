@@ -45,6 +45,10 @@ public class ElevatorConsole
 	    
 	    String input ="";
 	    
+	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
+	    Thread t = new Thread(GUI);
+	    t.run();
+	    
 	    while(true) {
 	    	
 	    	input = myObj.nextLine();
@@ -71,12 +75,13 @@ public class ElevatorConsole
 	        {
 	            System.out.println("Assigning elevators to queued requests...");
 	            controller.assignElevator();
+	            
 	        } catch (InterruptedException e)
 	        {
 	            e.printStackTrace();
 	        }
 	    }
-		
+	    
 	    myObj.close();
 	}
 
