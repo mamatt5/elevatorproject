@@ -114,7 +114,7 @@ public class Runner
 		scheduler.serializeSystemState("elevatorSystemState.ser");
 
 		// Deserialise to restart/reboot
-		Scheduler rebootScheduler = scheduler.deserializeSchedulerState("elevatorSystemState.ser");
+		//Scheduler rebootScheduler = scheduler.deserializeSchedulerState("elevatorSystemState.ser");
 
 	}
 }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class ReadConfiguration {
 	
 	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
