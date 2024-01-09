@@ -9,8 +9,6 @@ public class Controller {
 	private ArrayList<Person> peopleQueue = new ArrayList<Person>();
 	private Scheduler scheduler;
 	
-	// fixme: method unused - not called anywhere
-//	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 	
 	/**
 	 * @param scheduler The scheduler to be used for managing elevator assignments.
@@ -25,11 +23,6 @@ public class Controller {
 	public ArrayList<Person> getPeopleQueue() {
 		return peopleQueue;
 	}
-	
-	// fixme: method unused - not called anywhere
-//	public ArrayList<Elevator> getElevators() {
-//		return scheduler.getElevators();
-//	}
 	
 	/**
 	 * Adds a Person to the queue of people waiting for an elevator.
