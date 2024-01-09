@@ -18,10 +18,7 @@
 		</File>
 	</Appenders>
 	<Loggers> # Set level <Root level="trace">
-			<AppenderRef ref="StdOut" level="trace" />
 		</Root>
-
-		
 	<Logger
 			name="com.fdmgroup.ElevatorProject.Elevator" level="trace">
 			<AppenderRef ref="TraceFileAppender" level="trace" />
