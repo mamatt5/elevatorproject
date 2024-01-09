@@ -1,7 +1,7 @@
 {
 
 	"maxFloor":15,
-	"minFloor":6,
+	"minFloor":0,
 	"numOfElevators":5
 	
 }
