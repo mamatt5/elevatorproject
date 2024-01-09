@@ -8,6 +8,12 @@ public class Person implements Serializable , Comparable<Person>{
 	private int destFloor;
 	private boolean goingUp;
 	
+	/**
+	 * Constructor for creating a Person object with source and destination floors.
+	 *
+	 * @param srcFloor  The source floor of the person.
+	 * @param destFloor The destination floor of the person.
+	 */
 	public Person(int srcFloor, int destFloor) {
 		super();
 		this.srcFloor = srcFloor;
@@ -19,22 +25,27 @@ public class Person implements Serializable , Comparable<Person>{
 		return srcFloor;
 	}
 
-	public void setSrcFloor(int srcFloor) {
-		this.srcFloor = srcFloor;
-	}
-
 	public int getDestFloor() {
 		return destFloor;
 	}
-
-	public void setDestFloor(int destFloor) {
-		this.destFloor = destFloor;
-	}
-
+	
+	/**
+	 * Checks if the person is going up (true) or down (false).
+	 *
+	 * @return True if the person is going up, false if going down.
+	 */
 	public boolean isGoingUp() {
 		return goingUp;
 	}
-
+	
+	/**
+	 * Compares the destination floors of two Person objects.
+	 *
+	 * @param other The other Person object to compare to.
+	 * @return A negative value if calling person's destination floor is less than the other;
+	 *         Zero if both destination floors are equal;
+	 *         A positive value if calling person's destination floor is greater than the other.
+	 */
 	@Override
 	public int compareTo(Person other) {
 		return Integer.compare(this.destFloor, other.destFloor);

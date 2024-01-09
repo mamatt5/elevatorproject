@@ -1,6 +1,5 @@
 package com.fdmgroup.ElevatorProject;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -33,7 +32,7 @@ public class Runner
 
 		// Start elevator threads
 		System.out.println("Starting elevators...");
-		scheduler.RunElevators();
+		scheduler.runElevators();
 
         // Simulate some elevator requests
         System.out.println("Simulating elevator requests...");
@@ -109,8 +108,8 @@ public class Runner
 		}
 
 
-		// TODO we want to know if all the elevators were utilized for all three people
-		// because theoretically, it should use all elevators.
+		// TODO: we want to know if all the elevators were utilized for all three people
+		//  because theoretically, it should use all elevators.
 
 		scheduler.serializeSystemState("elevatorSystemState.ser");
 

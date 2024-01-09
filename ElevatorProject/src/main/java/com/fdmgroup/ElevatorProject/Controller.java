@@ -3,25 +3,38 @@ package com.fdmgroup.ElevatorProject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+/**
+ * Manages the queue of people and elevators' assignments.
+ */
 public class Controller {
 	private ArrayList<Person> peopleQueue = new ArrayList<Person>();
 	private Scheduler scheduler;
-	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+	
+	// fixme: method unused - not called anywhere
+//	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+	
+	/**
+	 * @param scheduler The scheduler to be used for managing elevator assignments.
+	 */
 	public Controller( Scheduler scheduler ) {
 		this.scheduler = scheduler;
 	}
 	
+	/**
+	 * @return The ArrayList representing the queue of people.
+	 */
 	public ArrayList<Person> getPeopleQueue() {
 		return peopleQueue;
 	}
 	
-	public ArrayList<Elevator> getElevators() {
-		return scheduler.getElevators();
-	}
-
-
+	// fixme: method unused - not called anywhere
+//	public ArrayList<Elevator> getElevators() {
+//		return scheduler.getElevators();
+//	}
+	
+	
+	// fixme: method unused - not called anywhere except in ControllerTest
 	// Might have to move this method to Person object
 	public Person StringToPerson(@NotNull String input) {
 		String[] personString = input.split(":");
@@ -30,22 +43,40 @@ public class Controller {
 		return new Person(srcFloor, destFloor);
 	}
 	
+	/**
+	 * Adds a Person to the queue of people waiting for an elevator.
+	 *
+	 * @param person The Person object to be added to the queue of people waiting for an elevator.
+	 */
 	public void addPersonToQueue(Person person) {
 		this.peopleQueue.add(person);
 	}
 	
-
+	
+	/**
+	 * Assigns elevators to people in the queue, loading them into the elevators.
+	 *
+	 * @throws InterruptedException If interrupted during elevator assignment.
+	 */
 	public void assignElevator() throws InterruptedException {
 		
-		// Since this is modifying the peopleQueue list, use for-loop with indices but do not increment i unless person object is not removed.
+		// Since this is modifying the peopleQueue list, use for-loop with indices
+		// but do not increment i unless person object is not removed.
 		for ( int i = 0 ; i < peopleQueue.size() ; ) {
 			Person person = peopleQueue.get(i);
-			scheduler.CallElevator(person).LoadPerson(person);
-//			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
+			scheduler.callElevator(person).loadPerson(person);
+//			LOGGER.info("Assigning person from floor " + person.getSrcFloor()
+//			+ " to floor " + person.getDestFloor() + " to an elevator.");
 			peopleQueue.remove(i);
 		}
 	}
-
+	
+	/**
+	 * Finds the elevator containing a specific Person.
+	 *
+	 * @param person The Person object to search for in elevators.
+	 * @return The Elevator object containing the specified Person, or null if not found.
+	 */
 	// For testing purposes
 	public Elevator FindElevatorWithPerson(Person person) {
 		for ( Elevator elevator : scheduler.getElevators() ) {
@@ -56,25 +87,4 @@ public class Controller {
 		
 		return null; // if no person exists inside any of the elevators
 	}
-
-
-
-//	todo: This is to convert string input into People object, hold testing for now!
-//	public void handlePeopleWaiting(String input) {
-//		
-//		// sample input: "1:4,12:3,5:13", where "src:dest" notation
-//		
-//		// input will be broken down to a peopleList: {1:4, 12:3, 5:13}
-//		String[] peopleList = input.split(",");
-//		
-//		// for each "src:dest" string in peopleList
-//		for ( int i = 0 ; i <= peopleList.length-1 ; i++ ) {
-//			
-//			// each element in personString is {src, dest}, then converted into Person object
-//			Person person = StringToPerson(peopleList[i]);
-//			peopleQueue.add(person);
-//		}
-//		
-//	}
-	
 }

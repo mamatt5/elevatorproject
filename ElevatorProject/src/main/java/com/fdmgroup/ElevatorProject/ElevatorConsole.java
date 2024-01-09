@@ -14,14 +14,16 @@ public class ElevatorConsole
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
-			System.out.println("Error occured when reading configuration file. Please double check the "
-					+ "configuration file and relauch the program");
+			System.out.println("Error occurred when reading configuration file. Please double check the "
+					+ "configuration file and relaunch the program");
 			return;
 		}
 		
 		int numElevators = configs.getNumOfElevators();
-		int maxFloor = configs.getMaxFloor();
-		int minFloor = configs.getMinFloor();
+		
+		// fixme: unused variables
+//		int maxFloor = configs.getMaxFloor();
+//		int minFloor = configs.getMinFloor();
 		
 		// TODO: use config to create number of elevators
 		System.out.println("Creating elevators...");
@@ -34,12 +36,11 @@ public class ElevatorConsole
 		}
 	
         Scheduler scheduler = new Scheduler(elevators);
-		
 		Controller controller = new Controller(scheduler);
 		
 		// Start elevator threads
 		System.out.println("Starting elevators...");
-		scheduler.RunElevators();
+		scheduler.runElevators();
 		
 		Scanner myObj = new Scanner(System.in);
 		InputValidation inputValidation = new InputValidation();
@@ -55,7 +56,7 @@ public class ElevatorConsole
 	    		break;
 	    	}
 	    	
-//	    	(inputValidation.isValidRequest(input)) 
+//	    	(inputValidation.isValidRequest(InputTo2DArray))
     		String[] people = input.split(",");
     		
     		for (String person: people) {
@@ -66,11 +67,10 @@ public class ElevatorConsole
     			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
     		// Assign elevators to the people in the queue
-	        try
-	        {
+	        try {
 	            controller.assignElevator();
-	        } catch (InterruptedException e)
-	        {
+	        }
+			catch (InterruptedException e) {
 	            e.printStackTrace();
 	        }
 	    	

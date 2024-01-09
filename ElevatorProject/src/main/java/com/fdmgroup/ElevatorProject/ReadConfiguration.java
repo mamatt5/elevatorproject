@@ -27,15 +27,14 @@ public class ReadConfiguration {
 		File newFile = new File(fileName);
 		
 		if (!newFile.exists()) {
-			
 			LOGGER.info("Configuration-File-Not-Found");
 			return null;	
-		} else {
+		}
+		else {
 			file = newFile;
 		}
 		
 		try {
-			
 			config = objectMapper.readValue(file, Configurations.class);
 			
 			if (config.getMaxFloor() < 0 || config.getMinFloor() < 0 || config.getNumOfElevators() < 0 ||
@@ -44,14 +43,11 @@ public class ReadConfiguration {
 				LOGGER.info("Invalid-Configuration-File-Field");
 				return null;
 			}
-			
-		} catch (IOException e) {
-		
+		}
+		catch (IOException e) {
 			LOGGER.info("Invalid-Configuration-File");
 			return null;
-		} 
-		
-		
+		}
 		
 		return config;
 	}
