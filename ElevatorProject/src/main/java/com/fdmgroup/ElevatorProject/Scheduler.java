@@ -8,6 +8,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This object chooses to which Elevator from an array of instantiated Elevator objects is best for the Person object to be
+ * loaded into. Note that it only chooses which Elevator but does not directly load the Person into the Elevator. This object
+ * can be instantiated by default with an empty ArrayList of Elevators.
+ */
+
 @SuppressWarnings("serial")
 public class Scheduler implements Serializable
 {
@@ -23,12 +29,26 @@ public class Scheduler implements Serializable
 		return elevators;
 	}
 
+	// Adds an instantiated Elevator into its list.
 	public void AddElevator(Elevator elevator)
 	{
 		this.elevators.add(elevator);
 	}
 
-	public Elevator CallElevator(Person person) {
+	/**
+	 * This method allocates an Elevator object to be assigned to a Person object. It is called by the Controller object.
+	 * 
+	 * It works by first checking if there are any idle Elevators available, then if all Elevators are active, it will choose
+	 * the nearest Elevator going in the same direction as the Person. If nothing else, it will choose the nearest Elevator.
+	 * It will return an Elevator object. To avoid errors due to synchronization, it will recursively call itself if it returns
+	 * a null.
+	 * 
+	 * TRY IMPROVE THIS LOGIC BEFORE SUBMITTING OTHERWISE IT WILL THROW STACKOVERFLOW ERROR. TRY TO AVOID CALLING THIS RECURSIVELY
+	 * BY MODIFYING LOGIC WHEN NO ELEVATOR IS IDLE, AND NONE IS GOING IN THE SAME DIRECTION AS THE PERSON.
+	 * @param person
+	 * @return Elevator
+	 */
+	public synchronized Elevator CallElevator(Person person) {
 	    Elevator bestElevator = null;
 	    Elevator closestIdleElevator = null;
 	    int minIdleDistance = Integer.MAX_VALUE;
@@ -49,11 +69,16 @@ public class Scheduler implements Serializable
 	            minDistance = distance;
 	        }
 	    }
+	    
+	    if (bestElevator == null && closestIdleElevator == null ) {
+	    	CallElevator(person);
+	    }
 
 	    return bestElevator != null ? bestElevator : closestIdleElevator;
 	}
 
 
+	// Starts the elevator objects as Threads.
 	public void RunElevators()
 	{
 		for (Elevator elevator : elevators)

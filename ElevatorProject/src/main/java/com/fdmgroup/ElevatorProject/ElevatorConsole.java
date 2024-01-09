@@ -23,13 +23,13 @@ public class ElevatorConsole
 		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
 		
-		// TODO: use config to create number of elevators
 		System.out.println("Creating elevators...");
 		
 		Elevator elevator;
 		ArrayList<Elevator> elevators = new ArrayList<>();
 		for (int i = 0; i < numElevators; i++) {
 			elevator = new Elevator();
+			elevator.setCurrentFloor(minFloor);
 			elevators.add(elevator);
 		}
 	
@@ -47,35 +47,43 @@ public class ElevatorConsole
 	    
 	    String input ="";
 	    
+	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
+	    
+	    //Thread t = new Thread(GUI);
+	    //t.run();
+	    GUI.run();
+	    
 	    while(true) {
 	    	
 	    	input = myObj.nextLine();
+	    	input = input.replaceAll(" ", "");
 	    	
 	    	if (input.equals("q")) {
 	    		break;
 	    	}
 	    	
-//	    	(inputValidation.isValidRequest(input)) 
     		String[] people = input.split(",");
+    		int[][] requests = inputValidation.InputTo2DArray(input);
     		
-    		for (String person: people) {
-    			String[] floors = person.split(":");
-    			int srcFloor = Integer.parseInt(floors[0]);
-    			int dstFloor = Integer.parseInt(floors[1]);
+    		for (int i = 0; i < people.length; i++) {
     			
-    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+    			int srcFloor = requests[i][0];
+    			int dstFloor = requests[i][1];
+    			if (srcFloor != -1 && dstFloor != -1)
+    				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
     		// Assign elevators to the people in the queue
 	        try
 	        {
 	            controller.assignElevator();
+	            
 	        } catch (InterruptedException e)
 	        {
 	            e.printStackTrace();
 	        }
-	    	
 	    }
-		
+	    
+	    GUI.close();
 	    myObj.close();
 	}
 
