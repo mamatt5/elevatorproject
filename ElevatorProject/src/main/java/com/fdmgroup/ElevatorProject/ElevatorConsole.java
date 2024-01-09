@@ -23,7 +23,6 @@ public class ElevatorConsole
 		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
 		
-		// TODO: use config to create number of elevators
 		System.out.println("Creating elevators...");
 		
 		Elevator elevator;
