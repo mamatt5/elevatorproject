@@ -82,9 +82,9 @@ public class FrameView implements Runnable
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(1080, 1050); 		// set size of the graphics
 		jframe.setTitle("Simulation for " + (maxFloor) + " Floors and " + numLift + " Elevators");
-
+		
 		TIMER = new Timer(250, null); 		// call every 10 milliseconds
-
+		
 	}
 
 	/**
@@ -93,13 +93,14 @@ public class FrameView implements Runnable
 	@Override
 	public void run()
 	{
+		
 		startGraphics();
 
 	}
 
 	private void startGraphics()
 	{
-
+		
 		jframe.add(new JComponent()
 		{
 			/**
@@ -117,12 +118,13 @@ public class FrameView implements Runnable
 				});
 				TIMER.start();
 			}
-
+			
 			/**
 			 * paintComponent is called each time the JComponent is repainted
 			 */
 			public void paintComponent(Graphics graphics)
 			{
+				
 				int numFloors = maxFloor - minFloor; // - minFloor;
 				
 				int adjustment = -minFloor;
@@ -150,7 +152,7 @@ public class FrameView implements Runnable
 				for (int i = 0; i < numLift; i++) // Draw elevators
 				{
 					//String liftLabelText = elevators.get(i).getCommand();
-
+					
 					liftPoint.x = leftOffset + spacer + i * (spacer + liftDimension.width);
 					liftPoint.y = (getHeight() - liftDimension.height - gHeight)- ((elevators.get(i).getCurrentFloor() - minFloor) * (levelHeight));
 					//liftPoint.y = (getHeight() - liftDimension.height - gHeight)- ((elevators.get(i).getCurrentFloor()) * (levelHeight));
@@ -177,6 +179,7 @@ public class FrameView implements Runnable
 					graphics.fillRect(liftPoint.x, liftPoint.y, liftDimension.width, liftDimension.height);
 
 					graphics.setColor(Color.BLACK); // Draw frame for elevator
+					
 					graphics.drawRect(liftPoint.x, liftPoint.y, liftDimension.width, liftDimension.height);
 
 					// Optional to display the elevator number when mouse held over it

@@ -49,8 +49,10 @@ public class ElevatorConsole
 	    String input ="";
 	    
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
-	    Thread t = new Thread(GUI);
-	    t.run();
+	    
+	    //Thread t = new Thread(GUI);
+	    //t.run();
+	    GUI.run();
 	    
 	    while(true) {
 	    	
@@ -82,6 +84,7 @@ public class ElevatorConsole
 	        }
 	    }
 	    
+	    GUI.close();
 	    myObj.close();
 	}
 
