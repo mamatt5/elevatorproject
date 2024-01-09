@@ -46,7 +46,7 @@ public class Controller {
 	 *
 	 * @throws InterruptedException If interrupted during elevator assignment.
 	 */
-	public void assignElevator() throws InterruptedException {
+	public synchronized void assignElevator() throws InterruptedException {
 		while (!peopleQueue.isEmpty()) {
 			Person person = peopleQueue.get(0);
 			scheduler.callElevator(person).addPersonToLoad(person);

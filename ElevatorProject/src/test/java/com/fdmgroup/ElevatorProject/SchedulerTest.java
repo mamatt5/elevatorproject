@@ -37,7 +37,7 @@ public class SchedulerTest {
 	}
 	
 	@Test
-	void scheduler_can_assign_elevator_to_a_person() {
+	void scheduler_can_assign_elevator_to_a_person() throws InterruptedException {
 		Person person = new Person(0,10);
 		Elevator assignedElevator = scheduler.callElevator(person);
 
@@ -47,7 +47,7 @@ public class SchedulerTest {
 	
 	@Test
 	// This test passes if run by itself
-	void  scheduler_can_assign_different_elevators() {
+	void  scheduler_can_assign_different_elevators() throws InterruptedException {
 		Person person1 = new Person(0,10);
 		Person person2 = new Person(0,10);
 
@@ -72,7 +72,7 @@ public class SchedulerTest {
 	
 	@Test
 	// This test passes if run by itself
-	void scheduler_assign_elevators_with_more_people_added() {  
+	void scheduler_assign_elevators_with_more_people_added() throws InterruptedException {  
 	    Person person1 = new Person(0,3);
 		Person person2 = new Person(10,14);
 		Person person3 = new Person(2,4);
