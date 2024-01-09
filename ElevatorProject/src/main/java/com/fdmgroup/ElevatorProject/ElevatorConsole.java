@@ -30,6 +30,7 @@ public class ElevatorConsole
 		ArrayList<Elevator> elevators = new ArrayList<>();
 		for (int i = 0; i < numElevators; i++) {
 			elevator = new Elevator();
+			elevator.setCurrentFloor(minFloor);
 			elevators.add(elevator);
 		}
 	
@@ -46,6 +47,12 @@ public class ElevatorConsole
 	    System.out.println("Enter your commands: ");
 	    
 	    String input ="";
+	    
+	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
+	    
+	    //Thread t = new Thread(GUI);
+	    //t.run();
+	    GUI.run();
 	    
 	    while(true) {
 	    	
@@ -70,12 +77,14 @@ public class ElevatorConsole
 	        try
 	        {
 	            controller.assignElevator();
+	            
 	        } catch (InterruptedException e)
 	        {
 	            e.printStackTrace();
 	        }
 	    }
-		
+	    
+	    GUI.close();
 	    myObj.close();
 	}
 

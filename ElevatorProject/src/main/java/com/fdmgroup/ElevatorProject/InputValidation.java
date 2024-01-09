@@ -5,8 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class InputValidation {
+
 	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
     Configurations CONFIGS = ReadConfiguration.getConfiguration(configFilePath);
+
     private final int MIN_FLOOR = CONFIGS.getMinFloor();
     private final int MAX_FLOOR = CONFIGS.getMaxFloor();
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
