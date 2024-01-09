@@ -3,6 +3,7 @@ package com.fdmgroup.ElevatorProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ public class Elevator implements Runnable, Serializable {
 	private boolean isIdle = true;
 	
 	private int currentFloor = 0;
-	private TreeSet<Integer> floorsToGo = new TreeSet<>();
+	private ConcurrentSkipListSet<Integer> floorsToGo = new ConcurrentSkipListSet<>();
 	
 	private ArrayList<Person> peopleInside = new ArrayList<>();
 	private ArrayList<Person> peopleOutsideToLoad = new ArrayList<>();
@@ -64,7 +65,7 @@ public class Elevator implements Runnable, Serializable {
 		return peopleOutsideToLoad;
 	}
 	
-	public TreeSet<Integer> getFloorsToGo() {
+	public ConcurrentSkipListSet<Integer> getFloorsToGo() {
 		return floorsToGo;
 	}
 
@@ -156,33 +157,50 @@ public class Elevator implements Runnable, Serializable {
 	
 	// This will move the Elevator over the floorsToGo list
 	public void operateElevator() throws InterruptedException {
-		
-		if ( floorsToGo.isEmpty() ) {
-			this.isIdle = true;
-			return;
-		}
-		
-		this.isIdle = false;
-		ArrayList<Integer> floorsVisited = new ArrayList<>();
-		Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
-		for (Integer floor : floorsIterable) {
-			GoToFloor(floor);
-			LoadPeople();
-			unloadPeople();
-			floorsVisited.add(floor);
-		}
-		
-		updateFloors();
-		floorsToGo.removeAll(floorsVisited);
-		if ( floorsToGo.isEmpty() ) {
-			this.isIdle = true;
-		}
+	    if (floorsToGo.isEmpty()) {
+	        this.isIdle = true;
+	        return;
+	    }
+
+	    this.isIdle = false;
+	    ArrayList<Integer> floorsVisited = new ArrayList<>();
+	    Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
+
+	    for (Integer floor : floorsIterable) {
+	        GoToFloor(floor);
+	        LoadPeople();
+	        unloadPeople();
+	        floorsVisited.add(floor);
+	        
+	        // Check if the current floor is the highest floor in floorsToGo
+	        if (this.currentFloor == floorsToGo.last()) {
+	            this.goingUp = false;
+	            break; // Exit the loop as the direction has changed
+	        }
+	    }
+
+	    updateFloors();
+	    floorsToGo.removeAll(floorsVisited);
+
+	    // Check if there are more floors to visit and the elevator is not idle
+	    if (!floorsToGo.isEmpty() && !this.isIdle) {
+	        operateElevator(); // Recursively call the method
+	    } else {
+	        this.isIdle = true;
+	    }
 	}
+
 	
 
 	@Override
 	public void run() {
 		while(!Thread.interrupted()) {
+			try {
+				operateElevator();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -156,9 +156,26 @@ public class ElevatorTest {
 		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
 		System.out.println(elevator.getPeopleInside().size() + " people inside elevator.");
 		elevator.operateElevator();
+		System.out.println(elevator.getFloorsToGo().size()+ " floors to visit.");
+		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
+		System.out.println(elevator.getPeopleInside().size() + " people inside elevator.");
 
 		
 	    assertTrue(elevator.getPeopleInside().isEmpty());
+	}
+	
+	
+	@Test
+	void OPERATE_elevator_loads_a_person_then_unloads_then_check_if_idle() throws InterruptedException {
+		Person person = new Person(0,10);
+		elevator.addPersonToLoad(person);
+		elevator.operateElevator();
+		
+	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
+	    assertTrue(elevator.getFloorsToGo().isEmpty());
+	    assertEquals(10, elevator.getCurrentFloor());
+	    assertTrue(elevator.isIdle());
 	}
 
 }
