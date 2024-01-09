@@ -125,6 +125,11 @@ public class SchedulerTest {
 		Elevator elevator6 = new Elevator();
 		Elevator elevator7 = new Elevator();
 		
+		scheduler.AddElevator(elevator4);
+		scheduler.AddElevator(elevator5);
+		scheduler.AddElevator(elevator6);
+		scheduler.AddElevator(elevator7);
+		
 		Person person1 = new Person(0,3);
 		Person person2 = new Person(10,14);
 		Person person3 = new Person(2,4);
