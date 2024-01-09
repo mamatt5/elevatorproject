@@ -69,10 +69,6 @@ public class Elevator implements Runnable, Serializable {
 		return floorsToGo;
 	}
 
-	public String getELEVATORID() {
-		return this.ELEVATORID;
-	}
-
 	// Elevator methods
 
 	public void doorsOpenClose() throws InterruptedException {
