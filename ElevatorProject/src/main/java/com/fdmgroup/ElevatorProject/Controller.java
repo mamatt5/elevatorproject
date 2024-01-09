@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /**
  * Manages the queue of people and passes requests to Elevators, handling Elevator assignments.
  */
-
 public class Controller {
 	private ArrayList<Person> peopleQueue = new ArrayList<Person>();
 	private Scheduler scheduler;
@@ -16,7 +15,6 @@ public class Controller {
 	/**
 	 * @param scheduler The scheduler to be used for managing elevator assignments.
 	 */
-	
 	public Controller( Scheduler scheduler ) {
 		this.scheduler = scheduler;
 	}
@@ -42,7 +40,6 @@ public class Controller {
 		this.peopleQueue.add(person);
 	}
 
-	
 	/**
 	 * Assigns elevators to people in the queue, loading them into the elevators.
 	 * Note that it will keep running until the peopleQueue list is empty.
@@ -52,7 +49,7 @@ public class Controller {
 	public void assignElevator() throws InterruptedException {
 		while (!peopleQueue.isEmpty()) {
 			Person person = peopleQueue.get(0);
-			scheduler.CallElevator(person).addPersonToLoad(person);
+			scheduler.callElevator(person).addPersonToLoad(person);
 //			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
 			peopleQueue.remove(0);
 		}
@@ -65,6 +62,8 @@ public class Controller {
 	 * @param person The Person object to search for in elevators.
 	 * @return The Elevator object containing the specified Person, or null if not found.
 	 */
+
+	// For testing purposes
 	public Elevator FindElevatorWithPerson(Person person) {
 		for ( Elevator elevator : scheduler.getElevators() ) {
 			if ( elevator.getPeopleInsideToUnload().contains(person) ) {
@@ -74,5 +73,4 @@ public class Controller {
 		
 		return null; // if no person exists inside any of the elevators
 	}
-	
 }

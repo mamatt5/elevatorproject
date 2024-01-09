@@ -28,8 +28,17 @@ public class ElevatorTest {
 	@Test
 	void elevator_load_one_person() throws InterruptedException {
 		Person person = new Person(0,1);
+<<<<<<< HEAD
 		elevator.addPersonToLoad(person);
 		elevator.loadPeople();
+=======
+		try {
+			elevator.loadPerson(person);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> 2604b9ba4b2a86f1dd9a2d63ae2cbf20fb77cdb2
 		
 		assertEquals(person, elevator.getPeopleInsideToUnload().get(0));
 	}
@@ -80,6 +89,7 @@ public class ElevatorTest {
 	@Test
 	void add_person_to_load_into_elevator() {
 		Person person = new Person(0,10);
+<<<<<<< HEAD
 		elevator.addPersonToLoad(person);
 		
 		assertEquals(1, elevator.getPeopleOutsideToLoad().size());
@@ -111,6 +121,21 @@ public class ElevatorTest {
 		elevator.goToFloor(person.getSrcFloor());
 		elevator.loadPeople();
 		elevator.operateElevator();
+=======
+		try {
+			elevator.loadPerson(person);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			elevator.goToFloor(elevator.getPeopleInside().get(0).getDestFloor());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> 2604b9ba4b2a86f1dd9a2d63ae2cbf20fb77cdb2
 		
 		assertEquals(10,elevator.getCurrentFloor());
 	}
@@ -118,10 +143,15 @@ public class ElevatorTest {
 	@Test
 	void elevator_loads_a_person_then_unloads() throws InterruptedException {
 		Person person = new Person(0,10);
+<<<<<<< HEAD
 		elevator.addPersonToLoad(person);
 		elevator.goToFloor(person.getSrcFloor());
 		elevator.loadPeople();
 		elevator.operateElevator();
+=======
+		elevator.loadPerson(person);
+		elevator.unloadPeople();
+>>>>>>> 2604b9ba4b2a86f1dd9a2d63ae2cbf20fb77cdb2
 		
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertEquals(10, elevator.getCurrentFloor());
@@ -130,10 +160,15 @@ public class ElevatorTest {
 	@Test
 	void elevator_loads_a_person_then_unloads_then_check_if_idle() throws InterruptedException {
 		Person person = new Person(0,10);
+<<<<<<< HEAD
 		elevator.addPersonToLoad(person);
 		elevator.goToFloor(person.getSrcFloor());
 		elevator.loadPeople();
 		elevator.operateElevator();
+=======
+		elevator.loadPerson(person);
+		elevator.unloadPeople();
+>>>>>>> 2604b9ba4b2a86f1dd9a2d63ae2cbf20fb77cdb2
 		
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
@@ -148,6 +183,7 @@ public class ElevatorTest {
 		Person person2 = new Person(2,5);
 		Person person3 = new Person(6,11);
 		Person person4 = new Person(14,0);
+<<<<<<< HEAD
 		elevator.addPersonToLoad(person1);
 		elevator.addPersonToLoad(person2);
 		elevator.addPersonToLoad(person3);
@@ -160,6 +196,13 @@ public class ElevatorTest {
 		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
 		System.out.println(elevator.getPeopleInsideToUnload().size() + " people inside elevator.");
 
+=======
+		elevator.loadPerson(person1);
+		elevator.loadPerson(person2);
+		elevator.loadPerson(person3);
+		elevator.loadPerson(person4);
+		elevator.unloadPeople();
+>>>>>>> 2604b9ba4b2a86f1dd9a2d63ae2cbf20fb77cdb2
 		
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.isIdle());

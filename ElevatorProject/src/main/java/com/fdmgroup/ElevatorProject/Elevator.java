@@ -3,9 +3,11 @@ package com.fdmgroup.ElevatorProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 /**
  * Represents the main object controlling the behavior of an elevator in the system.
@@ -47,10 +49,12 @@ public class Elevator implements Runnable, Serializable {
 		return goingUp;
 	}
 	
+
 	public boolean isIdle() {
 		return isIdle;
 	}
 	
+
 	// ------------ Getters and Setters ------------ //
 
 	public String getElevatorID() {

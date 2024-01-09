@@ -47,8 +47,9 @@ public class ReadConfiguration {
 		catch (IOException e) {
 			LOGGER.info("Invalid-Configuration-File");
 			return null;
-		} 
 
+		}
+		
 		return config;
 	}
 

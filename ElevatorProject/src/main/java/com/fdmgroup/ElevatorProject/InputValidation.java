@@ -101,7 +101,6 @@ public class InputValidation {
      * @param input The input string representing the trip request in "src:dest" format
      * @return True if the request is valid; otherwise, false
      */
-    // valid requests are: correct format, readable floor values within the building, different floors
     public boolean isValidRequest(String input) {
         input = input.replaceAll(" ", "");
         
@@ -143,7 +142,7 @@ public class InputValidation {
             }
         }
             
-            return resizedJobs;
+        return resizedJobs;
     }
     
     // ------------ validation methods (public) ------------ //

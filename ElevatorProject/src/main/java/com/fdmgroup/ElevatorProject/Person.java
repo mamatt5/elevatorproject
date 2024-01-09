@@ -39,7 +39,6 @@ public class Person implements Serializable{
 		return destFloor;
 	}
 	
-	
 	// fixme: methods unused - not called anywhere
 //	public void setSrcFloor(int srcFloor) {
 //		this.srcFloor = srcFloor;
@@ -55,5 +54,4 @@ public class Person implements Serializable{
 	public boolean isGoingUp() {
 		return goingUp;
 	}
-
 }

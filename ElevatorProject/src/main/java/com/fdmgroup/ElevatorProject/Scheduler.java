@@ -26,20 +26,21 @@ public class Scheduler implements Serializable
 	public ArrayList<Elevator> getElevators() {
 		return elevators;
 	}
-
+	
 	// Adds an instantiated Elevator into its list.
-	public void AddElevator(Elevator elevator) {
+	public void addElevator(Elevator elevator) {
 		this.elevators.add(elevator);
 	}
-
-
+	
 	/**
 	 * Determines the best elevator to respond to a person's request based on current elevators' states.
 	 *
 	 * @param person The person requesting an elevator.
 	 * @return The most appropriate Elevator object to respond to the request.
 	 */
-	public synchronized Elevator CallElevator(Person person) {
+
+	
+	public synchronized Elevator callElevator(Person person) {
 		//	It works by first checking if there are any idle Elevators available, then if all Elevators are active,
 		//	it will choose the nearest Elevator going in the same direction as the Person. If nothing else, it will
 		//	choose the nearest Elevator. It will return an Elevator object. To avoid errors due to synchronization,
@@ -66,17 +67,18 @@ public class Scheduler implements Serializable
 	    }
 	    
 	    if (bestElevator == null && closestIdleElevator == null ) {
-	    	CallElevator(person);
+	    	callElevator(person);
 	    }
 
 	    return bestElevator != null ? bestElevator : closestIdleElevator;
 	}
 	
+
 	
 	/**
 	 * Starts threads for each elevator for independent function.
 	 */
-	public void RunElevators() {
+	public void runElevators() {
 		for (Elevator elevator : elevators) {
 			new Thread(elevator).start();
 		}
@@ -111,5 +113,4 @@ public class Scheduler implements Serializable
 			return null;
 		}
 	}
-
 }

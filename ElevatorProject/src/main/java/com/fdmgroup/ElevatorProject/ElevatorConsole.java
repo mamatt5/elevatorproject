@@ -17,12 +17,13 @@ public class ElevatorConsole {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
-			System.out.println("Error occured when reading configuration file. Please double check the "
-					+ "configuration file and relauch the program");
+			System.out.println("Error occurred when reading configuration file. Please double check the "
+					+ "configuration file and relaunch the program");
 			return;
 		}
 		
 		int numElevators = configs.getNumOfElevators();
+		
 		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
 		
@@ -41,7 +42,7 @@ public class ElevatorConsole {
 		
 		// Start elevator threads
 		System.out.println("Starting elevators...");
-		scheduler.RunElevators();
+		scheduler.runElevators();
 		
 		Scanner myObj = new Scanner(System.in);
 		InputValidation inputValidation = new InputValidation();
@@ -62,7 +63,7 @@ public class ElevatorConsole {
 	    	if (input.equals("q")) {
 	    		break;
 	    	}
-	    	
+			
     		String[] people = input.split(",");
     		int[][] requests = inputValidation.InputTo2DArray(input);
     		
