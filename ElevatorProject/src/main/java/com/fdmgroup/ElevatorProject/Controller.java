@@ -47,7 +47,7 @@ public class Controller {
 	 * 
 	 * @throws InterruptedException
 	 */
-	public void assignElevator() throws InterruptedException {
+	public synchronized void assignElevator() throws InterruptedException {
 		while (!peopleQueue.isEmpty()) {
 			Person person = peopleQueue.get(0);
 			scheduler.CallElevator(person).addPersonToLoad(person);

@@ -39,42 +39,45 @@ public class Scheduler implements Serializable
 	 * This method allocates an Elevator object to be assigned to a Person object. It is called by the Controller object.
 	 * 
 	 * It works by first checking if there are any idle Elevators available, then if all Elevators are active, it will choose
-	 * the nearest Elevator going in the same direction as the Person. If nothing else, it will choose the nearest Elevator.
-	 * It will return an Elevator object. To avoid errors due to synchronization, it will recursively call itself if it returns
-	 * a null.
+	 * the nearest Elevator going in the same direction as the Person. If nothing else, it will choose the nearest Elevator. 
+	 * On both occasions, if the floorsToGo set of the elevator is greater than 10, it will not choose the Elevator as other 
+	 * Elevators will be underutilized. In this case, if there are no other Elevators available with these conditions, it will
+	 * wait for 1 second, then check again with the conditions until an Elevator is chosen.
 	 * 
-	 * TRY IMPROVE THIS LOGIC BEFORE SUBMITTING OTHERWISE IT WILL THROW STACKOVERFLOW ERROR. TRY TO AVOID CALLING THIS RECURSIVELY
-	 * BY MODIFYING LOGIC WHEN NO ELEVATOR IS IDLE, AND NONE IS GOING IN THE SAME DIRECTION AS THE PERSON.
 	 * @param person
 	 * @return Elevator
+	 * @throws InterruptedException 
 	 */
-	public synchronized Elevator CallElevator(Person person) {
-	    Elevator bestElevator = null;
-	    Elevator closestIdleElevator = null;
-	    int minIdleDistance = Integer.MAX_VALUE;
-	    int minDistance = Integer.MAX_VALUE;
+	public synchronized Elevator CallElevator(Person person) throws InterruptedException {
+		Elevator bestElevator = null;
+		Elevator closestIdleElevator = null;
+		int minIdleDistance = Integer.MAX_VALUE;
+		int minDistance = Integer.MAX_VALUE;
 
-	    for (Elevator elevator : elevators) {
-	        int distance = Math.abs(elevator.getCurrentFloor() - person.getSrcFloor());
+		while (bestElevator == null && closestIdleElevator == null) {
+			for (Elevator elevator : elevators) {
+				int distance = Math.abs(elevator.getCurrentFloor() - person.getSrcFloor());
 
-	        // Gets nearest idle Elevator first, meaning Elevator does not have people inside
-	        if (elevator.isIdle() && distance < minIdleDistance) {
-	            closestIdleElevator = elevator;
-	            minIdleDistance = distance;
-	        }
+				// Gets nearest idle Elevator first, meaning Elevator does not have people inside
+				if (elevator.isIdle() && distance < minIdleDistance 
+						&& elevator.getFloorsToGo().size() <= 5) {
+					closestIdleElevator = elevator;
+					minIdleDistance = distance;
+				}
 
-	        // If no idle Elevator, gets minimum distance between Elevator and person, then checks if same direction
-	        if (distance < minDistance && (elevator.isIdle() || (person.isGoingUp() == elevator.isGoingUp()) ) ) {
-	            bestElevator = elevator;
-	            minDistance = distance;
-	        }
-	    }
-	    
-	    if (bestElevator == null && closestIdleElevator == null ) {
-	    	CallElevator(person);
-	    }
+				// If no idle Elevator, gets minimum distance between Elevator and person, then checks if same direction
+				if (distance < minDistance && (elevator.isIdle() || (person.isGoingUp() == elevator.isGoingUp()))
+						&& elevator.getFloorsToGo().size() <= 5) {
+					bestElevator = elevator;
+					minDistance = distance;
+				}
+			}
 
-	    return bestElevator != null ? bestElevator : closestIdleElevator;
+			if (bestElevator == null && closestIdleElevator == null ) {
+				wait(1000);
+			}
+		}
+		return bestElevator != null ? bestElevator : closestIdleElevator;
 	}
 
 
