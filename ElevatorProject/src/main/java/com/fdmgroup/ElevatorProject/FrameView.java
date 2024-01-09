@@ -81,7 +81,7 @@ public class FrameView implements Runnable
 		jframe = new JFrame();
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(1080, 1050); 		// set size of the graphics
-		jframe.setTitle("Simulation for " + (maxFloor - 1) + " Floors and " + numLift + " Elevators");
+		jframe.setTitle("Simulation for " + (maxFloor) + " Floors and " + numLift + " Elevators");
 
 		TIMER = new Timer(250, null); 		// call every 10 milliseconds
 
@@ -123,15 +123,16 @@ public class FrameView implements Runnable
 			 */
 			public void paintComponent(Graphics graphics)
 			{
-				int numFloors = maxFloor; // - minFloor;
-				int levelHeight = (getHeight() - gHeight) / (maxFloor);
+				int numFloors = maxFloor - minFloor; // - minFloor;
+				
 				int adjustment = -minFloor;
 
 				setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
 				fm = graphics.getFontMetrics(this.getFont());
 				
 				liftWidth = 40;
-				levelHeight = (getHeight() - gHeight - leftOffset)/ (maxFloor);
+				int levelHeight = (getHeight() - gHeight - leftOffset)/ (numFloors + 1);
+				
 
 				drawBackgroundGrid(graphics, getHeight(), getWidth());
 
@@ -208,8 +209,8 @@ public class FrameView implements Runnable
 	private void drawBackgroundGrid(Graphics graphics, int height, int width)
 	{
 		int i = 0;
-		int numFloors = maxFloor - 1; // - minFloor;
-		int levelHeight = ( height - gHeight - leftOffset) / (maxFloor);
+		int numFloors = maxFloor - minFloor;
+		int levelHeight = (height - gHeight - leftOffset) / (numFloors + 1);
 		int adjust = 0; 
 		StringBuilder levelLabelText = new StringBuilder();
 		Color sky = new Color(135, 206, 235);
@@ -232,7 +233,6 @@ public class FrameView implements Runnable
 		graphics.setColor(Color.GRAY);
 		graphics.drawLine(leftOffset, height - gHeight - levelHeight * maxFloor, leftOffset, jframe.getHeight());
 		graphics.drawLine(width - leftOffset, height - gHeight - levelHeight * maxFloor, width - leftOffset, jframe.getHeight());
-
 		
 		
 		levelLabelDimension.height = (int) fm.getStringBounds(levelLabelText.toString(), graphics).getHeight();
