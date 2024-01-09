@@ -1,0 +1,7 @@
+{
+
+	"maxFloor":4987324,
+	"minFloor":23494,
+	"numOfElevators":987345
+	
+}

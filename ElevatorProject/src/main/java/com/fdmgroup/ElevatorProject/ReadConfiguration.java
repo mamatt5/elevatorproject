@@ -21,13 +21,14 @@ public class ReadConfiguration {
 	 *  null if the file is invalid or not found
 	 */
 	public static Configurations getConfiguration(String fileName) {
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		Configurations config = new Configurations();
 		File newFile = new File(fileName);
-		
 		File file;
+		
 		if (!newFile.exists()) {
-			LOGGER.info("Configuration-File-Not-Found");
+			LOGGER.error("Configuration-File-Not-Found");
 			return null;	
 		}
 		else {
@@ -40,12 +41,12 @@ public class ReadConfiguration {
 			if (config.getMaxFloor() < 0 || config.getMinFloor() < 0 || config.getNumOfElevators() < 0 ||
 					config.getMinFloor() > config.getMaxFloor()) {
 				
-				LOGGER.info("Invalid-Configuration-File-Field");
+				LOGGER.error("Invalid-Configuration-File-Field");
 				return null;
 			}
-		}
-		catch (IOException e) {
-			LOGGER.info("Invalid-Configuration-File");
+		} catch (IOException e) {
+			
+			LOGGER.error("Invalid-Configuration-File");
 			return null;
 
 		}
