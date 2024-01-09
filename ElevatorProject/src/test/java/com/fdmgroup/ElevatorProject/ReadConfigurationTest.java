@@ -73,19 +73,6 @@ public class ReadConfigurationTest {
 	}
 	
 	@Test 
-	void valid_json_format() {
-		
-		String fileName = "src/test/resources/ValidJsonFormatConfigurationTest.txt";
-	
-		Configurations config = ReadConfiguration.getConfiguration(fileName);
-			
-		assertEquals(4, config.getMaxFloor());
-		assertEquals(1, config.getMinFloor());
-		assertEquals(3, config.getNumOfElevators());
-
-	}
-	
-	@Test 
 	void invalid_maxFloor_field() {
 		
 		String fileName = "src/test/resources/InvalidMaxFloorTest.txt";
@@ -129,6 +116,31 @@ public class ReadConfigurationTest {
 
 	}
 	
+	@Test 
+	void valid_json_format() {
+		
+		String fileName = "src/test/resources/ValidJsonFormatConfigurationTest.txt";
+	
+		Configurations config = ReadConfiguration.getConfiguration(fileName);
+			
+		assertEquals(4, config.getMaxFloor());
+		assertEquals(1, config.getMinFloor());
+		assertEquals(3, config.getNumOfElevators());
+
+	}
+	
+	@Test 
+	void valid_json_format_big_fields() {
+		
+		String fileName = "src/test/resources/ValidJsonFormatBigFieldsConfigurationTest.txt";
+	
+		Configurations config = ReadConfiguration.getConfiguration(fileName);
+			
+		assertEquals(4987324, config.getMaxFloor());
+		assertEquals(23494, config.getMinFloor());
+		assertEquals(987345, config.getNumOfElevators());
+
+	}
 
 	
 }
