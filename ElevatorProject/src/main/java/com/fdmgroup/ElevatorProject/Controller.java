@@ -37,12 +37,12 @@ public class Controller {
 
 	public void assignElevator() throws InterruptedException {
 		
-		// Since this is modifying the peopleQueue list, use for-loop with indices but do not increment i unless person object is not removed.
-		for ( int i = 0 ; i < peopleQueue.size() ; ) {
-			Person person = peopleQueue.get(i);
-			scheduler.CallElevator(person).LoadPerson(person);
+
+		while (!peopleQueue.isEmpty()) {
+			Person person = peopleQueue.get(0);
+			scheduler.CallElevator(person).addPersonToLoad(person);
 //			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
-			peopleQueue.remove(i);
+			peopleQueue.remove(0);
 		}
 	}
 

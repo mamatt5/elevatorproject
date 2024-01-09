@@ -49,6 +49,10 @@ public class Scheduler implements Serializable
 	            minDistance = distance;
 	        }
 	    }
+	    
+	    if (bestElevator == null && closestIdleElevator == null ) {
+	    	CallElevator(person);
+	    }
 
 	    return bestElevator != null ? bestElevator : closestIdleElevator;
 	}
