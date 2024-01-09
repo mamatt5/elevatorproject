@@ -93,7 +93,7 @@ public class Elevator implements Runnable, Serializable {
 				this.currentFloor++;
 				movesFloor();
 			}
-			floorsToGo.remove(this.currentFloor);
+
 
 		} else if ( currentFloor > floor ) {
 			this.goingUp = false;
@@ -102,9 +102,8 @@ public class Elevator implements Runnable, Serializable {
 				this.currentFloor--;
 				movesFloor();
 			}
-			floorsToGo.remove(this.currentFloor);
 		}
-
+		
 	}
 	
 	public void updateFloors() {
@@ -155,6 +154,7 @@ public class Elevator implements Runnable, Serializable {
 		
 	}
 	
+	// This will move the Elevator over the floorsToGo list
 	public void operateElevator() throws InterruptedException {
 		
 		if ( floorsToGo.isEmpty() ) {
@@ -163,11 +163,19 @@ public class Elevator implements Runnable, Serializable {
 		}
 		
 		this.isIdle = false;
+		ArrayList<Integer> floorsVisited = new ArrayList<>();
 		Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
 		for (Integer floor : floorsIterable) {
 			GoToFloor(floor);
-			unloadPeople();
 			LoadPeople();
+			unloadPeople();
+			floorsVisited.add(floor);
+		}
+		
+		updateFloors();
+		floorsToGo.removeAll(floorsVisited);
+		if ( floorsToGo.isEmpty() ) {
+			this.isIdle = true;
 		}
 	}
 	
@@ -175,12 +183,6 @@ public class Elevator implements Runnable, Serializable {
 	@Override
 	public void run() {
 		while(!Thread.interrupted()) {
-			try {
-				operateElevator();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 

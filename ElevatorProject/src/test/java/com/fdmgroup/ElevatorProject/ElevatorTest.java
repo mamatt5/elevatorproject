@@ -136,6 +136,8 @@ public class ElevatorTest {
 		elevator.operateElevator();
 		
 	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
+	    assertTrue(elevator.getFloorsToGo().isEmpty());
 	    assertEquals(10, elevator.getCurrentFloor());
 	    assertTrue(elevator.isIdle());
 	}
@@ -150,9 +152,11 @@ public class ElevatorTest {
 		elevator.addPersonToLoad(person2);
 		elevator.addPersonToLoad(person3);
 		elevator.addPersonToLoad(person4);
-		elevator.LoadPeople();
-		elevator.unloadPeople();
+		System.out.println(elevator.getFloorsToGo().size()+ " floors to visit.");
+		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
+		System.out.println(elevator.getPeopleInside().size() + " people inside elevator.");
 		elevator.operateElevator();
+
 		
 	    assertTrue(elevator.getPeopleInside().isEmpty());
 	}
