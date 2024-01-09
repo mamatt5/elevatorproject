@@ -45,7 +45,7 @@ public class Scheduler implements Serializable
 	 * @return Elevator
 	 * @throws InterruptedException 
 	 */
-	public synchronized Elevator CallElevator(Person person) throws InterruptedException {
+	public synchronized Elevator callElevator(Person person) throws InterruptedException {
 		Elevator bestElevator = null;
 		Elevator closestIdleElevator = null;
 		int minIdleDistance = Integer.MAX_VALUE;
