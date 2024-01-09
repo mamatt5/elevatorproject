@@ -162,6 +162,7 @@ public class ElevatorTest {
 
 		
 	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.isIdle());
 	}
 	
 	
