@@ -56,7 +56,6 @@ public class ElevatorConsole
 	    		break;
 	    	}
 	    	
-
     		String[] people = input.split(",");
     		int[][] requests = inputValidation.InputTo2DArray(input);
     		
@@ -64,8 +63,8 @@ public class ElevatorConsole
     			
     			int srcFloor = requests[i][0];
     			int dstFloor = requests[i][1];
-    			
-    			controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+    			if (srcFloor != -1 && dstFloor != -1)
+    				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
     		// Assign elevators to the people in the queue
 	        try
@@ -75,7 +74,6 @@ public class ElevatorConsole
 	        {
 	            e.printStackTrace();
 	        }
-	    	
 	    }
 		
 	    myObj.close();
