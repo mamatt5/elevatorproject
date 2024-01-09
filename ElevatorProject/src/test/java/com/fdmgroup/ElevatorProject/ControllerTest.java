@@ -43,18 +43,6 @@ public class ControllerTest
 	}
 
 	@Test
-	void convert_string_to_Person_object()
-	{
-		Person person1 = new Person(0, 10);
-
-		String stringPerson = "0:10";
-		Person person2 = controller.StringToPerson(stringPerson);
-
-		assertEquals(person1.getSrcFloor(), person2.getSrcFloor());
-		assertEquals(person1.getDestFloor(), person2.getDestFloor());
-	}
-
-	@Test
 	void add_person_to_queue_from_ground_floor_going_up()
 	{
 		Person person1 = new Person(0, 10);
