@@ -9,7 +9,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -160,7 +159,7 @@ public class FrameView implements Runnable
 					// Display values options near lift
 					// Uncomment any display option you want
 					drawValueToSide("Current Floor: " + elevators.get(i).getCurrentFloor(), graphics);
-					drawStringToSide("Num People: " + elevators.get(i).getPeopleInside().size(), graphics);
+					drawStringToSide("Num People: " + elevators.get(i).getPeopleInsideToUnload().size(), graphics);
 					
 					
 					if (elevators.get(i).isIdle()) {

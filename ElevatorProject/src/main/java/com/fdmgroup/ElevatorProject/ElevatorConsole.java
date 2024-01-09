@@ -3,23 +3,27 @@ package com.fdmgroup.ElevatorProject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ElevatorConsole
-{
-
+/**
+ * The main class controlling the Elevator system through the console interface.
+ * Reads configurations, initializes elevators, and manages user input to interact with the Elevator system.
+ */
+public class ElevatorConsole {
 	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-		
-	public static void main(String[] args)
-	{
-		
+	
+	/**
+	 * Main method initiating the Elevator system through the console.
+	 */
+	public static void main(String[] args) {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
-			System.out.println("Error occured when reading configuration file. Please double check the "
-					+ "configuration file and relauch the program");
+			System.out.println("Error occurred when reading configuration file. Please double check the "
+					+ "configuration file and relaunch the program");
 			return;
 		}
 		
 		int numElevators = configs.getNumOfElevators();
+		
 		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
 		
@@ -34,12 +38,11 @@ public class ElevatorConsole
 		}
 	
         Scheduler scheduler = new Scheduler(elevators);
-		
 		Controller controller = new Controller(scheduler);
 		
 		// Start elevator threads
 		System.out.println("Starting elevators...");
-		scheduler.RunElevators();
+		scheduler.runElevators();
 		
 		Scanner myObj = new Scanner(System.in);
 		InputValidation inputValidation = new InputValidation();
@@ -54,14 +57,13 @@ public class ElevatorConsole
 	    GUI.run();
 	    
 	    while(true) {
-	    	
 	    	input = myObj.nextLine();
 	    	input = input.replaceAll(" ", "");
 	    	
 	    	if (input.equals("q")) {
 	    		break;
 	    	}
-	    	
+			
     		String[] people = input.split(",");
     		int[][] requests = inputValidation.InputTo2DArray(input);
     		
@@ -72,13 +74,12 @@ public class ElevatorConsole
     			if (srcFloor != -1 && dstFloor != -1)
     				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
+			
     		// Assign elevators to the people in the queue
-	        try
-	        {
+	        try {
 	            controller.assignElevator();
-	            
-	        } catch (InterruptedException e)
-	        {
+	        }
+			catch (InterruptedException e) {
 	            e.printStackTrace();
 	        }
 	    }

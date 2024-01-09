@@ -19,22 +19,19 @@ public class Scheduler implements Serializable
 {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 
-	public Scheduler(ArrayList<Elevator> elevators)
-	{
+	public Scheduler(ArrayList<Elevator> elevators) {
 		this.elevators = elevators;
 	}
 
-	public ArrayList<Elevator> getElevators()
-	{
+	public ArrayList<Elevator> getElevators() {
 		return elevators;
 	}
-
+	
 	// Adds an instantiated Elevator into its list.
-	public void AddElevator(Elevator elevator)
-	{
+	public void addElevator(Elevator elevator) {
 		this.elevators.add(elevator);
 	}
-
+	
 	/**
 	 * This method allocates an Elevator object to be assigned to a Person object. It is called by the Controller object.
 	 * 
@@ -79,38 +76,45 @@ public class Scheduler implements Serializable
 		}
 		return bestElevator != null ? bestElevator : closestIdleElevator;
 	}
+	
 
-
-	// Starts the elevator objects as Threads.
-	public void RunElevators()
-	{
-		for (Elevator elevator : elevators)
-		{
+	
+	/**
+	 * Starts threads for each elevator for independent function.
+	 */
+	public void runElevators() {
+		for (Elevator elevator : elevators) {
 			new Thread(elevator).start();
 		}
 	}
-
-	public void serializeSystemState(String fileName)
-	{
-		try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName)))
-		{
+	
+	/**
+	 * Serializes the current state of the scheduler into a file.
+	 *
+	 * @param fileName The name of the file to serialize the scheduler state into.
+	 */
+	public void serializeSystemState(String fileName) {
+		try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
 			output.writeObject(this);
-		} catch (IOException e)
-		{
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public Scheduler deserializeSchedulerState(String filename)
-	{
-		try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
-		{
+	
+	/**
+	 * Deserializes and retrieves the scheduler state from a file.
+	 *
+	 * @param filename The name of the file to deserialize the scheduler state from.
+	 * @return The Scheduler object retrieved from the file.
+	 */
+	public Scheduler deserializeSchedulerState(String filename) {
+		try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
 			return (Scheduler) input.readObject();
-		} catch (IOException | ClassNotFoundException e)
-		{
+		}
+		catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-
 }

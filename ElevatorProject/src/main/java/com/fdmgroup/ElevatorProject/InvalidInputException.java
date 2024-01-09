@@ -1,7 +1,10 @@
 package com.fdmgroup.ElevatorProject;
 
 public class InvalidInputException extends Exception {
-
+    
+    /**
+     * Custom exception class -- handles cases of invalid user input scenarios.
+     */
     private final InputValidation validation = new InputValidation();
 
     public InvalidInputException() {
@@ -10,11 +13,23 @@ public class InvalidInputException extends Exception {
     public InvalidInputException(String message) {
         super(message);
     }
-
-    // invalid floor inputs throw InvalidInputException
-    public void validateFloor(int floor) throws InvalidInputException {
-        if (!validation.isValidFloor(floor)) {
-            throw new InvalidInputException("Input floor value `" + floor + "` is invalid");
+    
+    /**
+     * Validates the trip based on source and destination floors.
+     *
+     * @param src  The source floor.
+     * @param dest The destination floor.
+     * @throws InvalidInputException Thrown when the input doesn't meet validation criteria.
+     */
+    public void validateTrip(int src, int dest) throws InvalidInputException {
+        if (!validation.floorInRange(src)) {
+            throw new InvalidInputException("Floor out of range-- " + src);
+        }
+        if (!validation.floorInRange(dest)) {
+            throw new InvalidInputException("Floor out of range-- " + dest);
+        }
+        if (!validation.sameFloor(src, dest)) {
+            throw new InvalidInputException("No travel required-- " + src + ", " + dest);
         }
     }
 

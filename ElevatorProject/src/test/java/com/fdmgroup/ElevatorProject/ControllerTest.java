@@ -138,7 +138,7 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
 	}
 	
 	@Test
@@ -159,9 +159,9 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInside().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInside().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
 	}
 	
 	@Test
@@ -182,9 +182,9 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInside().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInside().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
 	}
 	
 	@Test
@@ -205,9 +205,9 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInside().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInside().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
 	}
 	
 	@Test
@@ -228,9 +228,9 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInside().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInside().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInside().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
 	}
 	
 
