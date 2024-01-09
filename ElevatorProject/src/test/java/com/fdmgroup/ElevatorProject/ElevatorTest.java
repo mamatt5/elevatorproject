@@ -22,22 +22,22 @@ public class ElevatorTest {
 		assertTrue(elevator.isIdle());
 		assertTrue(elevator.isGoingUp());
 		assertEquals(0, elevator.getCurrentFloor());
-		assertTrue(elevator.getPeopleInside().isEmpty());
+		assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	}
 	
 	@Test
 	void elevator_load_one_person() throws InterruptedException {
 		Person person = new Person(0,1);
 		elevator.addPersonToLoad(person);
-		elevator.LoadPeople();
+		elevator.loadPeople();
 		
-		assertEquals(person, elevator.getPeopleInside().get(0));
+		assertEquals(person, elevator.getPeopleInsideToUnload().get(0));
 	}
 	
 	@Test
 	void elevator_go_up_to_floor_10() {
 		try {
-			elevator.GoToFloor(10);
+			elevator.goToFloor(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class ElevatorTest {
 	@Test
 	void elevator_go_to_same_floor() {
 		try {
-			elevator.GoToFloor(0);
+			elevator.goToFloor(0);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,14 +61,14 @@ public class ElevatorTest {
 	@Test
 	void elevator_go_down_to_ground_floor() {
 		try {
-			elevator.GoToFloor(10);
+			elevator.goToFloor(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			elevator.GoToFloor(1);
+			elevator.goToFloor(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,10 +97,10 @@ public class ElevatorTest {
 	void floor_list_gets_updated_after_loading_person_inside_elevator() throws InterruptedException {
 		Person person = new Person(0,10);
 		elevator.addPersonToLoad(person);
-		elevator.GoToFloor(person.getSrcFloor());
-		elevator.LoadPeople();
+		elevator.goToFloor(person.getSrcFloor());
+		elevator.loadPeople();
 		
-		assertEquals(1, elevator.getPeopleInside().size());
+		assertEquals(1, elevator.getPeopleInsideToUnload().size());
 		assertTrue(elevator.getFloorsToGo().contains(10));
 	}
 	
@@ -108,8 +108,8 @@ public class ElevatorTest {
 	void elevator_loads_a_person_then_goes_to_floor() throws InterruptedException {
 		Person person = new Person(0,10);
 		elevator.addPersonToLoad(person);
-		elevator.GoToFloor(person.getSrcFloor());
-		elevator.LoadPeople();
+		elevator.goToFloor(person.getSrcFloor());
+		elevator.loadPeople();
 		elevator.operateElevator();
 		
 		assertEquals(10,elevator.getCurrentFloor());
@@ -119,11 +119,11 @@ public class ElevatorTest {
 	void elevator_loads_a_person_then_unloads() throws InterruptedException {
 		Person person = new Person(0,10);
 		elevator.addPersonToLoad(person);
-		elevator.GoToFloor(person.getSrcFloor());
-		elevator.LoadPeople();
+		elevator.goToFloor(person.getSrcFloor());
+		elevator.loadPeople();
 		elevator.operateElevator();
 		
-	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertEquals(10, elevator.getCurrentFloor());
 	}
 	
@@ -131,11 +131,11 @@ public class ElevatorTest {
 	void elevator_loads_a_person_then_unloads_then_check_if_idle() throws InterruptedException {
 		Person person = new Person(0,10);
 		elevator.addPersonToLoad(person);
-		elevator.GoToFloor(person.getSrcFloor());
-		elevator.LoadPeople();
+		elevator.goToFloor(person.getSrcFloor());
+		elevator.loadPeople();
 		elevator.operateElevator();
 		
-	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
 	    assertTrue(elevator.getFloorsToGo().isEmpty());
 	    assertEquals(10, elevator.getCurrentFloor());
@@ -154,14 +154,14 @@ public class ElevatorTest {
 		elevator.addPersonToLoad(person4);
 		System.out.println(elevator.getFloorsToGo().size()+ " floors to visit.");
 		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
-		System.out.println(elevator.getPeopleInside().size() + " people inside elevator.");
+		System.out.println(elevator.getPeopleInsideToUnload().size() + " people inside elevator.");
 		elevator.operateElevator();
 		System.out.println(elevator.getFloorsToGo().size()+ " floors to visit.");
 		System.out.println(elevator.getPeopleOutsideToLoad().size() + " people waiting.");
-		System.out.println(elevator.getPeopleInside().size() + " people inside elevator.");
+		System.out.println(elevator.getPeopleInsideToUnload().size() + " people inside elevator.");
 
 		
-	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.isIdle());
 	}
 	
@@ -172,7 +172,7 @@ public class ElevatorTest {
 		elevator.addPersonToLoad(person);
 		elevator.operateElevator();
 		
-	    assertTrue(elevator.getPeopleInside().isEmpty());
+	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
 	    assertTrue(elevator.getFloorsToGo().isEmpty());
 	    assertEquals(10, elevator.getCurrentFloor());

@@ -10,32 +10,48 @@ import java.io.Serializable;
 public class Person implements Serializable{
 	private int srcFloor;
 	private int destFloor;
-	private boolean goingUp;
+	private final boolean goingUp;
 	
-	// Note that the direction of the Person is derived from the srcFloor and destFloor attribute.
+	/**
+	 * Constructor for creating a Person object with source and destination floors.
+	 *
+	 * @param srcFloor  The source floor of the person.
+	 * @param destFloor The destination floor of the person.
+	 */
 	public Person(int srcFloor, int destFloor) {
 		super();
 		this.srcFloor = srcFloor;
 		this.destFloor = destFloor;
-		this.goingUp = (srcFloor - destFloor) < 0 ? true:false;
+		this.goingUp = (srcFloor - destFloor) < 0;
 	}
-
+	
+	/**
+	 * @return the source floor of the person's journey
+	 */
 	public int getSrcFloor() {
 		return srcFloor;
 	}
-
-	public void setSrcFloor(int srcFloor) {
-		this.srcFloor = srcFloor;
-	}
-
+	
+	/**
+	 * @return the destination floor of the person's journey
+	 */
 	public int getDestFloor() {
 		return destFloor;
 	}
-
-	public void setDestFloor(int destFloor) {
-		this.destFloor = destFloor;
-	}
-
+	
+	
+	// fixme: methods unused - not called anywhere
+//	public void setSrcFloor(int srcFloor) {
+//		this.srcFloor = srcFloor;
+//	}
+//
+//	public void setDestFloor(int destFloor) {
+//		this.destFloor = destFloor;
+//	}
+	
+	/**
+	 * @return True if the person is going up, false if going down.
+	 */
 	public boolean isGoingUp() {
 		return goingUp;
 	}

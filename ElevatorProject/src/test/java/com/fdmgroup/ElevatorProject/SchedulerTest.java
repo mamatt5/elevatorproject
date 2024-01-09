@@ -57,7 +57,7 @@ public class SchedulerTest {
 		// Bring Elevator0 to floor 2
 		try
 		{
-			assignedElevator1.GoToFloor(2);
+			assignedElevator1.goToFloor(2);
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class SchedulerTest {
 
 		
 		try {
-			assignedElevator1.GoToFloor(3);
+			assignedElevator1.goToFloor(3);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +93,7 @@ public class SchedulerTest {
 		assertEquals("Elevator0", assignedElevator2.getElevatorID());
 		try
 		{
-			assignedElevator2.GoToFloor(14);
+			assignedElevator2.goToFloor(14);
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -101,7 +101,7 @@ public class SchedulerTest {
 		
 		assertFalse(assignedElevator1.isIdle());
 		assertFalse(assignedElevator2.isIdle());
-		assertTrue(assignedElevator2.getPeopleInside().isEmpty());
+		assertTrue(assignedElevator2.getPeopleInsideToUnload().isEmpty());
 		
 		
 		Elevator assignedElevator3 = scheduler.CallElevator(person3);
@@ -109,7 +109,7 @@ public class SchedulerTest {
 		assertEquals("Elevator1", assignedElevator3.getElevatorID());
 		try
 		{
-			assignedElevator3.GoToFloor(3);
+			assignedElevator3.goToFloor(3);
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -124,13 +124,13 @@ public class SchedulerTest {
 	@Test
 	void scheduler_assign_elevators_with_more_people_and_elevator_added() throws InterruptedException { 
 		Elevator elevator4 = new Elevator();
-		elevator4.GoToFloor(10);
+		elevator4.goToFloor(10);
 		
 		Elevator elevator5 = new Elevator();
-		elevator5.GoToFloor(25);
+		elevator5.goToFloor(25);
 		
 		Elevator elevator6 = new Elevator();
-		elevator6.GoToFloor(30);
+		elevator6.goToFloor(30);
 		
 		Elevator elevator7 = new Elevator();
 		
@@ -163,7 +163,7 @@ public class SchedulerTest {
 		Elevator assignedElevator3 = scheduler.CallElevator(person3);
 		
 		assertFalse(assignedElevator3.isIdle());
-		assertFalse(assignedElevator3.getPeopleInside().isEmpty());
+		assertFalse(assignedElevator3.getPeopleInsideToUnload().isEmpty());
 		assertEquals("Elevator2", assignedElevator3.getElevatorID());
 		
 		

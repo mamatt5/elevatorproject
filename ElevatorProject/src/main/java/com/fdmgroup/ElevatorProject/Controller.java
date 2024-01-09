@@ -1,51 +1,53 @@
 package com.fdmgroup.ElevatorProject;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
- * This object controls the flow of Person objects into the Elevators. It needs the Scheduler object to choose which Elevator
- * the Person is to be loaded. It handles all the requests and processes it into the Elevator objects. It takes a Scheduler
- * to be instantiated and it holds a list of requests to be passed on to the Elevators.
+ * Manages the queue of people and passes requests to Elevators, handling Elevator assignments.
  */
 
 public class Controller {
 	private ArrayList<Person> peopleQueue = new ArrayList<Person>();
 	private Scheduler scheduler;
 	
-	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+	// fixme: method unused - not called anywhere
+//	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 	
+	/**
+	 * @param scheduler The scheduler to be used for managing elevator assignments.
+	 */
 	
 	public Controller( Scheduler scheduler ) {
 		this.scheduler = scheduler;
 	}
 	
+	/**
+	 * @return The ArrayList representing the queue of people.
+	 */
 	public ArrayList<Person> getPeopleQueue() {
 		return peopleQueue;
 	}
 	
-	public ArrayList<Elevator> getElevators() {
-		return scheduler.getElevators();
-	}
+	// fixme: method unused - not called anywhere
+//	public ArrayList<Elevator> getElevators() {
+//		return scheduler.getElevators();
+//	}
 	
-	// Adds a Person object to the peopleQueue list
+	/**
+	 * Adds a Person to the queue of people waiting for an elevator.
+	 *
+	 * @param person The Person object to be added to the peopleQueue list.
+	 */
 	public void addPersonToQueue(Person person) {
 		this.peopleQueue.add(person);
 	}
 
 	
 	/**
-	 * Method to simulate a Person calling an Elevator.
-	 * 
-	 * This method assigns an Elevator to a Person object. It calls the Scheduler to choose the appropriate Elevator to
-	 * where the Person is to be loaded. It then calls the addPersonToLoad() method of the chosen Elevator to load the
-	 * Person object into the Elevator's peopleOutside list. Note that it will keep running until the peopleQueue list
-	 * is empty.
-	 * 
-	 * @throws InterruptedException
+	 * Assigns elevators to people in the queue, loading them into the elevators.
+	 * Note that it will keep running until the peopleQueue list is empty.
+	 *
+	 * @throws InterruptedException If interrupted during elevator assignment.
 	 */
 	public void assignElevator() throws InterruptedException {
 		while (!peopleQueue.isEmpty()) {
@@ -57,9 +59,15 @@ public class Controller {
 	}
 
 	// FOR TESTING PURPOSES
+	/**
+	 * Finds the elevator containing a specific Person.
+	 *
+	 * @param person The Person object to search for in elevators.
+	 * @return The Elevator object containing the specified Person, or null if not found.
+	 */
 	public Elevator FindElevatorWithPerson(Person person) {
 		for ( Elevator elevator : scheduler.getElevators() ) {
-			if ( elevator.getPeopleInside().contains(person) ) {
+			if ( elevator.getPeopleInsideToUnload().contains(person) ) {
 				return elevator;
 			}
 		}

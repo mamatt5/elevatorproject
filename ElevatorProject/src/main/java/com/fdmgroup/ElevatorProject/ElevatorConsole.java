@@ -3,14 +3,17 @@ package com.fdmgroup.ElevatorProject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ElevatorConsole
-{
-
+/**
+ * The main class controlling the Elevator system through the console interface.
+ * Reads configurations, initializes elevators, and manages user input to interact with the Elevator system.
+ */
+public class ElevatorConsole {
 	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-		
-	public static void main(String[] args)
-	{
-		
+	
+	/**
+	 * Main method initiating the Elevator system through the console.
+	 */
+	public static void main(String[] args) {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
@@ -34,7 +37,6 @@ public class ElevatorConsole
 		}
 	
         Scheduler scheduler = new Scheduler(elevators);
-		
 		Controller controller = new Controller(scheduler);
 		
 		// Start elevator threads
@@ -54,7 +56,6 @@ public class ElevatorConsole
 	    GUI.run();
 	    
 	    while(true) {
-	    	
 	    	input = myObj.nextLine();
 	    	input = input.replaceAll(" ", "");
 	    	
@@ -72,13 +73,12 @@ public class ElevatorConsole
     			if (srcFloor != -1 && dstFloor != -1)
     				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
     		}
+			
     		// Assign elevators to the people in the queue
-	        try
-	        {
+	        try {
 	            controller.assignElevator();
-	            
-	        } catch (InterruptedException e)
-	        {
+	        }
+			catch (InterruptedException e) {
 	            e.printStackTrace();
 	        }
 	    }
