@@ -2,12 +2,17 @@ package com.fdmgroup.ElevatorProject;
 
 import java.io.Serializable;
 
+/**
+ * This object simulates requests for the Elevator. It only has two states, going up or going down.
+ */
+
 @SuppressWarnings("serial")
-public class Person implements Serializable , Comparable<Person>{
+public class Person implements Serializable{
 	private int srcFloor;
 	private int destFloor;
 	private boolean goingUp;
 	
+	// Note that the direction of the Person is derived from the srcFloor and destFloor attribute.
 	public Person(int srcFloor, int destFloor) {
 		super();
 		this.srcFloor = srcFloor;
@@ -33,11 +38,6 @@ public class Person implements Serializable , Comparable<Person>{
 
 	public boolean isGoingUp() {
 		return goingUp;
-	}
-
-	@Override
-	public int compareTo(Person other) {
-		return Integer.compare(this.destFloor, other.destFloor);
 	}
 
 }
