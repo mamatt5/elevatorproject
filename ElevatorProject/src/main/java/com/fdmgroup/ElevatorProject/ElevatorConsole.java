@@ -65,6 +65,8 @@ public class ElevatorConsole {
 		// handle user input for elevator requests and manages elevator assignments
 	    int srcFloor = -1;
     	int dstFloor = -1;
+    	boolean setSrcOn = false;
+    	boolean setDstOn = false;
 	    while(true) {
 	    	input = myObj.nextLine();
 	    	if (input.equals("q")) {        // user termination command
@@ -72,18 +74,22 @@ public class ElevatorConsole {
 	    	}
 	    	
 	    	// Turn off the set source floor
-	    	else if (input.equals("setsource=off"))
+	    	else if (input.equals("setsource=off")) {
 	    		srcFloor = -1;
-	    	
+	    		setSrcOn = false;
+	    	}
 	    	// Turn off the set destination floor
-	    	else if (input.equals("setdestination=off"))
+	    	else if (input.equals("setdestination=off")) {
 	    		dstFloor = -1;
-	    	
+	    		setDstOn = false;
+	    	}
 	    	// Command to set source floor to a particular number
 	    	else if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
+	    			setSrcOn = true;
+	    		}
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
@@ -91,8 +97,11 @@ public class ElevatorConsole {
 	    	// Command to set destination floor to a particular number
 	    	else if (input.matches("setdestination=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
+	    			setDstOn = true;
+	    		}
+	    			
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
@@ -102,13 +111,13 @@ public class ElevatorConsole {
 		    for (int[] request : requests) {
 		    	
 		    	// If there hasn't been a source/destination floor set use input values
-		    	if (srcFloor == -1)
+		    	if (setSrcOn == false)
 		    		srcFloor = request[0];
 		    	
-		    	if (dstFloor == -1)
+		    	if (setDstOn == false)
 		    		dstFloor = request[1];
-		    	
-		    	controller.addPersonToQueue(new Person(request[0], request[1]));
+
+		    	controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 		    }
 		    // assign available elevators to people in queue
 	        try {
