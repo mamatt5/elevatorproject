@@ -37,8 +37,6 @@ public class Elevator implements Runnable, Serializable {
 	// ------------ Elevator Attributes ------------ //
 	private final String ELEVATOR_ID;
 	private static int nextID = 0;
-	private boolean goingUp = true;
-	private boolean isIdle = true;
 	private int currentFloor = 0;
 	private final int SLEEP_TIME = 1000;
 	
@@ -48,29 +46,13 @@ public class Elevator implements Runnable, Serializable {
 	}
 	
 	// ------------ States ------------ //
-	
-	public boolean isGoingUp() {
-		return goingUp;
-	}
-	
 
-	public boolean isIdle() {
-		return isIdle;
-	}
-	
+	ElevatorDirection state = ElevatorDirection.IDLE;
 
 	// ------------ Getters and Setters ------------ //
 
 	public String getElevatorID() {
 		return ELEVATOR_ID;
-	}
-	
-	public void setGoingUp(boolean state) {
-		this.goingUp = state;
-	}
-	
-	public void setIdle(boolean state) {
-		this.isIdle = state;
 	}
 
 	public int getCurrentFloor() {
@@ -103,17 +85,20 @@ public class Elevator implements Runnable, Serializable {
 	public void operateElevator() throws InterruptedException {
 		// base case: elevator stops operating when there are no more travel requests
 	    if (floorsToGo.isEmpty()) {
-	        this.isIdle = true;
+			this.state = ElevatorDirection.IDLE;
 	        return;
 	    }
 		
 		// recursive case: elevator keeps operating if there are remaining requests
 	    ArrayList<Integer> floorsVisited = new ArrayList<>();
-		
-	    Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
-		// permits conversion between ascending/descending order, determined by Elevator direction
-		
-	    for (Integer floor : floorsIterable) {
+
+		Iterable<Integer> floorsIterable = switch (state) {
+            case UP -> floorsToGo;							// Iterable<Integer> permits conversion
+            case DOWN -> floorsToGo.descendingSet();		// between ascending/descending order
+            default -> floorsToGo;
+        };
+
+        for (Integer floor : floorsIterable) {
 	        goToFloor(floor);                   // simulate elevator behaviour with
 	        loadPeople();                       // movement and loading/unloading
 	        unloadPeople();                     // of Person objects
@@ -121,8 +106,12 @@ public class Elevator implements Runnable, Serializable {
 	        
 	        
 		    if (shouldChangeDirection()) {
-			    this.goingUp = !this.goingUp;   // checks ends of `floorsToGo` set,
-			    break;                          // exit loop on direction change
+                switch (state) {
+                    case UP -> this.state = ElevatorDirection.DOWN;
+                    case DOWN -> this.state = ElevatorDirection.UP;
+                }
+
+				break;
 	        }
 	    }
 		
@@ -152,11 +141,10 @@ public class Elevator implements Runnable, Serializable {
 	 * @return true if the elevator should change direction; otherwise false.
 	 */
 	private boolean shouldChangeDirection() {
-		return (this.currentFloor == floorsToGo.last() && goingUp) ||
-				(this.currentFloor == floorsToGo.first() && !goingUp);
+		return (this.currentFloor == floorsToGo.last() && this.state == ElevatorDirection.UP) ||
+				(this.currentFloor == floorsToGo.first() && this.state == ElevatorDirection.DOWN);
 	}
-	
-	
+
 	/**
 	 * Moves the elevator to the specified floor.
 	 *
@@ -179,12 +167,11 @@ public class Elevator implements Runnable, Serializable {
 	 */
 	private void movesFloor(int numFloors) throws InterruptedException {
 		int absNumFloors = numFloors;
-		setIdle(false);
-		setGoingUp(true);
+		this.state = ElevatorDirection.UP;
 		
-		if (numFloors < 0) {        // determine if elevator is to
-			setGoingUp(false);      // move up (positive numFloors)
-			absNumFloors *= -1;     // or down (negative numFloors)
+		if (numFloors < 0) {        				// determine if elevator is to
+			absNumFloors *= -1;    					// move up (positive numFloors)
+			this.state = ElevatorDirection.DOWN;   	// or down (negative numFloors)
 		}
 		
 		for (int i = 0; i < absNumFloors; i++) {
