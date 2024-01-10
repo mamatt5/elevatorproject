@@ -1,8 +1,9 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -106,6 +107,17 @@ public class ReadConfigurationTest {
 	}
 	
 	@Test 
+	void invalid_generateCommands_field() {
+		
+		String fileName = "src/test/resources/InvalidNumOfElevatorsTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
 	void invalid_min_and_max_floor_field() {
 		
 		String fileName = "src/test/resources/InvalidMinAndMaxFloorTest.txt";
@@ -126,6 +138,8 @@ public class ReadConfigurationTest {
 		assertEquals(4, config.getMaxFloor());
 		assertEquals(1, config.getMinFloor());
 		assertEquals(3, config.getNumOfElevators());
+		assertFalse(config.getGenerateCommands());
+		assertEquals(8, config.getIntervalBetweenCommands());
 
 	}
 	
@@ -139,6 +153,8 @@ public class ReadConfigurationTest {
 		assertEquals(4987324, config.getMaxFloor());
 		assertEquals(23494, config.getMinFloor());
 		assertEquals(987345, config.getNumOfElevators());
+		assertTrue(config.getGenerateCommands());
+		assertEquals(85657, config.getIntervalBetweenCommands());
 
 	}
 

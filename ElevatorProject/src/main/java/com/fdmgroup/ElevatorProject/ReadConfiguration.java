@@ -35,6 +35,7 @@ public class ReadConfiguration {
 		}
 		
 		try {
+			
 			config = objectMapper.readValue(file, Configurations.class);
 			
 			if (config.getMaxFloor() < 0 || config.getMinFloor() < 0 || config.getNumOfElevators() < 0 ||

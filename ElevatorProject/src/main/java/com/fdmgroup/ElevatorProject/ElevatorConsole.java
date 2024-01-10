@@ -26,6 +26,7 @@ public class ElevatorConsole {
 		int numElevators = configs.getNumOfElevators();
 		int minFloor = configs.getMinFloor();
 		int maxFloor = configs.getMaxFloor();
+		boolean generateCommands = configs.getGenerateCommands();
 		
 		// elevator generation
 		System.out.println("Creating elevators...");
@@ -49,7 +50,10 @@ public class ElevatorConsole {
 		Scanner myObj = new Scanner(System.in);
 	    System.out.println("Enter your commands: ");
 	    String input ="";
-		
+	    
+		if (generateCommands) {
+			GenerateCommands generator = new GenerateCommands(minFloor, maxFloor);
+		}
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
 	    //Thread t = new Thread(GUI);
@@ -66,6 +70,11 @@ public class ElevatorConsole {
 			
 			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
+    		
+    		if (configs.getGenerateCommands()) {
+    			
+    		}
+    		
 		    for (int[] request : requests) {
 				controller.addPersonToQueue(new Person(request[0], request[1]));
 		    }

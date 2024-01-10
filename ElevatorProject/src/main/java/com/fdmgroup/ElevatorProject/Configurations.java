@@ -5,6 +5,8 @@ public class Configurations {
 	private int maxFloor;
 	private int minFloor;
 	private int numOfElevators;
+	private boolean generateCommands;
+	private int intervalBetweenCommands;
 	
 	/**
 	 * @return The maximum floor value as allowed in the configuration.
@@ -25,6 +27,20 @@ public class Configurations {
 	 */
 	public int getNumOfElevators() {
 		return numOfElevators;
+	}
+	
+	/**
+	 * @return The number of elevators as configured in the system.
+	 */
+	public boolean getGenerateCommands() {
+		return generateCommands;
+	}
+	
+	/**
+	 * @return The number of elevators as configured in the system.
+	 */
+	public int getIntervalBetweenCommands() {
+		return intervalBetweenCommands;
 	}
 	
 	
