@@ -19,14 +19,18 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("serial")
 public class Elevator implements Runnable, Serializable {
 	private ConcurrentSkipListSet<Integer> floorsToGo = new ConcurrentSkipListSet<>();
-	// ConcurrentSkipListSet permits concurrent modifications when loading/unloading people and moving floors,
-	// preventing ConcurrentModificationException experienced with other collections like TreeSet or HashSet.
+	// ConcurrentSkipListSet is thread-safe (built-in concurrency control) ensuring data integrity
+	// during simultaneous access e.g. during loading/unloading people and moving floors
 	
+	/**
+	 * holds Person objects currently inside the Elevator, ready for unloading.
+	 */
 	private ArrayList<Person> peopleInsideToUnload = new ArrayList<>();
-	// 'peopleInside' holds Person objects currently inside the Elevator, ready for unloading.
 	
+	/**
+	 * holds Person objects currently outside the Elevator, ready for loading.
+	 */
 	private ArrayList<Person> peopleOutsideToLoad = new ArrayList<>();
-	// 'peopleOutsideToLoad' holds Person objects currently outside the Elevator, ready for loading.
 
 	private static final Logger LOGGER = LogManager.getLogger(Elevator.class);
 	
@@ -93,56 +97,40 @@ public class Elevator implements Runnable, Serializable {
 	
 	/**
 	 * Simulates elevator behaviour by moving between floors based on the floorsToGo set.
-	 * Handles loading/unloading people, changes direction when reaching the end of the floors set,
-	 * and updates the floorsToGo set accordingly. If the set is empty, the elevator goes idle.
 	 *
 	 * @throws InterruptedException if the thread is interrupted while waiting.
 	 */
 	public void operateElevator() throws InterruptedException {
+		// base case: elevator stops operating when there are no more travel requests
 	    if (floorsToGo.isEmpty()) {
 	        this.isIdle = true;
 	        return;
 	    }
-
-	    this.isIdle = false;
+		
+		// recursive case: elevator keeps operating if there are remaining requests
 	    ArrayList<Integer> floorsVisited = new ArrayList<>();
-		// floorsVisited - stores the floors at which the Elevator have already visited.
 		
 	    Iterable<Integer> floorsIterable = goingUp ? floorsToGo : floorsToGo.descendingSet();
-		// floorsIterable - makes the floorsToGo set to be iterable, integrating a for loop
-		// and allowing descending order. The order depends on the direction of the Elevator
+		// permits conversion between ascending/descending order, determined by Elevator direction
 		
 	    for (Integer floor : floorsIterable) {
-			
 	        goToFloor(floor);                   // simulate elevator behaviour with
 	        loadPeople();                       // movement and loading/unloading
 	        unloadPeople();                     // of Person objects
-	        floorsVisited.add(floor);
+	        floorsVisited.add(floor);           // and updates floorsToGo set accordingly
 	        
-	        // Checks the end of the floorsToGo set and changes direction accordingly.
-	        if (this.currentFloor == floorsToGo.last() && goingUp) {
-	            this.goingUp = false;
-	            break; // Exit the loop as the direction has changed
-	        }
 	        
-	        if (this.currentFloor == floorsToGo.first() && !goingUp) {
-	        	this.goingUp = true;
-	        	break; // Exit the loop as the direction has changed
+		    if (shouldChangeDirection()) {
+			    this.goingUp = !this.goingUp;   // checks ends of `floorsToGo` set,
+			    break;                          // exit loop on direction change
 	        }
 	    }
-
-	    updateFloors();
-	    floorsToGo.removeAll(floorsVisited);
 		
-		// recursively call the method to check if it received any more requests and the elevator is not idle
-	    if (!floorsToGo.isEmpty() && !this.isIdle) {
-	        operateElevator(); // Recursively call the method
-	    }
-		else {
-	        this.isIdle = true;
-	    }
-	    
-	    // todo: Maybe add Thread.wait() or Thread.lock()?
+	    updateFloorRequests();                  // refresh the list of all floors
+		floorsToGo.removeAll(floorsVisited);    // to be travelled to, and
+		operateElevator();                      // continue operating elevator
+		
+		// todo: Maybe add Thread.wait() or Thread.lock()?
 	}
 	
 	// ------------ person handling ------------ //
@@ -154,10 +142,21 @@ public class Elevator implements Runnable, Serializable {
 	 */
 	public void addPersonToLoad(Person person) {
 		this.peopleOutsideToLoad.add(person);
-		updateFloors();
+		updateFloorRequests();
 	}
 
 	// ------------ helper methods ------------ //
+	/**
+	 * Determines whether the elevator should change its direction based on the current floor and direction.
+	 *
+	 * @return true if the elevator should change direction; otherwise false.
+	 */
+	private boolean shouldChangeDirection() {
+		return (this.currentFloor == floorsToGo.last() && goingUp) ||
+				(this.currentFloor == floorsToGo.first() && !goingUp);
+	}
+	
+	
 	/**
 	 * Moves the elevator to the specified floor.
 	 *
@@ -205,7 +204,7 @@ public class Elevator implements Runnable, Serializable {
 	 * `floorsToGo` contains the src floors of people waiting outside and the dest floors of people inside.
 	 */
 	// fixme: CHANGE TO PRIVATE METHOD BEFORE SUBMITTING
-	public void updateFloors() {
+	public void updateFloorRequests() {
 		for (Person person : peopleOutsideToLoad ) {
 			floorsToGo.add(person.getSrcFloor());
 		}
@@ -232,7 +231,7 @@ public class Elevator implements Runnable, Serializable {
 		}
 		
 		peopleOutsideToLoad.removeAll(peopleToBeLoaded);
-		updateFloors();
+		updateFloorRequests();
 		pauseOnDoorOpenClose();
 	}
 	
@@ -252,12 +251,11 @@ public class Elevator implements Runnable, Serializable {
 		}
 		
 		peopleInsideToUnload.removeAll(peopleToBeUnloaded);
-		updateFloors();
+		updateFloorRequests();
 		pauseOnDoorOpenClose();
 	}
 	
 	// ------------ pauses ------------ //
-	
 	/**
 	 * Pauses the execution for door opening and closing simulation.
 	 *
