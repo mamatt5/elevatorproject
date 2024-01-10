@@ -41,7 +41,7 @@ public class Elevator implements Runnable, Serializable {
 	private boolean isIdle = true;
 	private int currentFloor = 0;
 	private final int SLEEP_TIME = 100;
-	
+	private boolean running = true;
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
 		this.ELEVATOR_ID = "Elevator" +nextID++;
@@ -280,14 +280,20 @@ public class Elevator implements Runnable, Serializable {
 	// This allows the Elevator to be called as a Thread. It must only be called by the Scheduler object.
 	@Override
 	public void run() {
-		while(!Thread.interrupted()) {
+		while(running) {
 			try {
 				operateElevator();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	public void kill() {
+		this.running = false;
+	}
+	
+	
 
 }

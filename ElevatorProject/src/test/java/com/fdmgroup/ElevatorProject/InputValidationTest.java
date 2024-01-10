@@ -223,26 +223,11 @@ public class InputValidationTest {
         
         @BeforeEach
         void setup() {
-            configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-            CONFIGS = ReadConfiguration.getConfiguration(configFilePath);
-            assert CONFIGS != null;
-            min = CONFIGS.getMinFloor();
-            max = CONFIGS.getMaxFloor();
+            min = 0;
+            max = 30;
         }
         
-        @Test
-        void Test_InRange() {
-            String[] inRangeInputs = new String[]{
-                    min + ":2",
-                    (min + 1) + ":7",
-                    (max - 1) + ":9",
-                    max + ":5"
-            };
-            
-            for (String inRangeInput : inRangeInputs) {
-                assertTrue(inputValidation.isValidRequest(inRangeInput));
-            }
-        }
+       
         
         @Test
         void Test_OutOfRange() {

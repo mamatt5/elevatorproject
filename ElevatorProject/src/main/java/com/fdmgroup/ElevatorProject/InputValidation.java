@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 public class InputValidation {
-    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+    private static final Logger LOGGER = LogManager.getLogger(InputValidation.class);
     private final int minFloor;
     private final int maxFloor;
     private final int ERROR_FLOOR = -1;
@@ -114,6 +114,7 @@ public class InputValidation {
             validateTrip(src, dest);
         }
         catch (InvalidInputException e) {
+        	System.out.println(e.getMessage());
             LOGGER.error("Invalid request-- src: " + src + ", dest: " + dest);
             return false;
         }
@@ -144,14 +145,6 @@ public class InputValidation {
     }
     
     // ------------ validation methods ------------ //
-    /**
-     * Custom exception class -- handles cases of invalid user input scenarios.
-     */
-     public static class InvalidInputException extends Exception {
-        public InvalidInputException(String message) {
-            super(message);
-        }
-    }
 
     /**
      * Validates the trip based on source and destination floors.
