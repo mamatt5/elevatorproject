@@ -43,7 +43,7 @@ public class ControllerTest
 	}
 
 	@Test
-	void add_person_to_queue_from_ground_floor_going_up()
+	void add_person_to_queue_from_ground_floor_going_up() throws InterruptedException
 	{
 		Person person1 = new Person(0, 10);
 
@@ -53,7 +53,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void add_person_to_queue_from_different_floor_going_up()
+	void add_person_to_queue_from_different_floor_going_up() throws InterruptedException
 	{
 		Person person1 = new Person(3, 10);
 
@@ -63,7 +63,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void add_person_to_queue_from_going_down_to_different_floor()
+	void add_person_to_queue_from_going_down_to_different_floor() throws InterruptedException
 	{
 		Person person1 = new Person(10, 3);
 
@@ -73,7 +73,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void add_person_to_queue_from_going_down_to_ground_floor()
+	void add_person_to_queue_from_going_down_to_ground_floor() throws InterruptedException
 	{
 		Person person1 = new Person(6, 0);
 
@@ -83,7 +83,7 @@ public class ControllerTest
 	}
 
 	@Test
-	void add_multiple_person_to_queue_from_ground_floor()
+	void add_multiple_person_to_queue_from_ground_floor() throws InterruptedException
 	{
 		Person person1 = new Person(0, 10);
 		Person person2 = new Person(0, 5);
@@ -97,7 +97,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void add_multiple_person_to_queue_from_different_floors_going_up()
+	void add_multiple_person_to_queue_from_different_floors_going_up() throws InterruptedException
 	{
 		Person person1 = new Person(3, 10);
 		Person person2 = new Person(2, 5);
@@ -111,7 +111,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void add_multiple_person_to_queue_from_different_floors_going_down()
+	void add_multiple_person_to_queue_from_different_floors_going_down() throws InterruptedException
 	{
 		Person person1 = new Person(10, 2);
 		Person person2 = new Person(7, 1);
@@ -142,7 +142,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_3_person_ground_floor_going_up_to_load()
+	void assign_elevator_3_person_ground_floor_going_up_to_load() throws InterruptedException
 	{
 		Person person1 = new Person(0, 10);
 		Person person2 = new Person(0, 5);
@@ -165,7 +165,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_3_person_different_floor_going_up_to_load()
+	void assign_elevator_3_person_different_floor_going_up_to_load() throws InterruptedException
 	{
 		Person person1 = new Person(3, 10);
 		Person person2 = new Person(2, 5);
@@ -188,7 +188,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_ground_floor_to_load()
+	void assign_elevator_1_person_going_down_ground_floor_to_load() throws InterruptedException
 	{
 		Person person1 = new Person(3, 0);
 		Person person2 = new Person(2, 0);
@@ -211,7 +211,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_different_floor_to_load()
+	void assign_elevator_1_person_going_down_different_floor_to_load() throws InterruptedException
 	{
 		Person person1 = new Person(3, 1);
 		Person person2 = new Person(7, 2);
