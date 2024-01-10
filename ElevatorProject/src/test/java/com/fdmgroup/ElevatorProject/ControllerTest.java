@@ -125,7 +125,7 @@ public class ControllerTest
 	}
 
 	@Test
-	void assign_elevator_with_1_person_ground_floor_going_up()
+	void assign_elevator_with_1_person_ground_floor_going_up_to_load() throws InterruptedException
 	{
 		Person person1 = new Person(0, 1);
 
@@ -138,11 +138,11 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleOutsideToLoad().contains(person1));
 	}
 	
 	@Test
-	void assign_elevator_3_person_ground_floor_going_up()
+	void assign_elevator_3_person_ground_floor_going_up_to_load()
 	{
 		Person person1 = new Person(0, 10);
 		Person person2 = new Person(0, 5);
@@ -159,13 +159,13 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleOutsideToLoad().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleOutsideToLoad().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleOutsideToLoad().contains(person3));
 	}
 	
 	@Test
-	void assign_elevator_3_person_different_floor_going_up()
+	void assign_elevator_3_person_different_floor_going_up_to_load()
 	{
 		Person person1 = new Person(3, 10);
 		Person person2 = new Person(2, 5);
@@ -182,13 +182,13 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleOutsideToLoad().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleOutsideToLoad().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleOutsideToLoad().contains(person3));
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_ground_floor()
+	void assign_elevator_1_person_going_down_ground_floor_to_load()
 	{
 		Person person1 = new Person(3, 0);
 		Person person2 = new Person(2, 0);
@@ -205,13 +205,13 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleOutsideToLoad().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleOutsideToLoad().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleOutsideToLoad().contains(person3));
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_different_floor()
+	void assign_elevator_1_person_going_down_different_floor_to_load()
 	{
 		Person person1 = new Person(3, 1);
 		Person person2 = new Person(7, 2);
@@ -228,9 +228,9 @@ public class ControllerTest
 			e.printStackTrace();
 		}
 
-		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleInsideToUnload().contains(person1));
-		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleInsideToUnload().contains(person2));
-		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleInsideToUnload().contains(person3));
+		assertTrue(controller.FindElevatorWithPerson(person1).getPeopleOutsideToLoad().contains(person1));
+		assertTrue(controller.FindElevatorWithPerson(person2).getPeopleOutsideToLoad().contains(person2));
+		assertTrue(controller.FindElevatorWithPerson(person3).getPeopleOutsideToLoad().contains(person3));
 	}
 	
 

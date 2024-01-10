@@ -50,7 +50,7 @@ public class Controller {
 
 	// FOR TESTING PURPOSES
 	/**
-	 * Finds the elevator containing a specific Person.
+	 * Finds the elevator assigned to a specific Person.
 	 *
 	 * @param person The Person object to search for in elevators.
 	 * @return The Elevator object containing the specified Person, or null if not found.
@@ -59,7 +59,7 @@ public class Controller {
 	// For testing purposes
 	public Elevator FindElevatorWithPerson(Person person) {
 		for ( Elevator elevator : scheduler.getElevators() ) {
-			if ( elevator.getPeopleInsideToUnload().contains(person) ) {
+			if ( elevator.getPeopleOutsideToLoad().contains(person)) {
 				return elevator;
 			}
 		}
