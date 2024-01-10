@@ -27,6 +27,7 @@ public class ElevatorConsole {
 		int minFloor = configs.getMinFloor();
 		int maxFloor = configs.getMaxFloor();
 		boolean generateCommands = configs.getGenerateCommands();
+		int interval = configs.getIntervalBetweenCommands();
 		
 		// elevator generation
 		System.out.println("Creating elevators...");
@@ -52,7 +53,7 @@ public class ElevatorConsole {
 	    String input ="";
 	    
 		if (generateCommands) {
-			GenerateCommands generator = new GenerateCommands(minFloor, maxFloor);
+			GenerateCommands generator = new GenerateCommands(minFloor, maxFloor, interval, controller);
 		}
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
