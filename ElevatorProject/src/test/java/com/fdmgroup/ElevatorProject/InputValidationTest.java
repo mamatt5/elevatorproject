@@ -14,7 +14,9 @@ public class InputValidationTest {
     
     @BeforeEach
     void setup() {
-        inputValidation = new InputValidation();
+        int minFloor = 0;           // hardcoded min and max values so that the
+        int maxFloor = 25;          // test results do not fluctuate with config updates
+        inputValidation = new InputValidation(minFloor, maxFloor);
     }
     
     @Nested
@@ -228,7 +230,6 @@ public class InputValidationTest {
             assert CONFIGS != null;
             min = CONFIGS.getMinFloor();
             max = CONFIGS.getMaxFloor();
-            
         }
         
         @Test
@@ -314,100 +315,106 @@ public class InputValidationTest {
         }
     }
     
-    @Test
-    void Test_InputTo2DArray_Single() {
-        String userInput = "1:2";
+    @Nested
+    class TestInputTo2DArray {
+        @Test
+        void Test_InputTo2DArray_Single() {
+            String userInput = "1:2";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {
+                    {1, 2}
+            };
+            
+            assertArrayEquals(expected, result);
+        }
         
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {
-                {1, 2}
-        };
+        @Test
+        void Test_InputTo2DArray_None() {
+            String userInput = "";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {}; // Expecting an empty array
+            
+            assertArrayEquals(expected, result);
+        }
         
-        assertArrayEquals(expected, result);
+        @Test
+        void Test_InputTo2DArray_AllValid() {
+            String userInput = "1:2, 4:3, 5:4, 6:5, 7:6";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {
+                    {1, 2},
+                    {4, 3},
+                    {5, 4},
+                    {6, 5},
+                    {7, 6}
+            };
+            
+            assertArrayEquals(expected, result);
+        }
+        
+        @Test
+        void Test_InputTo2DArray_AllInvalid() {
+            String userInput = "G:3, 1.2:1, a:e, :";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {}; // Expecting an empty array
+            
+            assertArrayEquals(expected, result);
+        }
+        
+        @Test
+        void Test_InputTo2DArray_MixedValidInvalid() {
+            String userInput = "1:3, 9:5,5, 5:9, a:e, G:3 ,2:4";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {
+                    {1, 3},
+                    {9, 5},
+                    {5, 9},
+                    {2, 4},
+            };
+            
+            assertArrayEquals(expected, result);
+        }
+        
+        @Test
+        void Test_InputTo2DArray_MixedLongRequest1() {
+            String userInput = " 0:2, 1:4,  9:1, 6: 4, 8 8 :9, 64:7; 92:  1 00, 5 :9, 8: 7 ,";
+
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {
+                    {0,2},
+                    {1,4},
+                    {9,1},
+                    {6,4},
+                    {5,9},
+                    {8,7}
+            };
+
+            assertArrayEquals(expected, result);
+        }
+        
+        @Test
+        void Test_InputTo2DArray_MixedLongRequest2() {
+            String userInput = "1:21,G :3 ,2:4,32:125:8,2:3,6:7,2:c,5:d,e:7,3:7,1 :3,9 5 ,5, 5 :9,16:25,,26:24,";
+            
+            int[][] result = inputValidation.InputTo2DArray(userInput);
+            int[][] expected = {
+                    {1, 21},
+                    {2, 4},
+                    {2, 3},
+                    {6, 7},
+                    {3, 7},
+                    {1, 3},
+                    {5, 9},
+                    {16, 25},
+            };
+            
+            assertArrayEquals(expected, result);
+        }
     }
     
-    @Test
-    void Test_InputTo2DArray_None() {
-        String userInput = "";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {}; // Expecting an empty array
-        
-        assertArrayEquals(expected, result);
-    }
-    
-    @Test
-    void Test_InputTo2DArray_AllValid() {
-        String userInput = "1:2, 4:3, 5:4, 6:5, 7:6";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {
-                {1, 2},
-                {4, 3},
-                {5, 4},
-                {6, 5},
-                {7, 6}
-        };
-        
-        assertArrayEquals(expected, result);
-    }
-    
-    @Test
-    void Test_InputTo2DArray_AllInvalid() {
-        String userInput = "G:3, 1.2:1, a:e, :";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {}; // Expecting an empty array
-        
-        assertArrayEquals(expected, result);
-    }
-    
-    @Test
-    void Test_InputTo2DArray_MixedValidInvalid() {
-        String userInput = "1:3, 9:5,5, 5:9, a:e, G:3 ,2:4";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {
-                {1, 3},
-                {9, 5},
-                {5, 9},
-                {2, 4},
-        };
-        
-        assertArrayEquals(expected, result);
-    }
-    
-    @Test
-    void Test_InputTo2DArray_MixedLongRequest1() {
-        String userInput = " 0:2, 1:4,  9:1, 6: 4, 8 8 :9, 64:7; 92:  1 00, 5 :9, 8: 7 ,";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {
-                {1,4},
-                {9,1},
-                {6,4},
-                {5,9},
-                {8,7}
-        };
-        
-        assertArrayEquals(expected, result);
-    }
-    @Test
-    void Test_InputTo2DArray_MixedLongRequest2() {
-        String userInput = "1:21,G :3 ,2:4,32:125:8,2:3,6:7,2:c,5:d,e:7,3:7,1 :3,9 5 ,5, 5 :9,16:25,,26:24,";
-        
-        int[][] result = inputValidation.InputTo2DArray(userInput);
-        int[][] expected = {
-                {1, 21},
-                {2, 4},
-                {2, 3},
-                {6, 7},
-                {3, 7},
-                {1, 3},
-                {5, 9},
-                {16, 25}
-        };
-        
-        assertArrayEquals(expected, result);
-    }
 }

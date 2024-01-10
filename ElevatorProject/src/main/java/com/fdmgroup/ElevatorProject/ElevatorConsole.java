@@ -24,8 +24,8 @@ public class ElevatorConsole {
 		
 		int numElevators = configs.getNumOfElevators();
 		
-		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
+		int maxFloor = configs.getMaxFloor();
 		
 		System.out.println("Creating elevators...");
 		
@@ -45,7 +45,8 @@ public class ElevatorConsole {
 		scheduler.runElevators();
 		
 		Scanner myObj = new Scanner(System.in);
-		InputValidation inputValidation = new InputValidation();
+		
+		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    System.out.println("Enter your commands: ");
 	    
 	    String input ="";
