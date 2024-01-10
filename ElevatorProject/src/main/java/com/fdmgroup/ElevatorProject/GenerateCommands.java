@@ -1,5 +1,6 @@
 package com.fdmgroup.ElevatorProject;
 import java.util.Random;
+import java.util.Timer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,7 @@ public class GenerateCommands implements Runnable {
 		this.controller = controller;
 	}
 	
-	public void setInterval(int i) {
+	public synchronized void setInterval(int i) {
 		this.interval = i;
 	}
 	
@@ -28,6 +29,7 @@ public class GenerateCommands implements Runnable {
 		
 		int source = random.nextInt(minFloor, maxFloor + 1);
 		int destination = random.nextInt(minFloor, maxFloor + 1);
+		System.out.println("bruh");
 		LOGGER.info("Person going from " + source + "to " + destination);
 		controller.addPersonToQueue(new Person(source, destination));
 		return;
@@ -35,6 +37,15 @@ public class GenerateCommands implements Runnable {
 
 	@Override
 	public void run() {
-		generateCommands();
+		while (true) {
+			
+			try {
+				generateCommands();
+				Thread.sleep(interval*1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
