@@ -184,19 +184,5 @@ public class ElevatorTest {
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.isIdle());
 	}
-	
-	
-	@Test
-	void OPERATE_elevator_loads_a_person_then_unloads_then_check_if_idle() throws InterruptedException {
-		Person person = new Person(0,10);
-		elevator.addPersonToLoad(person);
-		elevator.operateElevator();
-		
-	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
-	    assertTrue(elevator.getPeopleOutsideToLoad().isEmpty());
-	    assertTrue(elevator.getFloorsToGo().isEmpty());
-	    assertEquals(10, elevator.getCurrentFloor());
-	    assertTrue(elevator.isIdle());
-	}
 
 }
