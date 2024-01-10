@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This object allow for the automatic generator of commands depending on a time interval.
+ * This object allow for the automatic generation of commands depending on a time interval.
  */
 public class GenerateCommands extends Thread {
 	
@@ -15,15 +15,15 @@ public class GenerateCommands extends Thread {
 	private int maxFloor;
 	private int minFloor;
 	private int interval;
-	private static Random random = new Random();
-	static Controller controller;
+	private Random random = new Random();
+	private Controller controller;
 	private Timer timer;
 	
 	public GenerateCommands(int maxFloor, int minFloor, int interval, Controller controller) {
 		this.maxFloor = maxFloor;
 		this.minFloor = minFloor;
 		this.interval = interval;
-		GenerateCommands.controller = controller;
+		this.controller = controller;
 	}
 	
 	/**
@@ -63,8 +63,10 @@ public class GenerateCommands extends Thread {
 		
 		@Override
 		public void run() {
+			
 			int source = random.nextInt(minFloor, maxFloor + 1);
 			int destination = random.nextInt(minFloor, maxFloor + 1);
+			
 			System.out.println("Person going from " + source + " to " + destination);
 			LOGGER.info("Person going from " + source + " to " + destination);
 			
@@ -89,7 +91,7 @@ public class GenerateCommands extends Thread {
 			try {
 				controller.assignElevator();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				System.out.println("Interrupted");
 				e.printStackTrace();
 			}
@@ -97,17 +99,20 @@ public class GenerateCommands extends Thread {
 		
 		
 	}
-
+	
+	/**
+	 * A kill function which stops the automatic generation of commands.
+	 */
+	public void kill() {
+		timer.cancel();
+	}
+	
 	@Override
 	public synchronized void run() {
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new generateCommands(), 0, interval * 1000);
 		timer.scheduleAtFixedRate(new runElevator(), 0, interval * 1010);
 		
-	}
-	
-	public void kill() {
-		timer.cancel();
 	}
 	
 }

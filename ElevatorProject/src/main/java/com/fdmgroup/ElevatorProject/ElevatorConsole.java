@@ -62,15 +62,16 @@ public class ElevatorConsole {
 	    
 	    GenerateCommands generator = null;
 	    
+	    // if command generation is set to true in the config file
 	    if (generateCommands) {
 			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
 			generator.run();
-			
 		}
+	    
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
+		
+		// runs the GUI
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
-	    //Thread t = new Thread(GUI);
-	    //t.run();
 	    GUI.run();
 	    
 		// handle user input for elevator requests and manages elevator assignments
@@ -97,13 +98,17 @@ public class ElevatorConsole {
 	    	// Turn on the command generation
 	    	if (input.equals("commandgeneration=on")) {
 	    		generateCommands = true;
-	    		generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
+	    		
+	    		if (generator == null) {
+	    			System.out.println("beans");
+	    			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
+	    		}
+	    		
 				generator.run();
 	    	}
 	    	
-	    	// Turn off the set destination floor
+	    	// Turn off the command generation
 	    	if (input.equals("commandgeneration=off")) {
-	    		
 	    		generateCommands = false;
 	    		generator.kill();
 	    	}
@@ -157,10 +162,6 @@ public class ElevatorConsole {
 	    	
 			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
-    		
-    		if (configs.getGenerateCommands()) {
-    			
-    		}
     		
 		    for (int[] request : requests) {
 		    	

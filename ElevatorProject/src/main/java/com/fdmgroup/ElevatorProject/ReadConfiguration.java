@@ -27,10 +27,10 @@ public class ReadConfiguration {
 		File file;
 		
 		if (!newFile.exists()) {
+			
 			LOGGER.error("Configuration-File-Not-Found");
 			return null;	
-		}
-		else {
+		} else {
 			file = newFile;
 		}
 		
@@ -44,6 +44,7 @@ public class ReadConfiguration {
 				LOGGER.error("Invalid-Configuration-File-Field");
 				return null;
 			}
+			
 		} catch (IOException e) {
 			
 			LOGGER.error("Invalid-Configuration-File");
