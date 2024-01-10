@@ -56,10 +56,15 @@ public class ElevatorConsole {
 	    System.out.println("'setdestination=(int)': set a destination floor for all people");
 	    System.out.println("'setsource=off': turn off set source floor");
 	    System.out.println("'setdestination=off': turn off set destination floor");
+	    System.out.println("'setinterval=(int)': set a time interval for commands to generate");
 	    String input ="";
 	    
-		if (generateCommands) {
-			GenerateCommands generator = new GenerateCommands(minFloor, maxFloor, interval, controller);
+	    GenerateCommands generator = null;
+	    if (generateCommands) {
+			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
+			Thread s = new Thread(generator);
+			s.run();
+			
 		}
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
@@ -70,6 +75,7 @@ public class ElevatorConsole {
 		// handle user input for elevator requests and manages elevator assignments
 	    int srcFloor = -1;
     	int dstFloor = -1;
+    	
 	    while(true) {
 	    	input = myObj.nextLine();
 	    	input.replaceAll(" ", "");
@@ -77,6 +83,7 @@ public class ElevatorConsole {
 	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
+	    	
 	    	
 	    	// Turn off the set source floor
 	    	if (input.equals("setsource=off"))
@@ -103,7 +110,27 @@ public class ElevatorConsole {
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
+	    	
 
+	    	// Command to an interval to commands to generate
+	    	if (input.matches("setinterval=-?[0-9]\\d*")) {
+	    		int intervalCommand = Integer.parseInt(input.split("=")[1]);
+
+	    		if (generateCommands) {
+	    	
+	    			if (intervalCommand > 0) {
+	    				
+	    				generator.setInterval(intervalCommand);
+	    			} else {
+
+	    			} 
+
+	    		} else {
+	    			System.out.println("You have not enabled command generation");
+	    		}
+	    		
+	    	}
+	    	
 			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
     		
