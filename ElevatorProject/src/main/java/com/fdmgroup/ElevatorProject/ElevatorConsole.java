@@ -12,8 +12,9 @@ public class ElevatorConsole {
 	
 	/**
 	 * Main method initiating the Elevator system through the console.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
@@ -65,55 +66,61 @@ public class ElevatorConsole {
 		// handle user input for elevator requests and manages elevator assignments
 	    int srcFloor = -1;
     	int dstFloor = -1;
+    	boolean setSrcOn = false;
+    	boolean setDstOn = false;
 	    while(true) {
 	    	input = myObj.nextLine();
-	    	input.replaceAll(" ", "");
-	    	input = input.toLowerCase();
 	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
 	    	
 	    	// Turn off the set source floor
-	    	if (input.equals("setsource=off"))
+	    	else if (input.equals("setsource=off")) {
 	    		srcFloor = -1;
-	    	
+	    		setSrcOn = false;
+	    	}
 	    	// Turn off the set destination floor
-	    	if (input.equals("setdestination=off"))
+	    	else if (input.equals("setdestination=off")) {
 	    		dstFloor = -1;
-	    	
+	    		setDstOn = false;
+	    	}
 	    	// Command to set source floor to a particular number
-	    	if (input.matches("setsource=-?[0-9]\\d*")) {
+	    	else if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
+	    			setSrcOn = true;
+	    		}
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
 	    	
 	    	// Command to set destination floor to a particular number
-	    	if (input.matches("setdestination=-?[0-9]\\d*")) {
+	    	else if (input.matches("setdestination=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
+	    			setDstOn = true;
+	    		}
+	    			
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
-
-			// add Person objects to the elevator queue
+	    	
+    		// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
 		    for (int[] request : requests) {
 		    	
 		    	// If there hasn't been a source/destination floor set use input values
-		    	if (srcFloor == -1)
+		    	if (setSrcOn == false)
 		    		srcFloor = request[0];
 		    	
-		    	if (dstFloor == -1)
+		    	if (setDstOn == false)
 		    		dstFloor = request[1];
-		    	
-				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+
+		    	controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 		    }
-			
-    		// assign available elevators to people in queue
+		    // assign available elevators to people in queue
 	        try {
 	            controller.assignElevator();
 	        }
