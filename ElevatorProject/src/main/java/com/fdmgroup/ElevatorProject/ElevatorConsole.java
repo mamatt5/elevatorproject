@@ -22,13 +22,13 @@ public class ElevatorConsole {
 			return;
 		}
 		
+		// configs attributes
 		int numElevators = configs.getNumOfElevators();
-		
 		int minFloor = configs.getMinFloor();
 		int maxFloor = configs.getMaxFloor();
 		
+		// elevator generation
 		System.out.println("Creating elevators...");
-		
 		Elevator elevator;
 		ArrayList<Elevator> elevators = new ArrayList<>();
 		for (int i = 0; i < numElevators; i++) {
@@ -37,46 +37,40 @@ public class ElevatorConsole {
 			elevators.add(elevator);
 		}
 	
+		// elevator management
         Scheduler scheduler = new Scheduler(elevators);
 		Controller controller = new Controller(scheduler);
 		
-		// Start elevator threads
+		// start elevator threads
 		System.out.println("Starting elevators...");
 		scheduler.runElevators();
 		
+		// user interaction
 		Scanner myObj = new Scanner(System.in);
+	    System.out.println("Enter your commands: ");
+	    String input ="";
 		
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
-	    System.out.println("Enter your commands: ");
-	    
-	    String input ="";
-	    
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
-	    
 	    //Thread t = new Thread(GUI);
 	    //t.run();
 	    GUI.run();
-	    
+		
+		// handle user input for elevator requests and manages elevator assignments
 	    while(true) {
 	    	input = myObj.nextLine();
-	    	input = input.replaceAll(" ", "");
 	    	
-	    	if (input.equals("q")) {
+	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
 			
-    		String[] people = input.split(",");
+			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
-    		
-    		for (int i = 0; i < people.length; i++) {
-    			
-    			int srcFloor = requests[i][0];
-    			int dstFloor = requests[i][1];
-    			if (srcFloor != -1 && dstFloor != -1)
-    				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
-    		}
+		    for (int[] request : requests) {
+				controller.addPersonToQueue(new Person(request[0], request[1]));
+		    }
 			
-    		// Assign elevators to the people in the queue
+    		// assign available elevators to people in queue
 	        try {
 	            controller.assignElevator();
 	        }
