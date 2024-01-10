@@ -56,8 +56,7 @@ public class Scheduler implements Serializable
 				int distance = Math.abs(elevator.getCurrentFloor() - person.getSrcFloor());
 
 				// Gets nearest idle Elevator first, meaning Elevator does not have people inside
-				if (elevator.isIdle() && distance < minIdleDistance 
-						&& elevator.getFloorsToGo().size() <= 5) {
+				if ( elevator.isIdle() && distance < minIdleDistance ) {
 					closestIdleElevator = elevator;
 					minIdleDistance = distance;
 				}
@@ -68,13 +67,14 @@ public class Scheduler implements Serializable
 					bestElevator = elevator;
 					minDistance = distance;
 				}
+				
 			}
 
 			if (bestElevator == null && closestIdleElevator == null ) {
 				wait(1000);
 			}
 		}
-		return bestElevator != null ? bestElevator : closestIdleElevator;
+		return closestIdleElevator != null ? closestIdleElevator : bestElevator;
 	}
 	
 

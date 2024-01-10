@@ -12,8 +12,9 @@ public class ElevatorConsole {
 	
 	/**
 	 * Main method initiating the Elevator system through the console.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
@@ -77,30 +78,34 @@ public class ElevatorConsole {
 		// handle user input for elevator requests and manages elevator assignments
 	    int srcFloor = -1;
     	int dstFloor = -1;
-    	
+
+    	boolean setSrcOn = false;
+    	boolean setDstOn = false;
+
 	    while(true) {
 	    	input = myObj.nextLine();
-	    	input.replaceAll(" ", "");
-	    	input = input.toLowerCase();
 	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
 	    	
 	    	
 	    	// Turn off the set source floor
-	    	if (input.equals("setsource=off"))
+	    	if (input.equals("setsource=off")) {
 	    		srcFloor = -1;
-	    	
+	    		setSrcOn = false;
+	    	}
 	    	// Turn off the set destination floor
-	    	if (input.equals("setdestination=off"))
+	    	if (input.equals("setdestination=off")) {
 	    		dstFloor = -1;
-	    	
+				setDstOn = false;
+			}
+
+			
 	    	// Turn on the command generation
 	    	if (input.equals("commandgeneration=on")) {
 	    		generateCommands = true;
 	    		
 	    		if (generator == null) {
-	    			System.out.println("beans");
 	    			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
 	    		}
 	    		
@@ -114,11 +119,16 @@ public class ElevatorConsole {
 	    	}
 	    		
 	    	
+
+	    	
+
 	    	// Command to set source floor to a particular number
 	    	if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
+					setSrcOn = true;
+
 	    			if (generateCommands)
 	    				generator.setMinFloor(srcFloor);
 	    				
@@ -133,9 +143,12 @@ public class ElevatorConsole {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
+					setDstOn = true;
+
 	    			if (generateCommands)
 	    				generator.setMaxFloor(dstFloor);
 	    		} else {
+
 	    			System.out.println("Invalid floor number");
 	    		}
 	    			
@@ -166,16 +179,15 @@ public class ElevatorConsole {
 		    for (int[] request : requests) {
 		    	
 		    	// If there hasn't been a source/destination floor set use input values
-		    	if (srcFloor == -1)
+		    	if (setSrcOn == false)
 		    		srcFloor = request[0];
 		    	
-		    	if (dstFloor == -1)
+		    	if (setDstOn == false)
 		    		dstFloor = request[1];
-		    	
-				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+
+		    	controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 		    }
-			
-    		// assign available elevators to people in queue
+		    // assign available elevators to people in queue
 	        try {
 	            controller.assignElevator();
 	        }

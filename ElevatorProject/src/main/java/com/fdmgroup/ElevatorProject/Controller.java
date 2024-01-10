@@ -28,9 +28,11 @@ public class Controller {
 	 * Adds a Person to the queue of people waiting for an elevator.
 	 *
 	 * @param person The Person object to be added to the peopleQueue list.
+	 * @throws InterruptedException 
 	 */
-	public void addPersonToQueue(Person person) {
+	public synchronized void addPersonToQueue(Person person) throws InterruptedException {
 		this.peopleQueue.add(person);
+		wait(500);
 	}
 
 	/**
@@ -45,6 +47,7 @@ public class Controller {
 			scheduler.callElevator(person).addPersonToLoad(person);
 //			LOGGER.info("Assigning person from floor " + person.getSrcFloor() + " to floor " + person.getDestFloor() + " to an elevator.");
 			peopleQueue.remove(0);
+			wait(500);
 		}
 	}
 
