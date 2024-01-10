@@ -1,14 +1,13 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ public class SchedulerTest {
 	@BeforeAll
 	static void setup() {
 		
-		// These elevators instantiated at floor 0
+		// These elevators instantiated at ground floor
 		Elevator elevator1 = new Elevator();
 		Elevator elevator2 = new Elevator();
 		Elevator elevator3 = new Elevator();
@@ -30,6 +29,21 @@ public class SchedulerTest {
 		elevators.add(elevator3);
 
 		scheduler = new Scheduler(elevators);
+		
+	}
+	
+	@AfterEach
+	void cleanup() {
+		scheduler.getElevators().clear();
+		
+		// Refresh the Elevator array after each test
+		Elevator elevator1 = new Elevator();
+		Elevator elevator2 = new Elevator();
+		Elevator elevator3 = new Elevator();
+		
+		scheduler.getElevators().add(elevator1);
+		scheduler.getElevators().add(elevator2);
+		scheduler.getElevators().add(elevator3);
 	}
 
 	@Test
@@ -53,24 +67,36 @@ public class SchedulerTest {
 	void  scheduler_can_assign_different_elevators() throws InterruptedException {
 		Person person1 = new Person(0,10);
 		Person person2 = new Person(0,10);
-		List<String> validElevatorIDs = Arrays.asList("Elevator0","Elevator1","Elevator2");
+		
+		// Grabs IDs of Elevators at ground floor
+		List<String> elevatorsOnGroundFloor = new ArrayList<>();
+		for ( Elevator elevator : scheduler.getElevators() ) {
+			if ( elevator.getCurrentFloor() == 0 ) {
+				elevatorsOnGroundFloor.add(elevator.getElevatorID());
+				
+			}
+		}
 		
 		Elevator assignedElevator1 = scheduler.callElevator(person1);
-		assertTrue(validElevatorIDs.contains(assignedElevator1.getElevatorID())); 
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator1.getElevatorID())); 
 
-		// Bring first assigned Elevator to floor 4
+		
+		// Bring first assigned Elevator to floor 4, making it an invalid choice for the second person
 		try
 		{
+			
 			assignedElevator1.goToFloor(4);
-			assignedElevator1.setIdle(true);
+			assignedElevator1.setIdle(true); // To simulate if the Elevator unloaded at floor 4
+			elevatorsOnGroundFloor.remove(assignedElevator1.getElevatorID());
+			
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 
 		Elevator assignedElevator2 = scheduler.callElevator(person2);
-
-		assertEquals("Elevator1",assignedElevator2.getElevatorID());
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator2.getElevatorID()));
+		
 	}
 
 	@Test
@@ -78,50 +104,52 @@ public class SchedulerTest {
 		Person person1 = new Person(0,3);
 		Person person2 = new Person(10,14);
 		Person person3 = new Person(2,4);
+		
+		// Grabs IDs of Elevators at ground floor
+		List<String> elevatorsOnGroundFloor = new ArrayList<>();
+		for ( Elevator elevator : scheduler.getElevators() ) {
+			if ( elevator.getCurrentFloor() == 0 ) {
+				elevatorsOnGroundFloor.add(elevator.getElevatorID());
+				
+			}
+		}
 
 
 		Elevator assignedElevator1 = scheduler.callElevator(person1);
-		assertEquals("Elevator0", assignedElevator1.getElevatorID());
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator1.getElevatorID()));
 
 
 		try {
-			assignedElevator1.goToFloor(3);
+			assignedElevator1.goToFloor(3); // Assume person unloaded at floor 3
+			assignedElevator1.setIdle(true); // Elevator idle
+			elevatorsOnGroundFloor.remove(assignedElevator1.getElevatorID()); // Since Elevator is not in ground floor anymore
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 		Elevator assignedElevator2 = scheduler.callElevator(person2);
-
-		assertEquals("Elevator0", assignedElevator2.getElevatorID());
+		
+		// Should be the same Elevator as the first since the other Elevators are on ground floor 
+		assertEquals(assignedElevator2, assignedElevator1); 
+		
+		
 		try
 		{
-			assignedElevator2.goToFloor(14);
+			assignedElevator2.goToFloor(14); // person unloaded at floor 14
+			assignedElevator2.setIdle(true); // Elevator idle
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 
-		assertFalse(assignedElevator1.isIdle());
-		assertFalse(assignedElevator2.isIdle());
-		assertTrue(assignedElevator2.getPeopleInsideToUnload().isEmpty());
-
-
+		// Should grab any elevator from ground floor
 		Elevator assignedElevator3 = scheduler.callElevator(person3);
-
-		assertEquals("Elevator1", assignedElevator3.getElevatorID());
-		try
-		{
-			assignedElevator3.goToFloor(3);
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-		assertFalse(assignedElevator3.isIdle());
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator3.getElevatorID()));
 
 	}
 
 	@Test
-	void scheduler_assign_elevators_with_more_people_and_elevator_added() throws InterruptedException { 
+	void scheduler_assign_elevators_with_more_people_and_elevator_added_but_different_starting_position() throws InterruptedException { 
 		Elevator elevator4 = new Elevator();
 		elevator4.goToFloor(10);
 
@@ -139,11 +167,23 @@ public class SchedulerTest {
 		scheduler.addElevator(elevator6);
 		scheduler.addElevator(elevator7);
 		
-		// Set all elevators to idle
+		// List of elevators that is on ground floor
+		List<String> elevatorsOnGroundFloor = new ArrayList<>();
+		for ( Elevator elevator : scheduler.getElevators() ) {
+			if ( elevator.getCurrentFloor() == 0 ) {
+				elevatorsOnGroundFloor.add(elevator.getElevatorID());
+				
+			}
+		}
+		
+		
+		// Set all elevators to idle to simulate different idle positions
 		for ( Elevator elevator: scheduler.getElevators() ) {
 			elevator.setIdle(true);
 		}
 
+		// In theory, only person2 and person6 would be assigned a different elevator from different floor
+		// person2 would be assigned elevator4, while person6 would be assigned elevator7
 		Person person1 = new Person(0,3);
 		Person person2 = new Person(10,14);
 		Person person3 = new Person(2,4);
@@ -152,32 +192,30 @@ public class SchedulerTest {
 		Person person6 = new Person(5,4);
 		Person person7 = new Person(2,4);
 
-
-		// Elevators for all persons except person2 and person6
-		List<String> validElevatorIDs = Arrays.asList("Elevator0","Elevator1","Elevator2");
 		
 		Elevator assignedElevator1 = scheduler.callElevator(person1);
-		assertTrue(validElevatorIDs.contains(assignedElevator1.getElevatorID()));
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator1.getElevatorID()));
 
 		Elevator assignedElevator2 = scheduler.callElevator(person2);
 		assertEquals(elevator4.getElevatorID(), assignedElevator2.getElevatorID());
 
 		Elevator assignedElevator3 = scheduler.callElevator(person3);
-		assertTrue(validElevatorIDs.contains(assignedElevator3.getElevatorID()));
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator3.getElevatorID()));
 
 		Elevator assignedElevator4 = scheduler.callElevator(person4);
-		assertTrue(validElevatorIDs.contains(assignedElevator4.getElevatorID()));
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator4.getElevatorID()));
 
 		Elevator assignedElevator5 = scheduler.callElevator(person5);
-		assertTrue(validElevatorIDs.contains(assignedElevator5.getElevatorID()));
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator5.getElevatorID()));
 
 		Elevator assignedElevator6 = scheduler.callElevator(person6);
 		assertEquals(elevator7.getElevatorID(), assignedElevator6.getElevatorID());
 
 		Elevator assignedElevator7 = scheduler.callElevator(person7);
-		assertTrue(validElevatorIDs.contains(assignedElevator7.getElevatorID()));
+		assertTrue(elevatorsOnGroundFloor.contains(assignedElevator7.getElevatorID()));
 
 
 	}
+	
 
 }

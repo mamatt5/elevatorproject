@@ -3,8 +3,6 @@ package com.fdmgroup.ElevatorProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.Collections;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -141,8 +139,7 @@ public class Elevator implements Runnable, Serializable {
 		else {
 	        this.isIdle = true;
 	    }
-	    
-	    // todo: Maybe add Thread.wait() or Thread.lock()?
+
 	}
 	
 	// ------------ person handling ------------ //
