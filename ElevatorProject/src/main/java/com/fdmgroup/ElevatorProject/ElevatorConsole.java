@@ -12,8 +12,9 @@ public class ElevatorConsole {
 	
 	/**
 	 * Main method initiating the Elevator system through the console.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
