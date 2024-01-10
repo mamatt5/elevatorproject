@@ -167,8 +167,10 @@ public class Elevator implements Runnable, Serializable {
 	public void goToFloor(int floor) throws InterruptedException {
 		int currentFloor = getCurrentFloor();
 		int numFloors = floor - currentFloor;
+		LOGGER.info(this.getElevatorID() + " moving to floor " +floor);
 		
 		movesFloor(numFloors);
+		LOGGER.info(this.getElevatorID() + " arrived at floor " +this.currentFloor);
 	}
 	
 	/**
