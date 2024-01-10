@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * This object allow for the automatic generator of commands depending on a time interval.
  */
-public class GenerateCommands implements Runnable {
+public class GenerateCommands extends Thread {
 	
 	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
 	private int maxFloor;
@@ -90,6 +90,7 @@ public class GenerateCommands implements Runnable {
 				controller.assignElevator();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				System.out.println("Interrupted");
 				e.printStackTrace();
 			}
 		}
@@ -102,5 +103,11 @@ public class GenerateCommands implements Runnable {
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new generateCommands(), 0, interval * 1000);
 		timer.scheduleAtFixedRate(new runElevator(), 0, interval * 1010);
+		
 	}
+	
+	public void kill() {
+		timer.cancel();
+	}
+	
 }

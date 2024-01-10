@@ -57,13 +57,14 @@ public class ElevatorConsole {
 	    System.out.println("'setsource=off': turn off set source floor");
 	    System.out.println("'setdestination=off': turn off set destination floor");
 	    System.out.println("'setinterval=(int)': set a time interval for commands to generate");
+	    System.out.println("'commandgeneration=on/off': set a time interval for commands to generate");
 	    String input ="";
 	    
 	    GenerateCommands generator = null;
+	    
 	    if (generateCommands) {
 			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
-			Thread s = new Thread(generator);
-			s.run();
+			generator.run();
 			
 		}
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
@@ -93,12 +94,29 @@ public class ElevatorConsole {
 	    	if (input.equals("setdestination=off"))
 	    		dstFloor = -1;
 	    	
+	    	// Turn on the command generation
+	    	if (input.equals("commandgeneration=on")) {
+	    		generateCommands = true;
+	    		generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
+				generator.run();
+	    	}
+	    	
+	    	// Turn off the set destination floor
+	    	if (input.equals("commandgeneration=off")) {
+	    		
+	    		generateCommands = false;
+	    		generator.kill();
+	    	}
+	    		
+	    	
 	    	// Command to set source floor to a particular number
 	    	if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
-	    			generator.setMinFloor(srcFloor);
+	    			if (generateCommands)
+	    				generator.setMinFloor(srcFloor);
+	    				
 	    		} else {
 	    			System.out.println("Invalid floor number");
 	    		}
@@ -110,7 +128,8 @@ public class ElevatorConsole {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
-	    			generator.setMaxFloor(dstFloor);
+	    			if (generateCommands)
+	    				generator.setMaxFloor(dstFloor);
 	    		} else {
 	    			System.out.println("Invalid floor number");
 	    		}
@@ -123,12 +142,11 @@ public class ElevatorConsole {
 	    		int intervalCommand = Integer.parseInt(input.split("=")[1]);
 
 	    		if (generateCommands) {
-	    	
 	    			if (intervalCommand > 0) {
-	    				
+	    		
 	    				generator.setInterval(intervalCommand);
 	    			} else {
-
+	    				System.out.println("Invalid Interval");
 	    			} 
 
 	    		} else {
