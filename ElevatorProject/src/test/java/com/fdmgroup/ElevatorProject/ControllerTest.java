@@ -165,7 +165,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_3_person_different_floor_going_up()
+	void assign_elevator_3_person_different_floor_going_up_to_load()
 	{
 		Person person1 = new Person(3, 10);
 		Person person2 = new Person(2, 5);
@@ -188,7 +188,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_ground_floor()
+	void assign_elevator_1_person_going_down_ground_floor_to_load()
 	{
 		Person person1 = new Person(3, 0);
 		Person person2 = new Person(2, 0);
@@ -211,7 +211,7 @@ public class ControllerTest
 	}
 	
 	@Test
-	void assign_elevator_1_person_going_down_different_floor()
+	void assign_elevator_1_person_going_down_different_floor_to_load()
 	{
 		Person person1 = new Person(3, 1);
 		Person person2 = new Person(7, 2);

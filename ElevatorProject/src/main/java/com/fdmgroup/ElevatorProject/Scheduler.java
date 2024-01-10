@@ -70,8 +70,9 @@ public class Scheduler implements Serializable
 				}
 			}
 
+			// for testing purposes: set wait to 10ms.
 			if (bestElevator == null && closestIdleElevator == null ) {
-				wait(1000);
+				wait(10);
 			}
 		}
 		return bestElevator != null ? bestElevator : closestIdleElevator;
