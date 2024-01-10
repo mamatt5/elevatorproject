@@ -22,13 +22,13 @@ public class ElevatorConsole {
 			return;
 		}
 		
+		// configs attributes
 		int numElevators = configs.getNumOfElevators();
-		
-		int maxFloor = configs.getMaxFloor();
 		int minFloor = configs.getMinFloor();
+		int maxFloor = configs.getMaxFloor();
 		
+		// elevator generation
 		System.out.println("Creating elevators...");
-		
 		Elevator elevator;
 		ArrayList<Elevator> elevators = new ArrayList<>();
 		for (int i = 0; i < numElevators; i++) {
@@ -37,45 +37,83 @@ public class ElevatorConsole {
 			elevators.add(elevator);
 		}
 	
+		// elevator management
         Scheduler scheduler = new Scheduler(elevators);
 		Controller controller = new Controller(scheduler);
 		
-		// Start elevator threads
+		// start elevator threads
 		System.out.println("Starting elevators...");
 		scheduler.runElevators();
 		
+		// user interaction
 		Scanner myObj = new Scanner(System.in);
-		InputValidation inputValidation = new InputValidation();
-	    System.out.println("Enter your commands: ");
-	    
+	    System.out.println("Available commands: ");
+	    System.out.println("'q': exit program");
+	    System.out.println("'srcFloor:dstFloor': move elevator");
+	    System.out.println("'setsource=(int)': set a source floor for all people");
+	    System.out.println("'setdestination=(int)': set a destination floor for all people");
+	    System.out.println("'setsource=off': turn off set source floor");
+	    System.out.println("'setdestination=off': turn off set destination floor");
 	    String input ="";
-	    
+		
+		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
-	    
 	    //Thread t = new Thread(GUI);
 	    //t.run();
 	    GUI.run();
 	    
+		// handle user input for elevator requests and manages elevator assignments
+	    int srcFloor = -1;
+    	int dstFloor = -1;
 	    while(true) {
 	    	input = myObj.nextLine();
-	    	input = input.replaceAll(" ", "");
-	    	
-	    	if (input.equals("q")) {
+	    	input.replaceAll(" ", "");
+	    	input = input.toLowerCase();
+	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
-			
-    		String[] people = input.split(",");
+	    	
+	    	// Turn off the set source floor
+	    	if (input.equals("setsource=off"))
+	    		srcFloor = -1;
+	    	
+	    	// Turn off the set destination floor
+	    	if (input.equals("setdestination=off"))
+	    		dstFloor = -1;
+	    	
+	    	// Command to set source floor to a particular number
+	    	if (input.matches("setsource=-?[0-9]\\d*")) {
+	    		int floor = Integer.parseInt(input.split("=")[1]);
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    			srcFloor = floor;
+	    		else
+	    			System.out.println("Invalid floor number");
+	    	}
+	    	
+	    	// Command to set destination floor to a particular number
+	    	if (input.matches("setdestination=-?[0-9]\\d*")) {
+	    		int floor = Integer.parseInt(input.split("=")[1]);
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    			dstFloor = floor;
+	    		else
+	    			System.out.println("Invalid floor number");
+	    	}
+
+			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
-    		
-    		for (int i = 0; i < people.length; i++) {
-    			
-    			int srcFloor = requests[i][0];
-    			int dstFloor = requests[i][1];
-    			if (srcFloor != -1 && dstFloor != -1)
-    				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
-    		}
+		    for (int[] request : requests) {
+		    	
+		    	// If there hasn't been a source/destination floor set use input values
+		    	if (srcFloor == -1)
+		    		srcFloor = request[0];
+		    	
+		    	if (dstFloor == -1)
+		    		dstFloor = request[1];
+		    	
+				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+		    }
 			
-    		// Assign elevators to the people in the queue
+    		// assign available elevators to people in queue
 	        try {
 	            controller.assignElevator();
 	        }

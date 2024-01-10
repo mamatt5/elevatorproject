@@ -2,30 +2,29 @@ package com.fdmgroup.ElevatorProject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
 public class InputValidation {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
-    private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-    Configurations CONFIGS = ReadConfiguration.getConfiguration(configFilePath);
-    private final int MIN_FLOOR;
-    {
-        assert CONFIGS != null;
-        MIN_FLOOR = CONFIGS.getMinFloor();
-    }
-    
-    private final int MAX_FLOOR = CONFIGS.getMaxFloor();
+    private final int minFloor;
+    private final int maxFloor;
     private final int ERROR_FLOOR = -1;
     
+    // ------------ constructor ------------ //
     
+    public InputValidation(int minFloor, int maxFloor) {
+        this.minFloor = minFloor;
+        this.maxFloor = maxFloor;
+    }
+    
+    // -------------------------------------------------------------------- //
     /**
      * Converts String user input into a 2D array containing source and destination floors.
      * @param userInput The input string in the format "src:dest,src:dest,src:dest..."
      * @return A 2D array representing source and destination floors
      */
-    public int[][] InputTo2DArray (@NotNull String userInput) {
+    public int[][] InputTo2DArray (String userInput) {
         userInput = userInput.replaceAll(" ", "");
         String[] requests = userInput.split(",");     // splits on comma (,) delimiter for separate src:dest requests
         int[][] jobs = new int[requests.length][2];
@@ -59,8 +58,8 @@ public class InputValidation {
      * @param input The job request array "src:dest" to validate
      * @return True if the input array has a length of 2; otherwise, false
      */
-    public boolean isValidSrcDestFormat(String @NotNull [] input) {
-        return input.length == 2;                           // expected job format is "src:dest"
+    public boolean isValidSrcDestFormat(String[] input) {
+        return input.length == 2;   // expected job format has 2 parts "src:dest" after : split
     }
     
     /**
@@ -68,7 +67,7 @@ public class InputValidation {
      * @param input An array in the expected src:dest format, where the source floor is the first element
      * @return The integer value of the source floor
      */
-    public int getSrcFloor(String @NotNull [] input) {
+    public int getSrcFloor(String[] input) {
         try {
             return Integer.parseInt(input[0]);              // converts source floor from String to int
         }
@@ -83,7 +82,7 @@ public class InputValidation {
      * @param input An array in the expected src:dest format, where the destination floor is the second element
      * @return The integer value of the destination floor
      */
-    public int getDestFloor(String @NotNull [] input) {
+    public int getDestFloor(String[] input) {
         try {
             return Integer.parseInt(input[1]);                     // converts destination floor from String to int
         }
@@ -112,8 +111,7 @@ public class InputValidation {
         int dest = getDestFloor(trip);
         
         try {
-            InvalidInputException inputCheck = new InvalidInputException();
-            inputCheck.validateTrip(src, dest);
+            validateTrip(src, dest);
         }
         catch (InvalidInputException e) {
             LOGGER.error("Invalid request-- src: " + src + ", dest: " + dest);
@@ -135,24 +133,52 @@ public class InputValidation {
         int index = 0;
         
         for (int[] job : jobs) {
-            if (job[0] != 0) {
+            if (job[0] != 0 || job[1] != 0) {
                 resizedJobs[index][0] = job[0];
                 resizedJobs[index][1] = job[1];
                 index++;
             }
         }
-            
+        
         return resizedJobs;
     }
     
-    // ------------ validation methods (public) ------------ //
+    // ------------ validation methods ------------ //
+    /**
+     * Custom exception class -- handles cases of invalid user input scenarios.
+     */
+     public static class InvalidInputException extends Exception {
+        public InvalidInputException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * Validates the trip based on source and destination floors.
+     *
+     * @param src  The source floor.
+     * @param dest The destination floor.
+     * @throws InvalidInputException Thrown when the input doesn't meet validation criteria.
+     */
+    public void validateTrip(int src, int dest) throws InvalidInputException {
+        if (!floorInRange(src)) {
+            throw new InvalidInputException("Floor out of range-- " + src);
+        }
+        if (!floorInRange(dest)) {
+            throw new InvalidInputException("Floor out of range-- " + dest);
+        }
+        if (!sameFloor(src, dest)) {
+            throw new InvalidInputException("No travel required-- " + src + ", " + dest);
+        }
+    }
+    
     /**
      * Checks if the given floor is within the valid building range.
      * @param floor The floor number to check
      * @return True if the floor is within the building range, otherwise false
      */
     public boolean floorInRange(int floor) {
-        return floor >= MIN_FLOOR && floor <= MAX_FLOOR;        // floor has to exist within building
+        return floor >= minFloor && floor <= maxFloor;        // floor has to exist within building
     }
     
     /**

@@ -9,7 +9,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -126,8 +125,6 @@ public class FrameView implements Runnable
 			{
 				
 				int numFloors = maxFloor - minFloor; // - minFloor;
-				
-				int adjustment = -minFloor;
 
 				setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
 				fm = graphics.getFontMetrics(this.getFont());
@@ -214,13 +211,10 @@ public class FrameView implements Runnable
 		int i = 0;
 		int numFloors = maxFloor - minFloor;
 		int levelHeight = (height - gHeight - leftOffset) / (numFloors + 1);
-		int adjust = 0; 
+		
 		StringBuilder levelLabelText = new StringBuilder();
 		Color sky = new Color(135, 206, 235);
 		
-		if (minFloor > 0)
-			adjust = 1;
-
 		
 		//Draw top
 		graphics.setColor(sky);
