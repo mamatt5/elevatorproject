@@ -18,6 +18,7 @@
 		</File>
 	</Appenders>
 	<Loggers> # Set level <Root level="trace">
+
 		</Root>
 	<Logger
 			name="com.fdmgroup.ElevatorProject.Elevator" level="trace">

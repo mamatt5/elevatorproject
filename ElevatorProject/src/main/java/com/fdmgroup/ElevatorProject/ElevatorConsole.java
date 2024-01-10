@@ -67,22 +67,20 @@ public class ElevatorConsole {
     	int dstFloor = -1;
 	    while(true) {
 	    	input = myObj.nextLine();
-	    	input.replaceAll(" ", "");
-	    	input = input.toLowerCase();
 	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
 	    	
 	    	// Turn off the set source floor
-	    	if (input.equals("setsource=off"))
+	    	else if (input.equals("setsource=off"))
 	    		srcFloor = -1;
 	    	
 	    	// Turn off the set destination floor
-	    	if (input.equals("setdestination=off"))
+	    	else if (input.equals("setdestination=off"))
 	    		dstFloor = -1;
 	    	
 	    	// Command to set source floor to a particular number
-	    	if (input.matches("setsource=-?[0-9]\\d*")) {
+	    	else if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
 	    			srcFloor = floor;
@@ -91,15 +89,15 @@ public class ElevatorConsole {
 	    	}
 	    	
 	    	// Command to set destination floor to a particular number
-	    	if (input.matches("setdestination=-?[0-9]\\d*")) {
+	    	else if (input.matches("setdestination=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
 	    			dstFloor = floor;
 	    		else
 	    			System.out.println("Invalid floor number");
 	    	}
-
-			// add Person objects to the elevator queue
+	    	
+    		// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
 		    for (int[] request : requests) {
 		    	
@@ -110,10 +108,9 @@ public class ElevatorConsole {
 		    	if (dstFloor == -1)
 		    		dstFloor = request[1];
 		    	
-				controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+		    	controller.addPersonToQueue(new Person(request[0], request[1]));
 		    }
-			
-    		// assign available elevators to people in queue
+		    // assign available elevators to people in queue
 	        try {
 	            controller.assignElevator();
 	        }
