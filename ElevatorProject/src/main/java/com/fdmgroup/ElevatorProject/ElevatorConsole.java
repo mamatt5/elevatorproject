@@ -96,19 +96,25 @@ public class ElevatorConsole {
 	    	// Command to set source floor to a particular number
 	    	if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
-	    		else
+	    			generator.setMinFloor(srcFloor);
+	    		} else {
 	    			System.out.println("Invalid floor number");
+	    		}
+	    			
 	    	}
 	    	
 	    	// Command to set destination floor to a particular number
 	    	if (input.matches("setdestination=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
-	    		if (floor > minFloor - 1 && floor < maxFloor + 1)
+	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
-	    		else
+	    			generator.setMaxFloor(dstFloor);
+	    		} else {
 	    			System.out.println("Invalid floor number");
+	    		}
+	    			
 	    	}
 	    	
 

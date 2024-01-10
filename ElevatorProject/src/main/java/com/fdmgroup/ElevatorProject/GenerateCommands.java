@@ -14,7 +14,7 @@ public class GenerateCommands implements Runnable {
 	private int interval;
 	private static Random random = new Random();
 	static Controller controller;
-	private Timer timer = new Timer();
+	private Timer timer;
 	
 	public GenerateCommands(int maxFloor, int minFloor, int interval, Controller controller) {
 		GenerateCommands.maxFloor = maxFloor;
@@ -24,11 +24,25 @@ public class GenerateCommands implements Runnable {
 	}
 	
 	public synchronized void setInterval(int i) {
-		System.out.println("BEANS");
+		
+		timer.cancel();
 		this.interval = i;
 		run();
 	}
 	
+	public synchronized void setMaxFloor(int i) {
+		
+		timer.cancel();
+		GenerateCommands.maxFloor = i;
+		run();
+	}
+	
+	public synchronized void setMinFloor(int i) {
+		
+		timer.cancel();
+		GenerateCommands.minFloor = i;
+		run();
+	}
 	static class generateCommands extends TimerTask {
 		
 		@Override
@@ -56,7 +70,7 @@ public class GenerateCommands implements Runnable {
 			try {
 				controller.assignElevator();
 			} catch (InterruptedException e) {
-			
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -66,6 +80,7 @@ public class GenerateCommands implements Runnable {
 
 	@Override
 	public synchronized void run() {
+		timer = new Timer();
 		timer.scheduleAtFixedRate(new generateCommands(), 0, interval * 1000);
 		timer.scheduleAtFixedRate(new runElevator(), 0, interval * 1010);
 	}
