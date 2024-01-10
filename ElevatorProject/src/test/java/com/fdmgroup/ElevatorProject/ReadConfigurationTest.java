@@ -1,8 +1,9 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,9 +20,9 @@ public class ReadConfigurationTest {
 
 	/**
 	 * Function that is used to verify certain log messages were produced in order
-	 * to test if getConfiguration is working properly. It reads the last line of the
-	 * LogTesting.log file to see if the lastest logger message produced is correct. 
-	 * @return
+	 * to test if getConfiguration is working properly. It reads the last token of of the
+	 * last line of the LogTesting.log file to see if the lastest logger message produced is correct. 
+	 * @return String the last token of the last line
 	 */
 	private String readLogFile() {
 		
@@ -55,10 +56,8 @@ public class ReadConfigurationTest {
 		String fileName = "Invalid";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
-		
 		assertEquals("Configuration-File-Not-Found", readLogFile());
 		
-
 	}
 	
 	@Test 
@@ -67,7 +66,6 @@ public class ReadConfigurationTest {
 		String fileName = "src/test/resources/InvalidJsonFormatConfigurationTest.txt";
 
 		assertNull(ReadConfiguration.getConfiguration(fileName));			
-		
 		assertEquals("Invalid-Configuration-File", readLogFile());
 		
 	}
@@ -78,7 +76,6 @@ public class ReadConfigurationTest {
 		String fileName = "src/test/resources/InvalidMaxFloorTest.txt";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
-			
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
 
 	}
@@ -89,7 +86,6 @@ public class ReadConfigurationTest {
 		String fileName = "src/test/resources/InvalidMinFloorTest.txt";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
-			
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
 
 	}
@@ -100,7 +96,16 @@ public class ReadConfigurationTest {
 		String fileName = "src/test/resources/InvalidNumOfElevatorsTest.txt";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
-			
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
+	void invalid_generateCommands_field() {
+		
+		String fileName = "src/test/resources/InvalidNumOfElevatorsTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
 
 	}
@@ -111,7 +116,6 @@ public class ReadConfigurationTest {
 		String fileName = "src/test/resources/InvalidMinAndMaxFloorTest.txt";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
-			
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
 
 	}
@@ -120,12 +124,13 @@ public class ReadConfigurationTest {
 	void valid_json_format() {
 		
 		String fileName = "src/test/resources/ValidJsonFormatConfigurationTest.txt";
-	
 		Configurations config = ReadConfiguration.getConfiguration(fileName);
 			
 		assertEquals(4, config.getMaxFloor());
 		assertEquals(1, config.getMinFloor());
 		assertEquals(3, config.getNumOfElevators());
+		assertFalse(config.getGenerateCommands());
+		assertEquals(8, config.getIntervalBetweenCommands());
 
 	}
 	
@@ -133,12 +138,13 @@ public class ReadConfigurationTest {
 	void valid_json_format_big_fields() {
 		
 		String fileName = "src/test/resources/ValidJsonFormatBigFieldsConfigurationTest.txt";
-	
 		Configurations config = ReadConfiguration.getConfiguration(fileName);
 			
 		assertEquals(4987324, config.getMaxFloor());
 		assertEquals(23494, config.getMinFloor());
 		assertEquals(987345, config.getNumOfElevators());
+		assertTrue(config.getGenerateCommands());
+		assertEquals(85657, config.getIntervalBetweenCommands());
 
 	}
 

@@ -38,7 +38,7 @@ public class Elevator implements Runnable, Serializable {
 	private final String ELEVATOR_ID;
 	private static int nextID = 0;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 1000;
+	private final int SLEEP_TIME = 100;
 	
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
@@ -155,8 +155,10 @@ public class Elevator implements Runnable, Serializable {
 	public void goToFloor(int floor) throws InterruptedException {
 		int currentFloor = getCurrentFloor();
 		int numFloors = floor - currentFloor;
+		LOGGER.info(this.getElevatorID() + " moving to floor " +floor);
 		
 		movesFloor(numFloors);
+		LOGGER.info(this.getElevatorID() + " arrived at floor " +this.currentFloor);
 	}
 	
 	/**
