@@ -67,7 +67,7 @@ public class GenerateCommands extends Thread {
 			int source = random.nextInt(minFloor, maxFloor + 1);
 			int destination = random.nextInt(minFloor, maxFloor + 1);
 			
-			System.out.println("Person going from " + source + " to " + destination);
+			System.out.println(source + ":" + destination);
 			LOGGER.info("Person going from " + source + " to " + destination);
 			
 			try {
