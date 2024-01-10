@@ -40,7 +40,7 @@ public class Elevator implements Runnable, Serializable {
 	private boolean goingUp = true;
 	private boolean isIdle = true;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 1000;
+	private final int SLEEP_TIME = 100;
 	
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {

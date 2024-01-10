@@ -2,6 +2,8 @@
 
 	"maxFloor":30,
 	"minFloor":0,
-	"numOfElevators":5
+	"numOfElevators":5,
+	"generateCommands": false,
+	"intervalBetweenCommands": 4
 	
 }

@@ -1,0 +1,8 @@
+{
+
+	"maxFloor":25,
+	"minFloor":1,
+	"numOfElevators":4,
+	"generateCommands": false,
+	"intervalBetweenCommands": -4
+}
