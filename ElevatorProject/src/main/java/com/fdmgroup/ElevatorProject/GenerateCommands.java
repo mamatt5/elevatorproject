@@ -6,23 +6,29 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This object allow for the automatic generator of commands depending on a time interval.
+ */
 public class GenerateCommands implements Runnable {
 	
 	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
-	private static int maxFloor;
-	private static int minFloor;
+	private int maxFloor;
+	private int minFloor;
 	private int interval;
 	private static Random random = new Random();
 	static Controller controller;
 	private Timer timer;
 	
 	public GenerateCommands(int maxFloor, int minFloor, int interval, Controller controller) {
-		GenerateCommands.maxFloor = maxFloor;
-		GenerateCommands.minFloor = minFloor;
+		this.maxFloor = maxFloor;
+		this.minFloor = minFloor;
 		this.interval = interval;
 		GenerateCommands.controller = controller;
 	}
 	
+	/**
+	 * A setter for interval which allows it be changed.
+	 */
 	public synchronized void setInterval(int i) {
 		
 		timer.cancel();
@@ -30,20 +36,30 @@ public class GenerateCommands implements Runnable {
 		run();
 	}
 	
+	/**
+	 * A setter for maxFloor which allows it be changed.
+	 */
 	public synchronized void setMaxFloor(int i) {
 		
 		timer.cancel();
-		GenerateCommands.maxFloor = i;
+		maxFloor = i;
 		run();
 	}
 	
+	/**
+	 * A setter for minFloor which allows it be changed.
+	 */
 	public synchronized void setMinFloor(int i) {
 		
 		timer.cancel();
-		GenerateCommands.minFloor = i;
+		minFloor = i;
 		run();
 	}
-	static class generateCommands extends TimerTask {
+	
+	/**
+	 * A TimerTask that allows for command generation.
+	 */
+	public class generateCommands extends TimerTask {
 		
 		@Override
 		public void run() {
@@ -63,7 +79,10 @@ public class GenerateCommands implements Runnable {
 		
 	}
 	
-	static class runElevator extends TimerTask {
+	/**
+	 * A TimerTask that is used to wrap assignElevator.
+	 */
+	public class runElevator extends TimerTask {
 		
 		@Override
 		public void run() {
