@@ -184,7 +184,7 @@ public class ElevatorConsole {
 		    	
 		    	if (setDstOn == false)
 		    		dstFloor = request[1];
-
+		    	
 		    	controller.addPersonToQueue(new Person(srcFloor, dstFloor));
 		    }
 		    // assign available elevators to people in queue
@@ -196,8 +196,13 @@ public class ElevatorConsole {
 	        }
 	    }
 	    
+	    for (Elevator e : elevators) {
+	    	e.kill();
+	    }
+	    
 	    GUI.close();
 	    myObj.close();
+	    
 	}
 
 }

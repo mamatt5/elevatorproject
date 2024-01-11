@@ -37,7 +37,7 @@
 	</Logger>
 
 	<Logger
-			name="com.fdmgroup.ElevatorProject.InputValidator" level="trace">
+			name="com.fdmgroup.ElevatorProject.InputValidation" level="trace">
 
 			<AppenderRef ref="TraceFileAppender" level="trace" />
 			<AppenderRef ref="WarningFileAppender" level="warn" />
