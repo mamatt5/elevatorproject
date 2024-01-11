@@ -47,7 +47,45 @@ public class ConsoleTest
 		InputStream sysInBackup = System.in;
 		
 		// Get the user input
-		ByteArrayInputStream in = new ByteArrayInputStream("setsource=0\nsetdestination=3\nq".getBytes());
+		ByteArrayInputStream in = new ByteArrayInputStream("setsource=0\nq".getBytes());
+		System.setIn(in);
+		
+		// Run console
+		ElevatorConsole.main(args);
+		
+		ByteArrayInputStream in2 = new ByteArrayInputStream("setdestination=3\nq".getBytes());
+		System.setIn(in2);
+		
+		// Run console
+		ElevatorConsole.main(args);
+		
+		System.setIn(sysInBackup);
+	}
+	
+	@Test
+	public void test_console_running_set_source_off() throws IOException, InterruptedException {
+		
+		String[] args = null;
+		InputStream sysInBackup = System.in;
+		
+		// Get the user input
+		ByteArrayInputStream in = new ByteArrayInputStream("setsource=off\nq".getBytes());
+		System.setIn(in);
+		
+		// Run console
+		ElevatorConsole.main(args);
+		
+		System.setIn(sysInBackup);
+	}
+	
+	@Test
+	public void test_console_running_set_destination_off() throws IOException, InterruptedException {
+		
+		String[] args = null;
+		InputStream sysInBackup = System.in;
+		
+		// Get the user input
+		ByteArrayInputStream in = new ByteArrayInputStream("setdestination=off\nq".getBytes());
 		System.setIn(in);
 		
 		// Run console
@@ -63,14 +101,23 @@ public class ConsoleTest
 		InputStream sysInBackup = System.in;
 		
 		// Get the user input
-		ByteArrayInputStream in = new ByteArrayInputStream("commandgeneration=on\ncommandgeneration=off\nq".getBytes());
+		ByteArrayInputStream in = new ByteArrayInputStream("commandgeneration=on\nq".getBytes());
 		System.setIn(in);
+	
+		// Run console
+		ElevatorConsole.main(args);
 		
+		Thread.sleep(1000);
+		// Get the user input
+		ByteArrayInputStream in2 = new ByteArrayInputStream("commandgeneration=off\nq".getBytes());
+		System.setIn(in2);
+			
 		// Run console
 		ElevatorConsole.main(args);
 		
 		System.setIn(sysInBackup);
 	}
+	
 	
 	@Test
 	public void test_console_running_and_setting_time_interval() throws IOException, InterruptedException {

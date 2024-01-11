@@ -386,7 +386,7 @@ public class FrameView implements Runnable
 				graphics.fillRect(liftPoint.x + LEFT_OFFSET + liftDimension.width,
 				        liftPoint.y + liftDimension.height / 2 - LEFT_OFFSET - liftLabelDimension.height,
 				        liftLabelDimension.width, liftLabelDimension.height);
-
+		
 				graphics.setColor(Color.BLACK);
 				graphics.drawRect(liftPoint.x + LEFT_OFFSET + liftDimension.width,
 				        liftPoint.y + liftDimension.height / 2 - LEFT_OFFSET - liftLabelDimension.height,

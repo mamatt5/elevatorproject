@@ -83,6 +83,7 @@ public class GenerateCommands extends Thread {
 		
 		@Override
 		public void run() {
+
 			int source = random.nextInt(maxFloor - minFloor + 1) + minFloor;
 			int destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
 			
@@ -97,7 +98,7 @@ public class GenerateCommands extends Thread {
 			}
 		}
 	}
-	
+
 	/**
 	 * A TimerTask that is used to wrap assignElevator.
 	 */
@@ -114,14 +115,14 @@ public class GenerateCommands extends Thread {
 		}
 
 	}
-
+	
 	/**
 	 * A kill function which stops the automatic generation of commands.
 	 */
 	public void kill() {
 		timer.cancel();
 	}
-	
+
 	@Override
 	public synchronized void run() {
 		timer = new Timer();

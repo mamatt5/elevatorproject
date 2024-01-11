@@ -9,12 +9,13 @@ import java.util.Scanner;
  */
 public class ElevatorConsole {
 	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-	
+
 	/**
 	 * Main method initiating the Elevator system through the console.
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
+		
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		ElevatorConsole console = new ElevatorConsole();
 		
@@ -23,7 +24,7 @@ public class ElevatorConsole {
 					+ "configuration file and relaunch the program");
 			return;
 		}
-		
+	
 		// configs attributes
 		int numElevators = configs.getNumOfElevators();
 		int minFloor = configs.getMinFloor();
