@@ -125,8 +125,12 @@ public class ElevatorConsole {
 	    			srcFloor = floor;
 					setSrcOn = true;
 
-	    			if (generateCommands)
+	    			if (generateCommands) {
+	    				generator.kill();
 	    				generator.setMinFloor(srcFloor);
+	    				generator.run();
+	    			}
+	    				
 	    				
 	    		} else {
 	    			System.out.println("Invalid floor number");
@@ -141,8 +145,12 @@ public class ElevatorConsole {
 	    			dstFloor = floor;
 					setDstOn = true;
 
-	    			if (generateCommands)
+	    			if (generateCommands) {
+	    				generator.kill();
 	    				generator.setMaxFloor(dstFloor);
+	    				generator.run();
+	    			}
+	    				
 	    		} else {
 
 	    			System.out.println("Invalid floor number");
@@ -157,7 +165,7 @@ public class ElevatorConsole {
 
 	    		if (generateCommands) {
 	    			if (intervalCommand > 0) {
-	    		
+	    				generator.kill();
 	    				generator.setInterval(intervalCommand);
 	    			} else {
 	    				System.out.println("Invalid Interval");

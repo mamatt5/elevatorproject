@@ -26,7 +26,7 @@ public class Elevator implements Runnable, Serializable {
 	 * holds Person objects currently inside the Elevator, ready for unloading.
 	 */
 	private ArrayList<Person> peopleInsideToUnload = new ArrayList<>();
-	
+
 	/**
 	 * holds Person objects currently outside the Elevator, ready for loading.
 	 */
