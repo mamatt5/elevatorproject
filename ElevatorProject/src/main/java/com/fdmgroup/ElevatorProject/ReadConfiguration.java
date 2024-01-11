@@ -25,7 +25,7 @@ public class ReadConfiguration {
 		Configurations config = new Configurations();
 		File newFile = new File(fileName);
 		File file;
-		
+	
 		if (!newFile.exists()) {
 			
 			LOGGER.error("Configuration-File-Not-Found");
@@ -37,7 +37,7 @@ public class ReadConfiguration {
 		try {
 			
 			config = objectMapper.readValue(file, Configurations.class);
-			System.out.println(config.getGenerateCommands());
+			
 			if (config.getMaxFloor() < 0 || config.getMinFloor() < 0 || config.getNumOfElevators() < 0 ||
 					config.getMinFloor() > config.getMaxFloor() || config.getIntervalBetweenCommands() < 0)
 					 {
