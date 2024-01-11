@@ -32,7 +32,6 @@ public class Controller {
 	 */
 	public synchronized void addPersonToQueue(Person person) throws InterruptedException {
 		this.peopleQueue.add(person);
-		wait(500);
 	}
 
 	/**
