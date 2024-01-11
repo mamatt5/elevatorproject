@@ -117,10 +117,6 @@ public class ElevatorConsole {
 	    		generateCommands = false;
 	    		generator.kill();
 	    	}
-	    		
-	    	
-
-	    	
 
 	    	// Command to set source floor to a particular number
 	    	if (input.matches("setsource=-?[0-9]\\d*")) {
@@ -172,6 +168,32 @@ public class ElevatorConsole {
 	    		}
 	    		
 	    	}
+	    	
+	    	// saving the state of the system to a file
+	    	if (input.matches("save=[aA-zZ0-9]*\\.ser")) {
+	    	
+	    		String fileName = input.split("=")[1];
+	    		scheduler.serializeSystemState(fileName);
+	    		System.out.println("Saved current system state to file " + fileName);
+	    	}
+	    	
+	    	// loads a state of the system
+	    	if (input.matches("load=[aA-zZ0-9]*\\.ser")) {
+		    	
+	    		String fileName = input.split("=")[1];
+	    		Scheduler newScheduler = scheduler.deserializeSchedulerState(fileName);
+	    		GUI.close();
+	  
+	    		scheduler = newScheduler;
+	    		controller = new Controller(scheduler);
+	    		
+	    		scheduler.runElevators();
+	    		GUI = new FrameView(minFloor, maxFloor, scheduler.getElevators().size(), scheduler.getElevators());
+	    	    GUI.run();
+	    		System.out.println("Loaded system state from file " + fileName);
+	    		
+	    	}
+	    	
 	    	
 			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
