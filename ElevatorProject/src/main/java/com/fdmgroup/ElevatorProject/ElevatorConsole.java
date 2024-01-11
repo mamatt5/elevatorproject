@@ -176,7 +176,7 @@ public class ElevatorConsole {
 	    		}
 	    		
 	    	}
-	    	
+	    
 	    	// saving the state of the system to a file
 	    	if (input.matches("save=[aA-zZ0-9]*\\.ser")) {
 	    	

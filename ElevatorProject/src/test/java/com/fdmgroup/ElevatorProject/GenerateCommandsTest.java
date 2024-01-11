@@ -1,8 +1,6 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -14,7 +12,7 @@ public class GenerateCommandsTest {
 	ArrayList<Elevator> elevators;
 	Scheduler scheduler;
 	Controller controller;
-	
+
 	@BeforeEach
 	void setup() {
 		elevators = new ArrayList<>();

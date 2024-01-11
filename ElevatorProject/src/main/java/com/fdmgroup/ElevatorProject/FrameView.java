@@ -166,7 +166,7 @@ public class FrameView implements Runnable
                         case UP -> drawValueAbove(graphics, "Up", liftPoint);
                         case DOWN -> drawValueAbove(graphics, "Down", liftPoint);
                     }
-			
+		
 					drawStringInBase(this, graphics, elevators.get(i).getElevatorID(), liftPoint);
 
 					graphics.setColor(getStateColor(i)); // use to show elevator state if implemented

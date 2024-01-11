@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class GenerateCommands extends Thread {
 	
-	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
+	private static final Logger LOGGER = LogManager.getLogger(GenerateCommands.class);
 	private int maxFloor;
 	private int minFloor;
 	private int interval;
@@ -112,8 +112,7 @@ public class GenerateCommands extends Thread {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
 
 	/**
