@@ -101,8 +101,7 @@ public class Elevator implements Runnable, Serializable {
 	        loadPeople();                       // movement and loading/unloading
 	        unloadPeople();                     // of Person objects
 	        floorsVisited.add(floor);           // and updates floorsToGo set accordingly
-	        
-	        
+
 		    if (shouldChangeDirection()) {
                 switch (state) {
                     case UP -> this.state = Direction.DOWN;
