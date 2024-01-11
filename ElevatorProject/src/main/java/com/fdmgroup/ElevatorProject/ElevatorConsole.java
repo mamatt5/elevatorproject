@@ -48,9 +48,8 @@ public class ElevatorConsole {
 	    String input ="";
 	    
 	    // if command generation is set to true in the config file
-		GenerateCommands generator = null;
+		GenerateCommands generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
 	    if (generateCommands) {
-			generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
 			generator.run();
 		}
 		
