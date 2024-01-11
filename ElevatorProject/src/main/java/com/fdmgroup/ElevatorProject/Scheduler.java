@@ -98,10 +98,12 @@ public class Scheduler implements Serializable
 	public void serializeSystemState(String fileName) {
 		try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
 			output.writeObject(this);
+			output.close();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	/**
@@ -112,7 +114,9 @@ public class Scheduler implements Serializable
 	 */
 	public Scheduler deserializeSchedulerState(String filename) {
 		try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
-			return (Scheduler) input.readObject();
+			Scheduler scheduler = (Scheduler) input.readObject();
+			input.close();
+			return (scheduler);
 		}
 		catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

@@ -156,6 +156,7 @@ public class FrameView implements Runnable
 
 					// Display values options near lift
 					// Uncomment any display option you want
+					
 					drawValueToSide("Current Floor: " + elevators.get(i).getCurrentFloor(), graphics);
 					drawStringToSide("Num People: " + elevators.get(i).getPeopleInsideToUnload().size(), graphics);
 
