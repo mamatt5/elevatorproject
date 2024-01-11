@@ -97,12 +97,8 @@ public class Elevator implements Runnable, Serializable {
         };
 
         for (Integer floor : floorsIterable) {
-	        goToFloor(floor);                   // simulate elevator behaviour with
-	        if ( this.peopleInsideToUnload.size() < 1 ) { 	//tried with one elevator, it ignores the person, but it wasn't called again (though it is like that irl?)
-	        												//if input another, it assigns the previously unassigned person.
-	        	loadPeople();
-	        }
-	        									// movement and loading/unloading
+	        goToFloor(floor);                   // simulate elevator behaviour with     
+	        loadPeople();						// movement and loading/unloading
 	        unloadPeople();                     // of Person objects
 	        floorsVisited.add(floor);           // and updates floorsToGo set accordingly
 
@@ -209,10 +205,15 @@ public class Elevator implements Runnable, Serializable {
 	public void loadPeople() throws InterruptedException {
 		ArrayList<Person> peopleToBeLoaded = new ArrayList<Person>();
 		for ( Person person : peopleOutsideToLoad ) {
-			if ( person.getSrcFloor() == this.currentFloor ) {
-				this.peopleInsideToUnload.add(person);
-				peopleToBeLoaded.add(person);
-				LOGGER.info("Person entered " + this.ELEVATOR_ID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
+			
+			if ( person.getSrcFloor() == this.currentFloor ) { 	// moved logic here for capacity
+				peopleToBeLoaded.add(person);					// person to be removed from peopleToBeLoaded list to remove request even if not yet loaded
+				
+				if ( this.peopleInsideToUnload.size() < 1 ) {	// checks capacity
+					this.peopleInsideToUnload.add(person);
+					LOGGER.info("Person entered " + this.ELEVATOR_ID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
+				}
+				
 			}
 		}
 		
