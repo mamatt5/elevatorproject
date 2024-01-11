@@ -166,7 +166,9 @@ public class ElevatorConsole {
 		// Turn off the command generation
 		if (input.equals("commandgeneration=off")) {
 			toggleOptions.setGenerateCommands(false);
-			generator.kill();
+			if (generator != null) {
+				generator.kill();
+			}
 		}
 
 		// Command to set source floor to a particular number
