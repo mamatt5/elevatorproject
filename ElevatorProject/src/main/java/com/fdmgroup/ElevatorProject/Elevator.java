@@ -39,8 +39,9 @@ public class Elevator implements Runnable, Serializable {
 	private static int nextID = 0;
 	Direction state = Direction.IDLE;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 1000;
+	private final int SLEEP_TIME = 500;
 	private boolean running = true;
+	private int capacity = 8;
 
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
@@ -97,8 +98,8 @@ public class Elevator implements Runnable, Serializable {
         };
 
         for (Integer floor : floorsIterable) {
-	        goToFloor(floor);                   // simulate elevator behaviour with
-	        loadPeople();                       // movement and loading/unloading
+	        goToFloor(floor);                   // simulate elevator behaviour with     
+	        loadPeople();						// movement and loading/unloading
 	        unloadPeople();                     // of Person objects
 	        floorsVisited.add(floor);           // and updates floorsToGo set accordingly
 
@@ -198,6 +199,8 @@ public class Elevator implements Runnable, Serializable {
 	
 	/**
 	 * Loads eligible Person objects into the Elevator from outside if they are at the Elevator's current floor.
+	 * Checks the number of Person objects inside if less than the capacity before loading. Otherwise, it will
+	 * just remove the person object from the outside list.
 	 *
 	 * @throws InterruptedException if the thread is interrupted while pausing during the door open/close.
 	 */
@@ -205,10 +208,15 @@ public class Elevator implements Runnable, Serializable {
 	public void loadPeople() throws InterruptedException {
 		ArrayList<Person> peopleToBeLoaded = new ArrayList<Person>();
 		for ( Person person : peopleOutsideToLoad ) {
+			
 			if ( person.getSrcFloor() == this.currentFloor ) {
-				this.peopleInsideToUnload.add(person);
 				peopleToBeLoaded.add(person);
-				LOGGER.info("Person entered " + this.ELEVATOR_ID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
+				
+				if ( this.peopleInsideToUnload.size() < capacity ) {
+					this.peopleInsideToUnload.add(person);
+					LOGGER.info("Person entered " + this.ELEVATOR_ID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
+				}
+				
 			}
 		}
 		
