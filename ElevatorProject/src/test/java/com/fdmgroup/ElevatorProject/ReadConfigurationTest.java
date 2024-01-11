@@ -131,6 +131,16 @@ public class ReadConfigurationTest {
 	}
 	
 	@Test 
+	void invalid_lift_capacity_field() {
+		
+		String fileName = "src/test/resources/InvalidLiftCapacityTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+		assertEquals("Invalid-Configuration-File-Field", readLogFile());
+
+	}
+	
+	@Test 
 	void valid_json_format() {
 		
 		String fileName = "src/test/resources/ValidJsonFormatConfigurationTest.txt";
@@ -141,6 +151,7 @@ public class ReadConfigurationTest {
 		assertEquals(3, config.getNumOfElevators());
 		assertFalse(config.getGenerateCommands());
 		assertEquals(8, config.getIntervalBetweenCommands());
+		assertEquals(8, config.getLiftCapacity());
 
 	}
 	
@@ -155,6 +166,7 @@ public class ReadConfigurationTest {
 		assertEquals(987345, config.getNumOfElevators());
 		assertTrue(config.getGenerateCommands());
 		assertEquals(85657, config.getIntervalBetweenCommands());
+		assertEquals(3728948, config.getLiftCapacity());
 
 	}
 

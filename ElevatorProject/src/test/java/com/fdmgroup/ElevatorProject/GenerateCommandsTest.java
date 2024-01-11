@@ -19,7 +19,7 @@ public class GenerateCommandsTest {
 		scheduler = new Scheduler(elevators);
 		controller = new Controller(scheduler);
 	}
-	
+
 	@Test
 	void test_getting_values() {
 		GenerateCommands generator = new GenerateCommands(10, 0, -1, -1, 1, controller);

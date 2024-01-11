@@ -7,7 +7,7 @@ import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 public class ConsoleTest
 {
-	
+
 	@Test
 	public void test_console_running_then_immediately_terminate() throws IOException, InterruptedException {
 		
