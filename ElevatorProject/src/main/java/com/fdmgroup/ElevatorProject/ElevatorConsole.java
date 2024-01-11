@@ -9,12 +9,13 @@ import java.util.Scanner;
  */
 public class ElevatorConsole {
 	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
-	
+
 	/**
 	 * Main method initiating the Elevator system through the console.
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException {
+		
 		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		
 		if (configs == null) {
@@ -22,7 +23,7 @@ public class ElevatorConsole {
 					+ "configuration file and relaunch the program");
 			return;
 		}
-		
+	
 		// configs attributes
 		int numElevators = configs.getNumOfElevators();
 		int minFloor = configs.getMinFloor();
@@ -76,7 +77,7 @@ public class ElevatorConsole {
 		// runs the GUI
 	    FrameView GUI = new FrameView(minFloor, maxFloor, numElevators, elevators);
 	    GUI.run();
-	    
+	   
 		// handle user input for elevator requests and manages elevator assignments
 	    int srcFloor = -1;
     	int dstFloor = -1;
@@ -89,7 +90,7 @@ public class ElevatorConsole {
 	    	if (input.equals("q")) {        // user termination command
 	    		break;
 	    	}
-	    	
+	    
 	    	
 	    	// Turn off the set source floor
 	    	if (input.equals("setsource=off")) {
@@ -117,22 +118,25 @@ public class ElevatorConsole {
 	    	// Turn off the command generation
 	    	if (input.equals("commandgeneration=off")) {
 	    		generateCommands = false;
-	    		generator.kill();
+	    		if (generator != null) {
+	    			generator.kill();
+	    		}
+	    			
 	    	}
-
+	    	
 	    	// Command to set source floor to a particular number
 	    	if (input.matches("setsource=-?[0-9]\\d*")) {
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			srcFloor = floor;
 					setSrcOn = true;
-
+					
 	    			if (generateCommands) {
 	    				generator.kill();
 	    				generator.setMinFloor(srcFloor);
 	    				generator.run();
 	    			}
-	    				
+	    			
 	    				
 	    		} else {
 	    			System.out.println("Invalid floor number");
@@ -142,6 +146,7 @@ public class ElevatorConsole {
 	    	
 	    	// Command to set destination floor to a particular number
 	    	if (input.matches("setdestination=-?[0-9]\\d*")) {
+	    		
 	    		int floor = Integer.parseInt(input.split("=")[1]);
 	    		if (floor > minFloor - 1 && floor < maxFloor + 1) {
 	    			dstFloor = floor;
