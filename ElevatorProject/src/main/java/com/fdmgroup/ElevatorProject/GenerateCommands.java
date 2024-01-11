@@ -15,15 +15,19 @@ public class GenerateCommands extends Thread {
 	private int maxFloor;
 	private int minFloor;
 	private int interval;
+	private int src;
+	private int dest;
 	private Random random = new Random();
 	private Controller controller;
 	private Timer timer;
 	
-	public GenerateCommands(int maxFloor, int minFloor, int interval, Controller controller) {
+	public GenerateCommands(int maxFloor, int minFloor, int src, int dest, int interval, Controller controller) {
 		this.maxFloor = maxFloor;
 		this.minFloor = minFloor;
 		this.interval = interval;
 		this.controller = controller;
+		this.src = src;
+		this.dest = dest;
 	}
 
 	/**
@@ -49,6 +53,22 @@ public class GenerateCommands extends Thread {
 	public synchronized void setMinFloor(int i) {
 		
 		minFloor = i;
+	}
+	
+	/**
+	 * A setter for src which allows it be changed.
+	 */
+	public synchronized void setSrc(int i) {
+		
+		src = i;
+	}
+	
+	/**
+	 * A setter for dest which allows it be changed.
+	 */
+	public synchronized void setDest(int i) {
+		
+		dest = i;
 	}
 	
 	
@@ -83,12 +103,24 @@ public class GenerateCommands extends Thread {
 		
 		@Override
 		public void run() {
-
-			int source = random.nextInt(maxFloor - minFloor + 1) + minFloor;
-			int destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			int source = src;
+			int destination = dest;
 			
+			if (src == -1) {
+				source = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			}
+			
+			if (dest == -1) {
+				destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			}
+	
 			System.out.println(source + ":" + destination);
 			LOGGER.info("Person going from " + source + " to " + destination);
+			
+			// changes destination so it doesn't equal source
+			while (source == destination) {
+				destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			}
 			
 			try {
 				controller.addPersonToQueue(new Person(source, destination));
