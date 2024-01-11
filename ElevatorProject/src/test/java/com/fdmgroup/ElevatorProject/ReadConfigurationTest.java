@@ -99,11 +99,21 @@ public class ReadConfigurationTest {
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
 
 	}
-	
+
 	@Test 
 	void invalid_generateCommands_field() {
 		
-		String fileName = "src/test/resources/InvalidNumOfElevatorsTest.txt";
+		String fileName = "src/test/resources/InvalidGenerateCommandsTest.txt";
+	
+		assertNull(ReadConfiguration.getConfiguration(fileName));
+		assertEquals("Invalid-Configuration-File", readLogFile());
+
+	}
+	
+	@Test 
+	void invalid_invalidInterval_field() {
+		
+		String fileName = "src/test/resources/InvalidIntervalBetweenCommands.txt";
 	
 		assertNull(ReadConfiguration.getConfiguration(fileName));
 		assertEquals("Invalid-Configuration-File-Field", readLogFile());
