@@ -41,6 +41,7 @@ public class Elevator implements Runnable, Serializable {
 	private int currentFloor = 0;
 	private final int SLEEP_TIME = 500;
 	private boolean running = true;
+	private int capacity = 8;
 
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
@@ -198,6 +199,8 @@ public class Elevator implements Runnable, Serializable {
 	
 	/**
 	 * Loads eligible Person objects into the Elevator from outside if they are at the Elevator's current floor.
+	 * Checks the number of Person objects inside if less than the capacity before loading. Otherwise, it will
+	 * just remove the person object from the outside list.
 	 *
 	 * @throws InterruptedException if the thread is interrupted while pausing during the door open/close.
 	 */
@@ -206,10 +209,10 @@ public class Elevator implements Runnable, Serializable {
 		ArrayList<Person> peopleToBeLoaded = new ArrayList<Person>();
 		for ( Person person : peopleOutsideToLoad ) {
 			
-			if ( person.getSrcFloor() == this.currentFloor ) { 	// moved logic here for capacity
-				peopleToBeLoaded.add(person);					// person to be removed from peopleToBeLoaded list to remove request even if not yet loaded
+			if ( person.getSrcFloor() == this.currentFloor ) {
+				peopleToBeLoaded.add(person);
 				
-				if ( this.peopleInsideToUnload.size() < 1 ) {	// checks capacity
+				if ( this.peopleInsideToUnload.size() < capacity ) {
 					this.peopleInsideToUnload.add(person);
 					LOGGER.info("Person entered " + this.ELEVATOR_ID + " on floor " + this.getCurrentFloor() + " to get to floor " + person.getDestFloor());
 				}
