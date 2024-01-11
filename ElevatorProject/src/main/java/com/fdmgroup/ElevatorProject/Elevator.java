@@ -39,7 +39,7 @@ public class Elevator implements Runnable, Serializable {
 	private static int nextID = 0;
 	Direction state = Direction.IDLE;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 1000;
+	private final int SLEEP_TIME = 500;
 	private boolean running = true;
 
 	// ------------ Elevator Constructor ------------ //
@@ -98,7 +98,11 @@ public class Elevator implements Runnable, Serializable {
 
         for (Integer floor : floorsIterable) {
 	        goToFloor(floor);                   // simulate elevator behaviour with
-	        loadPeople();                       // movement and loading/unloading
+	        if ( this.peopleInsideToUnload.size() < 1 ) { 	//tried with one elevator, it ignores the person, but it wasn't called again (though it is like that irl?)
+	        												//if input another, it assigns the previously unassigned person.
+	        	loadPeople();
+	        }
+	        									// movement and loading/unloading
 	        unloadPeople();                     // of Person objects
 	        floorsVisited.add(floor);           // and updates floorsToGo set accordingly
 
