@@ -156,7 +156,7 @@ public class ElevatorTest {
 		Person person3 = new Person(6,11);
 		Person person4 = new Person(14,0);
 		
-		// Load them all onto an elevator
+		// Load the requests onto an elevator
 		elevator.addPersonToLoad(person1);
 		elevator.addPersonToLoad(person2);
 		elevator.addPersonToLoad(person3);
@@ -165,10 +165,10 @@ public class ElevatorTest {
 		// There should 4 floors to go to
 		assertEquals(4, elevator.getFloorsToGo().size());
 		
-		// There should be 4 people inside the elevator
+		// There should be 4 people waiting for elevator
 		assertEquals(4, elevator.getPeopleOutsideToLoad().size());
 		
-		// There should be 0 people waiting for elevator
+		// There should be 0 people inside elevator
 		assertEquals(0, elevator.getPeopleInsideToUnload().size());
 
 		elevator.operateElevator();
@@ -179,6 +179,63 @@ public class ElevatorTest {
 		// There should be 0 people inside the elevator and elevator should be idle
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	    assertTrue(elevator.state == Direction.IDLE);
+	}
+	
+	// Tests for lift capacity functionality
+	
+	@Test
+	void elevator_only_loads_up_to_lift_capacity() throws InterruptedException {
+		Person person1 = new Person(0,10);
+		Person person2 = new Person(0,15);
+		Person person3 = new Person(0,20);
+		Person person4 = new Person(0,25);
+		Person person5 = new Person(0,10);
+		Person person6 = new Person(0,15);
+		Person person7 = new Person(0,20);
+		Person person8 = new Person(0,25);
+		Person person9 = new Person(0,30);
+		
+		elevator.addPersonToLoad(person1);
+		elevator.addPersonToLoad(person2);
+		elevator.addPersonToLoad(person3);
+		elevator.addPersonToLoad(person4);
+		elevator.addPersonToLoad(person5);
+		elevator.addPersonToLoad(person6);
+		elevator.addPersonToLoad(person7);
+		elevator.addPersonToLoad(person8);
+		
+		// Last person should not be loaded
+		elevator.addPersonToLoad(person9);
+		
+		elevator.loadPeople();
+		
+		// Elevator should only load 3 people
+		assertEquals(8, elevator.getPeopleInsideToUnload().size());
+		
+	}
+	
+	@Test
+	void elevator_only_loads_up_to_specified_lift_capacity() throws InterruptedException {
+		Person person1 = new Person(0,10);
+		Person person2 = new Person(0,15);
+		Person person3 = new Person(0,20);
+		Person person4 = new Person(0,25);
+		
+		elevator.addPersonToLoad(person1);
+		elevator.addPersonToLoad(person2);
+		elevator.addPersonToLoad(person3);
+		
+		// Last person should not be loaded
+		elevator.addPersonToLoad(person4);
+		
+		// Change the capacity to 3
+		elevator.setCapacity(3);
+		
+		elevator.loadPeople();
+		
+		// Elevator should only load 3 people
+		assertEquals(3, elevator.getPeopleInsideToUnload().size());
+		
 	}
 
 }

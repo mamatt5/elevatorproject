@@ -39,7 +39,7 @@ public class Elevator implements Runnable, Serializable {
 	private static int nextID = 0;
 	Direction state = Direction.IDLE;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 500;
+	private final int SLEEP_TIME = 100;
 	private boolean running = true;
 	private int capacity = 8;
 
@@ -60,6 +60,10 @@ public class Elevator implements Runnable, Serializable {
 
 	public void setCurrentFloor(int floor) {
 		this.currentFloor = floor;
+	}
+	
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	public ArrayList<Person> getPeopleInsideToUnload() {
