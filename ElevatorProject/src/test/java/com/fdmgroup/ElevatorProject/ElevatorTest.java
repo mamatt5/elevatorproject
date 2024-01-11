@@ -21,17 +21,6 @@ public class ElevatorTest {
 		assertEquals(0, elevator.getCurrentFloor());
 		assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	}
-
-//	@Test
-//	void default_elevator_instantiated() {
-//		// Elevator should start idle and at ground floor
-//		assertTrue(elevator.isIdle());
-//		assertEquals(0, elevator.getCurrentFloor());
-//
-//		// Defaults to going up
-//		assertTrue(elevator.isGoingUp());
-//		assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
-//	}
 	
 	@Test
 	void elevator_load_one_person() throws InterruptedException {
