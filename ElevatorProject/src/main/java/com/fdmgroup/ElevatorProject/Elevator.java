@@ -115,8 +115,6 @@ public class Elevator implements Runnable, Serializable {
 	    updateFloorRequests();                  // refresh the list of all floors
 		floorsToGo.removeAll(floorsVisited);    // to be travelled to, and
 		operateElevator();                      // continue operating elevator
-		
-		// todo: Maybe add Thread.wait() or Thread.lock()?
 	}
 	
 	// ------------ person handling ------------ //

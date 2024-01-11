@@ -122,6 +122,7 @@ public class ElevatorConsole {
 	 */
 	void userOptions() {
 		System.out.println("Available commands: ");
+		System.out.println("'q': exit program");
 		System.out.println("'srcFloor:dstFloor': move elevator");
 		System.out.println("'setsource=(int)': set a source floor for all people");
 		System.out.println("'setdestination=(int)': set a destination floor for all people");
@@ -129,7 +130,8 @@ public class ElevatorConsole {
 		System.out.println("'setdestination=off': turn off set destination floor");
 		System.out.println("'setinterval=(int)': set a time interval for commands to generate");
 		System.out.println("'commandgeneration=on/off': set a time interval for commands to generate");
-		System.out.println("'q': exit program");
+		System.out.println("'save=[filename].ser': saves the state of the current elevators");
+		System.out.println("'load=[filename].ser': loads the state of the saved elevators");
 	}
 
 	/**
@@ -175,7 +177,6 @@ public class ElevatorConsole {
 		}
 	}
 
-
 	/**
 	 * Process user input:
 	 * 		'setsource=' to set source floor,
@@ -187,6 +188,7 @@ public class ElevatorConsole {
 			boolean setSrcOn, boolean setDstOn,
 			boolean generateCommands, GenerateCommands generator,
 			int minFloor, int maxFloor, Controller controller, int interval) {
+
 		// Command to set source floor to a particular number
 		if (input.matches("setsource=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
@@ -196,8 +198,8 @@ public class ElevatorConsole {
 
 				if (generateCommands)
 					generator.setMinFloor(srcFloor);
-
-			} else {
+			}
+			else {
 				System.out.println("Invalid floor number");
 			}
 		}
@@ -215,6 +217,7 @@ public class ElevatorConsole {
 
 				System.out.println("Invalid floor number");
 			}
+
 		}
 
 		// Command to an interval to commands to generate
@@ -223,13 +226,13 @@ public class ElevatorConsole {
 
 			if (generateCommands) {
 				if (intervalCommand > 0) {
-
 					generator.setInterval(intervalCommand);
-				} else {
+				}
+				else {
 					System.out.println("Invalid Interval");
 				}
-
-			} else {
+			}
+			else {
 				System.out.println("You have not enabled command generation");
 			}
 		}
@@ -243,6 +246,7 @@ public class ElevatorConsole {
 	private void processUserSaveLoad(
 			String input, int minFloor, int maxFloor,
 			Controller controller, Scheduler scheduler, FrameView GUI) {
+
 		// saving the state of the system to a file
 		if (input.matches("save=[aA-zZ0-9]*\\.ser")) {
 
@@ -265,6 +269,7 @@ public class ElevatorConsole {
 			GUI = new FrameView(minFloor, maxFloor, scheduler.getElevators().size(), scheduler.getElevators());
 			GUI.run();
 			System.out.println("Loaded system state from file " + fileName);
+
 		}
 	}
 
