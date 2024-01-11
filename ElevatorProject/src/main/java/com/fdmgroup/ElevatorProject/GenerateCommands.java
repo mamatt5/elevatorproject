@@ -63,9 +63,8 @@ public class GenerateCommands extends Thread {
 		
 		@Override
 		public void run() {
-			
-			int source = random.nextInt(minFloor, maxFloor + 1);
-			int destination = random.nextInt(minFloor, maxFloor + 1);
+			int source = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			int destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
 			
 			System.out.println(source + ":" + destination);
 			LOGGER.info("Person going from " + source + " to " + destination);
@@ -77,8 +76,6 @@ public class GenerateCommands extends Thread {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
 	
 	/**

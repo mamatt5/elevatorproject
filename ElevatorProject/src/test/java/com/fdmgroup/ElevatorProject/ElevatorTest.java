@@ -1,10 +1,9 @@
 package com.fdmgroup.ElevatorProject;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ElevatorTest {
 	
@@ -18,13 +17,21 @@ public class ElevatorTest {
 	@Test
 	void default_elevator_instantiated() {
 		// Elevator should start idle and at ground floor
-		assertTrue(elevator.isIdle());
+        assertSame(elevator.state, Direction.IDLE);
 		assertEquals(0, elevator.getCurrentFloor());
-		
-		// Defaults to going up
-		assertTrue(elevator.isGoingUp());
 		assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
 	}
+
+//	@Test
+//	void default_elevator_instantiated() {
+//		// Elevator should start idle and at ground floor
+//		assertTrue(elevator.isIdle());
+//		assertEquals(0, elevator.getCurrentFloor());
+//
+//		// Defaults to going up
+//		assertTrue(elevator.isGoingUp());
+//		assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
+//	}
 	
 	@Test
 	void elevator_load_one_person() throws InterruptedException {
@@ -149,7 +156,7 @@ public class ElevatorTest {
 	    
 	    // Elevator should be idle on floor 10
 	    assertEquals(10, elevator.getCurrentFloor());
-	    assertTrue(elevator.isIdle());
+	    assertTrue(elevator.state == Direction.IDLE);
 	}
 	
 	@Test
@@ -182,7 +189,7 @@ public class ElevatorTest {
 		
 		// There should be 0 people inside the elevator and elevator should be idle
 	    assertTrue(elevator.getPeopleInsideToUnload().isEmpty());
-	    assertTrue(elevator.isIdle());
+	    assertTrue(elevator.state == Direction.IDLE);
 	}
 
 }

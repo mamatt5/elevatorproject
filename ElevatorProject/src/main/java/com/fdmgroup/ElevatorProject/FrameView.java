@@ -158,15 +158,13 @@ public class FrameView implements Runnable
 					// Uncomment any display option you want
 					drawValueToSide("Current Floor: " + elevators.get(i).getCurrentFloor(), graphics);
 					drawStringToSide("Num People: " + elevators.get(i).getPeopleInsideToUnload().size(), graphics);
-					
-					
-					if (elevators.get(i).isIdle()) {
-						drawValueAbove(graphics, "Idle", liftPoint);
-					} else if (elevators.get(i).isGoingUp()) {
-						drawValueAbove(graphics, "Up", liftPoint);
-					} else if (!elevators.get(i).isGoingUp()) {
-						drawValueAbove(graphics, "Down", liftPoint);
-					} 
+
+					Direction elevatorState = elevators.get(i).state;
+                    switch (elevatorState) {
+                        case IDLE -> drawValueAbove(graphics, "Idle", liftPoint);
+                        case UP -> drawValueAbove(graphics, "Up", liftPoint);
+                        case DOWN -> drawValueAbove(graphics, "Down", liftPoint);
+                    }
 			
 					drawStringInBase(this, graphics, elevators.get(i).getElevatorID(), liftPoint);
 
@@ -255,7 +253,6 @@ public class FrameView implements Runnable
 
 		}
 		
-		
 		// Draw last line
 		graphics.setColor(Color.GRAY); // Draw last floor line
 		graphics.drawLine(leftOffset, height - gHeight - levelHeight * i, width - leftOffset,
@@ -264,39 +261,22 @@ public class FrameView implements Runnable
 		// Draw bottom part
 		graphics.setColor(Color.DARK_GRAY);
 		graphics.fillRect(0, height - gHeight, width, gHeight);
-
-
-
 	}
-	
+
 	/**
-	 * Optional method to get the lift colour from the elevator state;
-	 * 
-	 * @param the elevator number
-	 * @return the colour to use
+	 * Retrieves the color representation based on the state of the specified elevator.
+	 *
+	 * @param i The index of the elevator in question.
+	 * @return RED Color object if IDLE; otherwise GREEN.
 	 */
 	private Color getStateColor(int i)
 	{
+		Color color;
 
-		Color color = Color.GREEN;
-
-//		switch (elevators.get(i).getState())
-//		{
-//			case MOVING:
-//				color = Color.RED;
-//				break;
-//			case STOPPING:
-//				color = Color.YELLOW;
-//				break;
-//			case IDLE:
-//				color = Color.LIGHT_GRAY;
-//				break;
-//			default:
-//				throw new IllegalArgumentException("Unexpected value: " + elevators.get(i).getState());
-//		}
-		
-		if (elevators.get(i).isIdle()) {
-			color = Color.RED;
+		Direction elevatorState = elevators.get(i).state;
+		switch (elevatorState) {
+			case IDLE -> color = Color.RED;
+			default -> color = Color.GREEN;
 		}
 
 		return color;
@@ -349,7 +329,6 @@ public class FrameView implements Runnable
 	 * Option method to display a string value on the top of the elevator in a box
 	 * 
 	 * @param graphics
-	 * @param value
 	 * @param liftPoint
 	 */
 	private void drawValueAbove(Graphics graphics, String liftLabelText, Point liftPoint)
@@ -423,9 +402,7 @@ public class FrameView implements Runnable
 
 	/**
 	 * Option method to display a string value in the base below the elevator.
-	 * @param comp	
-	 * @param graphics 
-	 * @param value
+	 * @param graphics
 	 * @param liftPoint
 	 */
 	private void drawStringInBase(JComponent jcomp, Graphics graphics, String liftLabelText, Point liftPoint)

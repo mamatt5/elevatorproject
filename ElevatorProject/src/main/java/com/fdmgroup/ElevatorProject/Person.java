@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Person implements Serializable{
-	private int srcFloor;
-	private int destFloor;
-	private final boolean goingUp;
+	private final int srcFloor;
+	private final int destFloor;
+	final Direction direction;
 	
 	/**
 	 * Constructor for creating a Person object with source and destination floors.
@@ -22,7 +22,13 @@ public class Person implements Serializable{
 		super();
 		this.srcFloor = srcFloor;
 		this.destFloor = destFloor;
-		this.goingUp = (srcFloor - destFloor) < 0;
+
+		if ((srcFloor - destFloor) < 0) {
+			direction = Direction.UP;
+		}
+		else {
+			direction = Direction.DOWN;
+		}
 	}
 	
 	/**
@@ -37,21 +43,5 @@ public class Person implements Serializable{
 	 */
 	public int getDestFloor() {
 		return destFloor;
-	}
-	
-	// fixme: methods unused - not called anywhere
-//	public void setSrcFloor(int srcFloor) {
-//		this.srcFloor = srcFloor;
-//	}
-//
-//	public void setDestFloor(int destFloor) {
-//		this.destFloor = destFloor;
-//	}
-	
-	/**
-	 * @return True if the person is going up, false if going down.
-	 */
-	public boolean isGoingUp() {
-		return goingUp;
 	}
 }

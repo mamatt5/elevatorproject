@@ -84,9 +84,8 @@ public class SchedulerTest {
 		// Bring first assigned Elevator to floor 4, making it an invalid choice for the second person
 		try
 		{
-			
 			assignedElevator1.goToFloor(4);
-			assignedElevator1.setIdle(true); // To simulate if the Elevator unloaded at floor 4
+			assignedElevator1.state = Direction.IDLE; // To simulate if the Elevator unloaded at floor 4
 			elevatorsOnGroundFloor.remove(assignedElevator1.getElevatorID());
 			
 		} catch (InterruptedException e)
@@ -121,7 +120,7 @@ public class SchedulerTest {
 
 		try {
 			assignedElevator1.goToFloor(3); // Assume person unloaded at floor 3
-			assignedElevator1.setIdle(true); // Elevator idle
+			assignedElevator1.state = Direction.IDLE; // Elevator idle
 			elevatorsOnGroundFloor.remove(assignedElevator1.getElevatorID()); // Since Elevator is not in ground floor anymore
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -136,7 +135,7 @@ public class SchedulerTest {
 		try
 		{
 			assignedElevator2.goToFloor(14); // person unloaded at floor 14
-			assignedElevator2.setIdle(true); // Elevator idle
+			assignedElevator2.state = Direction.IDLE; // Elevator idle
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
@@ -179,7 +178,7 @@ public class SchedulerTest {
 		
 		// Set all elevators to idle to simulate different idle positions
 		for ( Elevator elevator: scheduler.getElevators() ) {
-			elevator.setIdle(true);
+			elevator.state = Direction.IDLE;
 		}
 
 		// In theory, only person2 and person6 would be assigned a different elevator from different floor

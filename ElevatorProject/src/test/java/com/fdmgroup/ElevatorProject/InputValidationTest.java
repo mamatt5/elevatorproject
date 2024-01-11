@@ -220,15 +220,13 @@ public class InputValidationTest {
         Configurations CONFIGS;
         int min;
         int max;
-        
+
         @BeforeEach
         void setup() {
             min = 0;
             max = 30;
         }
-        
-       
-        
+
         @Test
         void Test_OutOfRange() {
             String[] outOfRangeInputs = {
@@ -237,13 +235,13 @@ public class InputValidationTest {
                     (max + 1) + ":2",
                     "1:" + (max + 5)
             };
-            
+
             for (String input : outOfRangeInputs) {
                 assertFalse(inputValidation.isValidRequest(input));
             }
         }
     }
-    
+
     @Nested
     class Resize2dArray {
         @Test
@@ -255,12 +253,12 @@ public class InputValidationTest {
                     {7, 8}
             };
             int validRequestCounter = initialArray.length;
-            
+
             int[][] resizedArray = inputValidation.resizeArray(initialArray, validRequestCounter);
-            
+
             assertArrayEquals(initialArray, resizedArray);
         }
-        
+
         @Test
         void Test_ResizeRequired_DataAtBeginning() {
             int[][] initialArray = {
@@ -270,7 +268,7 @@ public class InputValidationTest {
                     {0, 0}
             };
             int validRequestCounter = 2;
-            
+
             int[][] resizedArray = inputValidation.resizeArray(initialArray, validRequestCounter);
             int[][] expectedResizedArray = {
                     {1, 2},
@@ -278,7 +276,7 @@ public class InputValidationTest {
             };
             assertArrayEquals(expectedResizedArray, resizedArray);
         }
-        
+
         @Test
         void Test_ResizeRequired_DataScattered() {
             int[][] initialArray = {
@@ -288,7 +286,7 @@ public class InputValidationTest {
                     {0, 0}
             };
             int validRequestCounter = 2;
-            
+
             int[][] resizedArray = inputValidation.resizeArray(initialArray, validRequestCounter);
             int[][] expectedResizedArray = {
                     {1, 2},
@@ -297,35 +295,35 @@ public class InputValidationTest {
             assertArrayEquals(expectedResizedArray, resizedArray);
         }
     }
-    
+
     @Nested
     class TestInputTo2DArray {
         @Test
         void Test_InputTo2DArray_Single() {
             String userInput = "1:2";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {
                     {1, 2}
             };
-            
+
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_None() {
             String userInput = "";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {}; // Expecting an empty array
-            
+
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_AllValid() {
             String userInput = "1:2, 4:3, 5:4, 6:5, 7:6";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {
                     {1, 2},
@@ -334,24 +332,24 @@ public class InputValidationTest {
                     {6, 5},
                     {7, 6}
             };
-            
+
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_AllInvalid() {
             String userInput = "G:3, 1.2:1, a:e, :";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {}; // Expecting an empty array
-            
+
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_MixedValidInvalid() {
             String userInput = "1:3, 9:5,5, 5:9, a:e, G:3 ,2:4";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {
                     {1, 3},
@@ -359,10 +357,10 @@ public class InputValidationTest {
                     {5, 9},
                     {2, 4},
             };
-            
+
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_MixedLongRequest1() {
             String userInput = " 0:2, 1:4,  9:1, 6: 4, 8 8 :9, 64:7; 92:  1 00, 5 :9, 8: 7 ,";
@@ -379,11 +377,11 @@ public class InputValidationTest {
 
             assertArrayEquals(expected, result);
         }
-        
+
         @Test
         void Test_InputTo2DArray_MixedLongRequest2() {
             String userInput = "1:21,G :3 ,2:4,32:125:8,2:3,6:7,2:c,5:d,e:7,3:7,1 :3,9 5 ,5, 5 :9,16:25,,26:24,";
-            
+
             int[][] result = inputValidation.InputTo2DArray(userInput);
             int[][] expected = {
                     {1, 21},
@@ -395,9 +393,9 @@ public class InputValidationTest {
                     {5, 9},
                     {16, 25},
             };
-            
+
             assertArrayEquals(expected, result);
         }
     }
-    
+
 }
