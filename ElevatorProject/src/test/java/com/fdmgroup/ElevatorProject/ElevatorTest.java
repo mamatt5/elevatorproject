@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ElevatorTest {
 	
 	Elevator elevator;
-	
+
 	@BeforeEach
 	void setup() {
 		elevator = new Elevator();
 	}
-	
+
 	@Test
 	void default_elevator_instantiated() {
 		// Elevator should start idle and at ground floor

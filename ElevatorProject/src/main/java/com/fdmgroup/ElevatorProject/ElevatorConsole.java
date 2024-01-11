@@ -133,9 +133,8 @@ public class ElevatorConsole {
 	 * 		'setdestination=' to set destination floor.
 	 * 		'setinterval=' to set the interval for command generation.
 	 * 		'save=' to save, or
-		 	'load=' to load.
+	 * 		'load=' to load.
 	 */
-
 	private void processUserOptions(
 			String input, UserToggleOptions toggleOptions, GenerateCommands generator,
 			int minFloor, int maxFloor, Controller controller,

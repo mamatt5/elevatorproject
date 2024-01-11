@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class GenerateCommands extends Thread {
 	
-	private static final Logger LOGGER = LogManager.getLogger(ReadConfiguration.class);
+	private static final Logger LOGGER = LogManager.getLogger(GenerateCommands.class);
 	private int maxFloor;
 	private int minFloor;
 	private int interval;
@@ -25,15 +25,13 @@ public class GenerateCommands extends Thread {
 		this.interval = interval;
 		this.controller = controller;
 	}
-	
+
 	/**
 	 * A setter for interval which allows it to be changed.
 	 */
 	public synchronized void setInterval(int i) {
 		
-		timer.cancel();
-		this.interval = i;
-		run();
+		interval = i;
 	}
 	
 	/**
@@ -41,19 +39,41 @@ public class GenerateCommands extends Thread {
 	 */
 	public synchronized void setMaxFloor(int i) {
 		
-		timer.cancel();
 		maxFloor = i;
-		run();
 	}
+
 	
 	/**
 	 * A setter for minFloor which allows it be changed.
 	 */
 	public synchronized void setMinFloor(int i) {
 		
-		timer.cancel();
 		minFloor = i;
-		run();
+	}
+	
+	
+	/**
+	 * A getter for minFloor.
+	 */
+	public int getMinFloor() {
+		
+		return minFloor;
+	}
+	
+	/**
+	 * A getter for maxFloor
+	 */
+	public int getMaxFloor() {
+		
+		return maxFloor;
+	}
+	
+	/**
+	 * A getter for interval
+	 */
+	public int getInterval() {
+		
+		return interval;
 	}
 	
 	/**
@@ -88,15 +108,13 @@ public class GenerateCommands extends Thread {
 			try {
 				controller.assignElevator();
 			} catch (InterruptedException e) {
-				
-				System.out.println("Interrupted");
+
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
-	
+
 	/**
 	 * A kill function which stops the automatic generation of commands.
 	 */

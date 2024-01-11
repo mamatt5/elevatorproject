@@ -37,9 +37,10 @@ public class ReadConfiguration {
 		try {
 			
 			config = objectMapper.readValue(file, Configurations.class);
-			
+			System.out.println(config.getGenerateCommands());
 			if (config.getMaxFloor() < 0 || config.getMinFloor() < 0 || config.getNumOfElevators() < 0 ||
-					config.getMinFloor() > config.getMaxFloor()) {
+					config.getMinFloor() > config.getMaxFloor() || config.getIntervalBetweenCommands() < 0)
+					 {
 				
 				LOGGER.error("Invalid-Configuration-File-Field");
 				return null;
