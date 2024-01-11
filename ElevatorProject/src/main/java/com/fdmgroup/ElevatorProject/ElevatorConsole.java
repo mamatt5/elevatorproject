@@ -60,12 +60,8 @@ public class ElevatorConsole {
 
 		InputValidation inputValidation = new InputValidation(minFloor, maxFloor);
 	    
-		// handle user input for elevator requests and manages elevator assignments
-	    int srcFloor = -1;
-    	int dstFloor = -1;
-
-    	boolean setSrcOn = false;
-    	boolean setDstOn = false;
+		// container to hold user input for elevator request creation
+		UserToggleOptions toggleOptions = new UserToggleOptions(-1, -1, false, false, generateCommands);
 
 	    while(true) {
 			// ------------ user input handling ------------ //
@@ -75,16 +71,8 @@ public class ElevatorConsole {
 				break;
 			}
 
-			console.processUserToggle(input, srcFloor, dstFloor,
-					setSrcOn, setDstOn, generateCommands, generator,
-					minFloor, maxFloor, controller, interval);
-
-			console.processUserSet(input, srcFloor, dstFloor,
-					setSrcOn, setDstOn, generateCommands, generator,
-					minFloor, maxFloor, controller, interval);
-
-			console.processUserSaveLoad(input, minFloor, maxFloor,
-					controller, scheduler, GUI);
+			console.processUserOptions(input, toggleOptions, generator,
+					minFloor, maxFloor, controller, interval, scheduler, GUI);
 
 			// ------------ elevator job requests ------------ //
 			// create a group of people to use the elevator
@@ -93,13 +81,14 @@ public class ElevatorConsole {
 		    for (int[] request : requests) {
 		    	
 		    	// If there hasn't been a source/destination floor set use input values
-		    	if (!setSrcOn)
-		    		srcFloor = request[0];
+		    	if (!toggleOptions.isSetSrcOn())
+		    		toggleOptions.setSrcFloor(request[0]);
 		    	
-		    	if (!setDstOn)
-		    		dstFloor = request[1];
+		    	if (!toggleOptions.isSetDstOn())
+		    		toggleOptions.setDstFloor(request[1]);
 		    	
-		    	controller.addPersonToQueue(new Person(srcFloor, dstFloor));
+		    	controller.addPersonToQueue(
+						new Person(toggleOptions.getSrcFloor(), toggleOptions.getDstFloor()));
 		    }
 
 			// ------------ elevator job assignments ------------ //
@@ -135,33 +124,38 @@ public class ElevatorConsole {
 	}
 
 	/**
-	 * Process user input to toggle various settings:
-	 * 		'setsource=off' to turn off set source floor,
-	 * 		'setdestination=off' tp turn off set destination floor, or
+	 * Process user options:
+	 *		'setsource=off' to toggle off set source floor.
+	 * 		'setdestination=off' to toggle off set destination floor.
 	 * 		'commandgeneration=on' to enable command generation.
 	 * 		'commandgeneration=off' to disable command generation.
+	 * 		'setsource=' to set source floor.
+	 * 		'setdestination=' to set destination floor.
+	 * 		'setinterval=' to set the interval for command generation.
+	 * 		'save=' to save, or
+		 	'load=' to load.
 	 */
-	private void processUserToggle(
-			String input, int srcFloor, int dstFloor,
-			boolean setSrcOn, boolean setDstOn,
-			boolean generateCommands, GenerateCommands generator,
-			int minFloor, int maxFloor, Controller controller, int interval) {
+
+	private void processUserOptions(
+			String input, UserToggleOptions toggleOptions, GenerateCommands generator,
+			int minFloor, int maxFloor, Controller controller,
+			int interval, Scheduler scheduler, FrameView GUI) {
 
 		// Turn off the set source floor
 		if (input.equals("setsource=off")) {
-			srcFloor = -1;
-			setSrcOn = false;
+			toggleOptions.setSrcFloor(-1);
+			toggleOptions.setSetSrcOn(false);
 		}
 
 		// Turn off the set destination floor
 		if (input.equals("setdestination=off")) {
-			dstFloor = -1;
-			setDstOn = false;
+			toggleOptions.setDstFloor(-1);
+			toggleOptions.setSetDstOn(false);
 		}
 
 		// Turn on the command generation
 		if (input.equals("commandgeneration=on")) {
-			generateCommands = true;
+			toggleOptions.setGenerateCommands(true);
 
 			if (generator == null) {
 				generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
@@ -172,32 +166,19 @@ public class ElevatorConsole {
 
 		// Turn off the command generation
 		if (input.equals("commandgeneration=off")) {
-			generateCommands = false;
+			toggleOptions.setGenerateCommands(false);
 			generator.kill();
 		}
-	}
-
-	/**
-	 * Process user input:
-	 * 		'setsource=' to set source floor,
-	 * 		'setdestination=' to set destination floor, or
-	 * 		'setinterval=' to set the interval for command generation.
-	 */
-	private void processUserSet(
-			String input, int srcFloor, int dstFloor,
-			boolean setSrcOn, boolean setDstOn,
-			boolean generateCommands, GenerateCommands generator,
-			int minFloor, int maxFloor, Controller controller, int interval) {
 
 		// Command to set source floor to a particular number
 		if (input.matches("setsource=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
 			if (floor > minFloor - 1 && floor < maxFloor + 1) {
-				srcFloor = floor;
-				setSrcOn = true;
+				toggleOptions.setSrcFloor(floor);
+				toggleOptions.setSetSrcOn(true);
 
-				if (generateCommands)
-					generator.setMinFloor(srcFloor);
+				if (toggleOptions.isGenerateCommands())
+					generator.setMinFloor(toggleOptions.getSrcFloor());
 			}
 			else {
 				System.out.println("Invalid floor number");
@@ -208,11 +189,11 @@ public class ElevatorConsole {
 		if (input.matches("setdestination=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
 			if (floor > minFloor - 1 && floor < maxFloor + 1) {
-				dstFloor = floor;
-				setDstOn = true;
+				toggleOptions.setDstFloor(floor);
+				toggleOptions.setSetDstOn(true);
 
-				if (generateCommands)
-					generator.setMaxFloor(dstFloor);
+				if (toggleOptions.isGenerateCommands())
+					generator.setMaxFloor(toggleOptions.getDstFloor());
 			} else {
 
 				System.out.println("Invalid floor number");
@@ -224,7 +205,7 @@ public class ElevatorConsole {
 		if (input.matches("setinterval=-?[0-9]\\d*")) {
 			int intervalCommand = Integer.parseInt(input.split("=")[1]);
 
-			if (generateCommands) {
+			if (toggleOptions.isGenerateCommands()) {
 				if (intervalCommand > 0) {
 					generator.setInterval(intervalCommand);
 				}
@@ -236,16 +217,6 @@ public class ElevatorConsole {
 				System.out.println("You have not enabled command generation");
 			}
 		}
-	}
-
-	/**
-	 * Process user input to save or load the system state:
-	 * 		'save=' to save,
-	 * 		'load=' to load
-	 */
-	private void processUserSaveLoad(
-			String input, int minFloor, int maxFloor,
-			Controller controller, Scheduler scheduler, FrameView GUI) {
 
 		// saving the state of the system to a file
 		if (input.matches("save=[aA-zZ0-9]*\\.ser")) {
@@ -269,7 +240,6 @@ public class ElevatorConsole {
 			GUI = new FrameView(minFloor, maxFloor, scheduler.getElevators().size(), scheduler.getElevators());
 			GUI.run();
 			System.out.println("Loaded system state from file " + fileName);
-
 		}
 	}
 

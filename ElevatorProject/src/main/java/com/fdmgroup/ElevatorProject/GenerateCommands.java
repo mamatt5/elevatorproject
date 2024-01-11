@@ -27,7 +27,7 @@ public class GenerateCommands extends Thread {
 	}
 	
 	/**
-	 * A setter for interval which allows it be changed.
+	 * A setter for interval which allows it to be changed.
 	 */
 	public synchronized void setInterval(int i) {
 		
@@ -37,7 +37,7 @@ public class GenerateCommands extends Thread {
 	}
 	
 	/**
-	 * A setter for maxFloor which allows it be changed.
+	 * A setter for maxFloor which allows it to be changed.
 	 */
 	public synchronized void setMaxFloor(int i) {
 		
@@ -109,7 +109,5 @@ public class GenerateCommands extends Thread {
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new generateCommands(), 0, interval * 1000);
 		timer.scheduleAtFixedRate(new runElevator(), 0, interval * 1010);
-		
 	}
-	
 }
