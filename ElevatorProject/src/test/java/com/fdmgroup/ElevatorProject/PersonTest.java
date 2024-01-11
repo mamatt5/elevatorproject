@@ -18,14 +18,14 @@ public class PersonTest {
 	void check_person_if_going_up() {
 		Person person = new Person(0,1);
 
-        assertSame(person.direction, Direction.UP);
+        assertSame(person.DIRECTION, Direction.UP);
 	}
 	
 	@Test
 	void check_person_if_going_down() {
 		Person person = new Person(5,0);
 
-        assertNotSame(person.direction, Direction.UP);
+        assertNotSame(person.DIRECTION, Direction.UP);
 	}
 
 }
