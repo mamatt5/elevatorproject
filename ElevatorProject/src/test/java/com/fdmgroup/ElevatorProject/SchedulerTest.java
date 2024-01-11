@@ -1,10 +1,12 @@
 package com.fdmgroup.ElevatorProject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -216,5 +218,52 @@ public class SchedulerTest {
 
 	}
 	
+	@Test
+	void run_and_kill_elevator_threads() {
+		scheduler.runElevators();
+		
+		for ( Elevator elevator : scheduler.getElevators() ) {
+			assertTrue(elevator.isRunning());
+			elevator.kill();
+			assertFalse(elevator.isRunning());
+		}
+	}
+	
+	@Test
+	void only_one_elevator_idle() throws InterruptedException {
+	    Person person = new Person(10,1); // Person going down
+	    
+	    for ( Elevator elevator : scheduler.getElevators() ) {
+	    	elevator.state=Direction.UP; // Set all Elevators
+	    }
+	    
+	    scheduler.getElevators().get(0).state=Direction.IDLE;
+	    Elevator onlyIdleElevator = scheduler.getElevators().get(0);
+	    assertEquals(onlyIdleElevator, scheduler.callElevator(person));
+	}
+	
+//	@Test
+//	void no_elevator_initially_to_simulate_a_null_pointer() {
+//		
+//	}
+//	
+	@Test
+	void all_active_elevators_have_five_floors_to_visit_except_one() throws InterruptedException {
+		Person person = new Person(0, 10);
 
+	    List<Elevator> allElevators = scheduler.getElevators();
+	    for (int i = 1; i < allElevators.size(); i++) {
+	        Elevator elevator = allElevators.get(i);
+	        elevator.state = Direction.UP;
+	        elevator.getFloorsToGo().addAll(Arrays.asList(1, 2, 3, 4, 5)); // Simulate busy Elevators except for the first
+	    }
+
+	    // Set the last elevator to be less busy
+	    Elevator onlyNonBusyElevator = allElevators.get(0);
+	    onlyNonBusyElevator.state = Direction.UP;
+
+
+	    Elevator calledElevator = scheduler.callElevator(person);
+	    assertEquals(onlyNonBusyElevator, calledElevator);
+	}
 }

@@ -277,6 +277,10 @@ public class Elevator implements Runnable, Serializable {
 		this.running = false;
 	}
 	
+	public boolean isRunning() {
+		return running;
+	}
+	
 	
 
 }
