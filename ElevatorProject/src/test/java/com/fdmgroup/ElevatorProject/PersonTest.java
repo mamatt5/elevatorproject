@@ -1,10 +1,8 @@
 package com.fdmgroup.ElevatorProject;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
 	
@@ -19,15 +17,15 @@ public class PersonTest {
 	@Test
 	void check_person_if_going_up() {
 		Person person = new Person(0,1);
-		
-		assertTrue(person.isGoingUp());
+
+        assertSame(person.direction, Direction.UP);
 	}
 	
 	@Test
 	void check_person_if_going_down() {
 		Person person = new Person(5,0);
-		
-		assertFalse(person.isGoingUp());
+
+        assertNotSame(person.direction, Direction.UP);
 	}
 
 }

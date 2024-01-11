@@ -37,17 +37,15 @@ public class Elevator implements Runnable, Serializable {
 	// ------------ Elevator Attributes ------------ //
 	private final String ELEVATOR_ID;
 	private static int nextID = 0;
+	Direction state = Direction.IDLE;
 	private int currentFloor = 0;
 	private final int SLEEP_TIME = 100;
 	private boolean running = true;
+
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
 		this.ELEVATOR_ID = "Elevator" +nextID++;
 	}
-	
-	// ------------ States ------------ //
-
-	ElevatorDirection state = ElevatorDirection.IDLE;
 
 	// ------------ Getters and Setters ------------ //
 
@@ -85,7 +83,7 @@ public class Elevator implements Runnable, Serializable {
 	public void operateElevator() throws InterruptedException {
 		// base case: elevator stops operating when there are no more travel requests
 	    if (floorsToGo.isEmpty()) {
-			this.state = ElevatorDirection.IDLE;
+			this.state = Direction.IDLE;
 	        return;
 	    }
 		
@@ -107,8 +105,8 @@ public class Elevator implements Runnable, Serializable {
 	        
 		    if (shouldChangeDirection()) {
                 switch (state) {
-                    case UP -> this.state = ElevatorDirection.DOWN;
-                    case DOWN -> this.state = ElevatorDirection.UP;
+                    case UP -> this.state = Direction.DOWN;
+                    case DOWN -> this.state = Direction.UP;
                 }
 
 				break;
@@ -141,8 +139,8 @@ public class Elevator implements Runnable, Serializable {
 	 * @return true if the elevator should change direction; otherwise false.
 	 */
 	private boolean shouldChangeDirection() {
-		return (this.currentFloor == floorsToGo.last() && this.state == ElevatorDirection.UP) ||
-				(this.currentFloor == floorsToGo.first() && this.state == ElevatorDirection.DOWN);
+		return (this.currentFloor == floorsToGo.last() && this.state == Direction.UP) ||
+				(this.currentFloor == floorsToGo.first() && this.state == Direction.DOWN);
 	}
 
 	/**
@@ -168,15 +166,13 @@ public class Elevator implements Runnable, Serializable {
 	 * @throws InterruptedException if the thread is interrupted while moving
 	 */
 	private void movesFloor(int numFloors) throws InterruptedException {
-		int absNumFloors = numFloors;
-		this.state = ElevatorDirection.UP;
-		
-		if (numFloors < 0) {        				// determine if elevator is to
-			absNumFloors *= -1;    					// move up (positive numFloors)
-			this.state = ElevatorDirection.DOWN;   	// or down (negative numFloors)
+
+		this.state = Direction.UP;				// determine if elevator is to
+		if (numFloors < 0) {        			// move UP (positive numFloors)
+			this.state = Direction.DOWN;   		// or DOWN (negative numFloors)
 		}
 		
-		for (int i = 0; i < absNumFloors; i++) {
+		for (int i = 0; i < Math.abs(numFloors); i++) {
 			if (numFloors > 0) {
 				setCurrentFloor(getCurrentFloor()+1);    // Elevator moves
 			}                                            // incrementally

@@ -1,6 +1,6 @@
 package com.fdmgroup.ElevatorProject;
 
-public enum ElevatorDirection {
+public enum Direction {
 	UP,
 	IDLE,
 	DOWN;
