@@ -174,14 +174,14 @@ public class ElevatorConsole {
 				generator.kill();
 				
 		}
-
+		
 		// Command to set source floor to a particular number
 		if (input.matches("setsource=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
-			if (floor > minFloor - 1 && floor < maxFloor + 1) {
+			if (floor > minFloor - 1 && floor < maxFloor + 1 && floor != toggleOptions.getDstFloor()) {
 				toggleOptions.setSrcFloor(floor);
 				toggleOptions.setSetSrcOn(true);
-
+				
 				if (toggleOptions.isGenerateCommands())
 					generator.setSrc(toggleOptions.getSrcFloor());
 			}
@@ -193,7 +193,7 @@ public class ElevatorConsole {
 		// Command to set destination floor to a particular number
 		if (input.matches("setdestination=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
-			if (floor > minFloor - 1 && floor < maxFloor + 1) {
+			if (floor > minFloor - 1 && floor < maxFloor + 1 && floor != toggleOptions.getSrcFloor()) {
 				toggleOptions.setDstFloor(floor);
 				toggleOptions.setSetDstOn(true);
 

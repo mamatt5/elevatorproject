@@ -113,9 +113,14 @@ public class GenerateCommands extends Thread {
 			if (dest == -1) {
 				destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
 			}
-		
+	
 			System.out.println(source + ":" + destination);
 			LOGGER.info("Person going from " + source + " to " + destination);
+			
+			// changes destination so it doesn't equal source
+			while (source == destination) {
+				destination = random.nextInt(maxFloor - minFloor + 1) + minFloor;
+			}
 			
 			try {
 				controller.addPersonToQueue(new Person(source, destination));
