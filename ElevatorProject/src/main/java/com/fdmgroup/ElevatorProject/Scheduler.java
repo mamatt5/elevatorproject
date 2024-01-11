@@ -80,7 +80,7 @@ public class Scheduler implements Serializable
 	}
 	
 
-	
+
 	/**
 	 * Starts threads for each elevator for independent function.
 	 */
