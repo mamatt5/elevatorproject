@@ -48,6 +48,8 @@ local.properties
 *.log
 # BlueJ files
 *.ctxt
+# file that stores the state of elevators
+*.ser
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 # Package Files #

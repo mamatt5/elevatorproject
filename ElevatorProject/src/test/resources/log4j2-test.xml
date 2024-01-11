@@ -10,7 +10,6 @@
 </Appenders>
 <Loggers>
 <Root level="trace">
-<AppenderRef ref="StdOut"/>
 <AppenderRef ref="TempFile"/>
 </Root>
 </Loggers>

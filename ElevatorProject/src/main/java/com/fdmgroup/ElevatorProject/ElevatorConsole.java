@@ -59,6 +59,8 @@ public class ElevatorConsole {
 	    System.out.println("'setdestination=off': turn off set destination floor");
 	    System.out.println("'setinterval=(int)': set a time interval for commands to generate");
 	    System.out.println("'commandgeneration=on/off': set a time interval for commands to generate");
+	    System.out.println("'save=[filename].ser': saves the state of the current elevators");
+	    System.out.println("'load=[filename].ser': loads the state of the saved elevators");
 	    String input ="";
 	    
 	    GenerateCommands generator = null;
@@ -193,7 +195,6 @@ public class ElevatorConsole {
 	    		System.out.println("Loaded system state from file " + fileName);
 	    		
 	    	}
-	    	
 	    	
 			// add Person objects to the elevator queue
     		int[][] requests = inputValidation.InputTo2DArray(input);
