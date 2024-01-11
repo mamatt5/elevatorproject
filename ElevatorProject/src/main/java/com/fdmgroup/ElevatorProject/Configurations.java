@@ -7,6 +7,7 @@ public class Configurations {
 	private int numOfElevators;
 	private boolean generateCommands;
 	private int intervalBetweenCommands;
+	private int liftCapacity;
 	
 	/**
 	 * @return The maximum floor value as allowed in the configuration.
@@ -42,6 +43,14 @@ public class Configurations {
 	public int getIntervalBetweenCommands() {
 		return intervalBetweenCommands;
 	}
+	
+	/**
+	 * @return The lift capacity of elevators as configured in the system.
+	 */
+	public int getLiftCapacity() {
+		return liftCapacity;
+	}
+
 	
 	
 }

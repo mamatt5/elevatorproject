@@ -4,5 +4,6 @@
 	"minFloor":1,
 	"numOfElevators":5,
 	"generateCommands": true,
-	"intervalBetweenCommands": 4
+	"intervalBetweenCommands": 4, 
+	"liftCapacity": 8
 }
