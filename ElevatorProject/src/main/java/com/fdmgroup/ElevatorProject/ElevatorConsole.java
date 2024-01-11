@@ -49,7 +49,7 @@ public class ElevatorConsole {
 	    String input ="";
 	    
 	    // if command generation is set to true in the config file
-		GenerateCommands generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
+		GenerateCommands generator = new GenerateCommands(maxFloor, minFloor, -1, -1, interval, controller);
 	    if (generateCommands) {
 			generator.run();
 		}
@@ -144,21 +144,25 @@ public class ElevatorConsole {
 		if (input.equals("setsource=off")) {
 			toggleOptions.setSrcFloor(-1);
 			toggleOptions.setSetSrcOn(false);
+			if (generator != null)
+				generator.setSrc(-1);
 		}
 
 		// Turn off the set destination floor
 		if (input.equals("setdestination=off")) {
 			toggleOptions.setDstFloor(-1);
 			toggleOptions.setSetDstOn(false);
+			if (generator != null)
+				generator.setDest(-1);
 		}
 
 		// Turn on the command generation
 		if (input.equals("commandgeneration=on")) {
 			toggleOptions.setGenerateCommands(true);
 
-			if (generator == null) {
-				generator = new GenerateCommands(maxFloor, minFloor, interval, controller);
-			}
+			if (generator == null)
+				generator = new GenerateCommands(maxFloor, minFloor, -1, -1, interval, controller);
+	
 
 			generator.run();
 		}
@@ -166,9 +170,9 @@ public class ElevatorConsole {
 		// Turn off the command generation
 		if (input.equals("commandgeneration=off")) {
 			toggleOptions.setGenerateCommands(false);
-			if (generator != null) {
+			if (generator != null)
 				generator.kill();
-			}
+				
 		}
 
 		// Command to set source floor to a particular number
@@ -179,13 +183,13 @@ public class ElevatorConsole {
 				toggleOptions.setSetSrcOn(true);
 
 				if (toggleOptions.isGenerateCommands())
-					generator.setMinFloor(toggleOptions.getSrcFloor());
+					generator.setSrc(toggleOptions.getSrcFloor());
 			}
 			else {
 				System.out.println("Invalid floor number");
 			}
 		}
-
+		
 		// Command to set destination floor to a particular number
 		if (input.matches("setdestination=-?[0-9]\\d*")) {
 			int floor = Integer.parseInt(input.split("=")[1]);
@@ -194,7 +198,7 @@ public class ElevatorConsole {
 				toggleOptions.setSetDstOn(true);
 
 				if (toggleOptions.isGenerateCommands())
-					generator.setMaxFloor(toggleOptions.getDstFloor());
+					generator.setDest(toggleOptions.getDstFloor());
 			} else {
 
 				System.out.println("Invalid floor number");

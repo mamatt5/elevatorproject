@@ -22,7 +22,7 @@ public class GenerateCommandsTest {
 	
 	@Test
 	void test_getting_values() {
-		GenerateCommands generator = new GenerateCommands(10, 0, 1, controller);
+		GenerateCommands generator = new GenerateCommands(10, 0, -1, -1, 1, controller);
 		
 		assertEquals(0, generator.getMinFloor());
 		assertEquals(10, generator.getMaxFloor());
@@ -31,7 +31,7 @@ public class GenerateCommandsTest {
 	
 	@Test
 	void test_setting_values() {
-		GenerateCommands generator = new GenerateCommands(10, 0, 1, controller);
+		GenerateCommands generator = new GenerateCommands(10, 0, -1, -1, 1, controller);
 		
 		generator.setMinFloor(20);
 		generator.setMaxFloor(57);
