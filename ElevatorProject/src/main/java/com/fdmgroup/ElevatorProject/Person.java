@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Person implements Serializable{
 	private final int srcFloor;
 	private final int destFloor;
-	final Direction direction;
+	final Direction DIRECTION;
 	
 	/**
 	 * Constructor for creating a Person object with source and destination floors.
@@ -24,10 +24,10 @@ public class Person implements Serializable{
 		this.destFloor = destFloor;
 
 		if ((srcFloor - destFloor) < 0) {
-			direction = Direction.UP;
+			DIRECTION = Direction.UP;
 		}
 		else {
-			direction = Direction.DOWN;
+			DIRECTION = Direction.DOWN;
 		}
 	}
 	
