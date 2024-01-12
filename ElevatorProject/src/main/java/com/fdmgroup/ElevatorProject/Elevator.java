@@ -60,6 +60,10 @@ public class Elevator implements Runnable, Serializable {
 	public int getCurrentFloor() {
 		return currentFloor;
 	}
+	
+	public int getMaxCapacity() {
+		return capacity;
+	}
 
 	public void setCurrentFloor(int floor) {
 		this.currentFloor = floor;
