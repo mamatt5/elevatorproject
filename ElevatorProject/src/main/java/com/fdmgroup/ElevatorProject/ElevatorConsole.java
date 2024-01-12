@@ -212,7 +212,9 @@ public class ElevatorConsole {
 
 			if (toggleOptions.isGenerateCommands()) {
 				if (intervalCommand > 0) {
+					generator.kill();
 					generator.setInterval(intervalCommand);
+					generator.run();
 				}
 				else {
 					System.out.println("Invalid Interval");
