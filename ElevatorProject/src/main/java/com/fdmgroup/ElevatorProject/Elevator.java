@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("serial")
 public class Elevator implements Runnable, Serializable {
+	private final static String configFilePath = "../ElevatorProject/src/main/resources/Configurations.txt";
 	private ConcurrentSkipListSet<Integer> floorsToGo = new ConcurrentSkipListSet<>();
 	// ConcurrentSkipListSet is thread-safe (built-in concurrency control) ensuring data integrity
 	// during simultaneous access e.g. during loading/unloading people and moving floors
@@ -41,11 +42,13 @@ public class Elevator implements Runnable, Serializable {
 	private int currentFloor = 0;
 	private final int SLEEP_TIME = 100;
 	private boolean running = true;
-	private int capacity = 8;
+	private int capacity;
 
 	// ------------ Elevator Constructor ------------ //
 	public Elevator() {
+		Configurations configs = ReadConfiguration.getConfiguration(configFilePath);
 		this.ELEVATOR_ID = "Elevator" +nextID++;
+		this.capacity = configs.getLiftCapacity();
 	}
 
 	// ------------ Getters and Setters ------------ //
