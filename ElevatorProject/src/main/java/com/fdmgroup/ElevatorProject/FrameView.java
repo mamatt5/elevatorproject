@@ -155,7 +155,7 @@ public class FrameView implements Runnable
 					//liftPoint.y = (getHeight() - liftDimension.height - gHeight)- ((elevators.get(i).getCurrentFloor()) * (levelHeight));
 
 					// Display values options near lift
-					// Uncomment any display option you want
+					// Uncomment any display option you want 
 					
 					drawValueToSide("Current Floor: " + elevators.get(i).getCurrentFloor(), graphics);
 					drawStringToSide("Num People: " + elevators.get(i).getPeopleInsideToUnload().size(), graphics);
@@ -167,7 +167,7 @@ public class FrameView implements Runnable
                         case DOWN -> drawValueAbove(graphics, "Down", liftPoint);
                     }
 		
-					drawStringInBase(this, graphics, elevators.get(i).getElevatorID(), liftPoint);
+					drawStringInBase(this, graphics, elevators.get(i).getElevatorID() + " Max Capacity: " + elevators.get(i).getMaxCapacity(), liftPoint);
 
 					graphics.setColor(getStateColor(i)); // use to show elevator state if implemented
 					// graphics.setColor(Color.GRAY); // if not using state use this
