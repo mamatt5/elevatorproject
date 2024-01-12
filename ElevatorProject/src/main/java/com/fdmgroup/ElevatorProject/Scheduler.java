@@ -64,8 +64,7 @@ public class Scheduler implements Serializable
 
 				// If no idle Elevator, gets minimum distance between Elevator and person, then checks if same direction
 				if (distance < minDistance
-						&& (elevator.state == Direction.IDLE || person.DIRECTION == elevator.state)
-						&& (elevator.getFloorsToGo().size() <= 5)) {
+						&& (elevator.state == Direction.IDLE || person.DIRECTION == elevator.state)) {
 					bestElevator = elevator;
 					minDistance = distance;
 				}

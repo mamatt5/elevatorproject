@@ -101,16 +101,8 @@ public class ConsoleTest
 		InputStream sysInBackup = System.in;
 		
 		// Get the user input
-		ByteArrayInputStream in = new ByteArrayInputStream("commandgeneration=on\nq".getBytes());
+		ByteArrayInputStream in = new ByteArrayInputStream("commandgeneration=on\ncommandgeneration=off\nq".getBytes());
 		System.setIn(in);
-	
-		// Run console
-		ElevatorConsole.main(args);
-		
-		Thread.sleep(1000);
-		// Get the user input
-		ByteArrayInputStream in2 = new ByteArrayInputStream("commandgeneration=off\nq".getBytes());
-		System.setIn(in2);
 			
 		// Run console
 		ElevatorConsole.main(args);
