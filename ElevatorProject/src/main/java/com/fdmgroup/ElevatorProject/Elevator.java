@@ -40,7 +40,7 @@ public class Elevator implements Runnable, Serializable {
 	private static int nextID = 0;
 	Direction state = Direction.IDLE;
 	private int currentFloor = 0;
-	private final int SLEEP_TIME = 100;
+	private final int SLEEP_TIME = 1000;
 	private boolean running = true;
 	private int capacity;
 
